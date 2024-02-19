@@ -1,12 +1,13 @@
 import React from "react";
+import Book from "../App"
 
-interface Book {
-  title: string;
-  author: string;
-  published: string;
-  pages: number;
-  coverImageUrl?: string;
-}
+// interface Book {
+//   title: string;
+//   author: string;
+//   published: string;
+//   pages: number;
+//   coverImageUrl?: string;
+// }
 
 interface ConfirmBookProps {
   books: Book[];

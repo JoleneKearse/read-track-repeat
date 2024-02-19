@@ -14,7 +14,7 @@ interface Book {
 }
 
 const AddForm: React.FC<AddFormProps> = ({ onAddBook }) => {
-  const searchMethodRef = useRef<HTMLInputElement>(null);
+  const searchMethodRef = useRef<HTMLSelectElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const formData = {
