@@ -544,12 +544,67 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.block {
+  display: block;
+}
+
 .min-h-screen {
   min-height: 100vh;
 }
 
+.w-4\/5 {
+  width: 80%;
+}
+
+.w-5\/6 {
+  width: 83.333333%;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.max-w-sm {
+  max-width: 24rem;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.border {
+  border-width: 1px;
+}
+
+.border-orange-200 {
+  --tw-border-opacity: 1;
+  border-color: rgb(255 136 7 / var(--tw-border-opacity));
+}
+
+.bg-orange-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 194 120 / var(--tw-bg-opacity));
+}
+
 .bg-bg-gradient {
   background-image: radial-gradient(ellipse at 50% 75%, #7B315E, #311D35);
+}
+
+.p-2 {
+  padding: 0.5rem;
+}
+
+.p-2\.5 {
+  padding: 0.625rem;
 }
 
 .py-10 {
@@ -562,11 +617,42 @@ video {
   line-height: 2.25rem;
 }
 
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
 .font-bold {
   font-weight: 700;
+}
+
+.tracking-wide {
+  letter-spacing: 0.025em;
+}
+
+.text-orange-200 {
+  --tw-text-opacity: 1;
+  color: rgb(255 136 7 / var(--tw-text-opacity));
 }
 
 .text-orange-300 {
   --tw-text-opacity: 1;
   color: rgb(255 152 26 / var(--tw-text-opacity));
+}
+
+.focus\:border-purple-500:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(49 29 53 / var(--tw-border-opacity));
+}
+
+.focus\:ring-purple-500:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(49 29 53 / var(--tw-ring-opacity));
+}
+
+@media (prefers-color-scheme: dark) {
+  .dark\:bg-purple-500 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(49 29 53 / var(--tw-bg-opacity));
+  }
 }
