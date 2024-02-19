@@ -8,11 +8,11 @@ interface Book {
   coverImageUrl?: string;
 }
 
-interface ConfimBookProps {
+interface ConfirmBookProps {
   books: Book[];
 }
 
-const ConfimBook: React.FC<ConfimBookProps> = ({ books }) => {
+const ConfirmBook: React.FC<ConfirmBookProps> = ({ books }) => {
   return (
     <main>
       {books.map((book) => (
@@ -28,4 +28,4 @@ const ConfimBook: React.FC<ConfimBookProps> = ({ books }) => {
   );
 };
 
-export default ConfimBook;
+export default ConfirmBook;

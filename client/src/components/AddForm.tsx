@@ -51,7 +51,7 @@ const AddForm: React.FC<AddFormProps> = ({ onAddBook }) => {
         className="bg-orange-100 border border-orange-200 text-purple-700 text-sm tracking-wide rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 mb-8"
         ref={searchMethodRef}
       >
-        <option selected>Choose search method</option>
+        <option defaultValue="">Choose search method</option>
         <option value="isbn">ISBN</option>
         <option value="title">Title</option>
         <option value="author">Author</option>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Header from "./components/Header";
 import AddForm from "./components/AddForm";
-import ConfimBook from "./components/ConfimBook";
+import ConfirmBook from "./components/ConfirmBook";
 
 function App() {
   interface Book {
@@ -20,7 +20,7 @@ function App() {
     <div className="min-h-screen bg-bg-gradient">
       <Header />
       <AddForm onAddBook={handleAddBook} />
-      <ConfimBook books={books} />
+      <ConfirmBook books={books} />
     </div>
   );
 }
