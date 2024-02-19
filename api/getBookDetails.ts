@@ -41,7 +41,9 @@ async function fetchBook(isbn: string): Promise<Book> {
   return bookData;
 }
 
-fetchBook("9780553418026");
+export default fetchBook;
+
+// fetchBook("9780553418026");
 
 // {
 //   title: 'The Martian',
