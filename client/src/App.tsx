@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Header from "./components/Header";
 import AddForm from "./components/AddForm";
+import BooksRead from "./components/BooksRead";
 
 function App() {
   interface Book {
@@ -19,6 +20,7 @@ function App() {
     <div className="min-h-screen bg-bg-gradient">
       <Header />
       <AddForm onAddBook={handleAddBook} />
+      <BooksRead books={books} />
     </div>
   );
 }
