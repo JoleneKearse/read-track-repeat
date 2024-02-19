@@ -1,5 +1,13 @@
 import React from "react";
 
+interface Book {
+  title: string;
+  author: string;
+  published: string;
+  pages: number;
+  coverImageUrl?: string;
+}
+
 interface ConfimBookProps {
   books: Book[];
 }
