@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Header from "./components/Header";
 import AddForm from "./components/AddForm";
-import BooksRead from "./components/BooksRead";
+import ConfimBook from "./components/ConfimBook";
 
 function App() {
   interface Book {
@@ -11,16 +11,16 @@ function App() {
     pages: number;
     coverImageUrl: string;
   }
-  
+
   const [books, setBooks] = useState<Book[]>([]);
   const handleAddBook = (newBook: Book) => {
     setBooks([...books, newBook]);
-  }
+  };
   return (
     <div className="min-h-screen bg-bg-gradient">
       <Header />
       <AddForm onAddBook={handleAddBook} />
-      <BooksRead books={books} />
+      <ConfimBook books={books} />
     </div>
   );
 }
