@@ -1,16 +1,28 @@
-import { FormEvent, useRef } from "react";
+import React, { FormEvent, useRef } from "react";
 import fetchBook from "../../../api/getBookDetails";
 
-const AddForm = () => {
+interface AddFormProps {
+  onAddBook: (newBook: Book) => void;
+}
+
+interface Book {
+  title: string;
+  author: string;
+  published: string;
+  pages: number;
+  coverImageUrl?: string;
+}
+
+const AddForm: React.FC<AddFormProps> = ({ onAddBook }) => {
   const searchMethodRef = useRef<HTMLInputElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
-  
+
   const formData = {
     method: "",
     input: "",
   };
-  
-  const handleSubmit = (event: FormEvent) => {
+
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     if (searchMethodRef.current !== null) {
       formData.method = searchMethodRef.current.value;
@@ -18,8 +30,11 @@ const AddForm = () => {
     if (searchInputRef.current !== null) {
       formData.input = searchInputRef.current.value;
     }
-    console.log(formData);
-    console.log(fetchBook(formData.input));
+    // console.log(formData);
+    // console.log(fetchBook(formData.input));
+    const newBook: Book = await fetchBook(formData.input);
+    console.log(newBook);
+    onAddBook(newBook);
   };
 
   return (

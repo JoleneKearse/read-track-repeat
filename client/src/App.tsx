@@ -1,11 +1,24 @@
+import { useState } from "react";
 import Header from "./components/Header";
 import AddForm from "./components/AddForm";
 
 function App() {
+  interface Book {
+    title: string;
+    author: string;
+    published: string;
+    pages: number;
+    coverImageUrl: string;
+  }
+  
+  const [books, setBooks] = useState<Book[]>([]);
+  const handleAddBook = (newBook: Book) => {
+    setBooks([...books, newBook]);
+  }
   return (
-    <div className="bg-bg-gradient min-h-screen">
+    <div className="min-h-screen bg-bg-gradient">
       <Header />
-      <AddForm />
+      <AddForm onAddBook={handleAddBook} />
     </div>
   );
 }
