@@ -553,16 +553,16 @@ video {
   margin-bottom: 0.5rem;
 }
 
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
 .block {
   display: block;
 }
 
 .min-h-screen {
   min-height: 100vh;
-}
-
-.w-4\/5 {
-  width: 80%;
 }
 
 .w-5\/6 {
@@ -640,6 +640,41 @@ video {
   color: rgb(255 152 26 / var(--tw-text-opacity));
 }
 
+.text-purple-700 {
+  --tw-text-opacity: 1;
+  color: rgb(123 49 94 / var(--tw-text-opacity));
+}
+
+.placeholder\:text-purple-100::-moz-placeholder {
+  --tw-text-opacity: 1;
+  color: rgb(255 240 255 / var(--tw-text-opacity));
+}
+
+.placeholder\:text-purple-100::placeholder {
+  --tw-text-opacity: 1;
+  color: rgb(255 240 255 / var(--tw-text-opacity));
+}
+
+.placeholder\:text-purple-700::-moz-placeholder {
+  --tw-text-opacity: 1;
+  color: rgb(123 49 94 / var(--tw-text-opacity));
+}
+
+.placeholder\:text-purple-700::placeholder {
+  --tw-text-opacity: 1;
+  color: rgb(123 49 94 / var(--tw-text-opacity));
+}
+
+.placeholder\:text-purple-500::-moz-placeholder {
+  --tw-text-opacity: 1;
+  color: rgb(49 29 53 / var(--tw-text-opacity));
+}
+
+.placeholder\:text-purple-500::placeholder {
+  --tw-text-opacity: 1;
+  color: rgb(49 29 53 / var(--tw-text-opacity));
+}
+
 .focus\:border-purple-500:focus {
   --tw-border-opacity: 1;
   border-color: rgb(49 29 53 / var(--tw-border-opacity));
@@ -648,11 +683,4 @@ video {
 .focus\:ring-purple-500:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(49 29 53 / var(--tw-ring-opacity));
-}
-
-@media (prefers-color-scheme: dark) {
-  .dark\:bg-purple-500 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(49 29 53 / var(--tw-bg-opacity));
-  }
 }
