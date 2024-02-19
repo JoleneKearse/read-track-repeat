@@ -37,7 +37,6 @@ async function fetchBook(isbn: string): Promise<Book> {
     pages: bookDetails?.number_of_pages,
     coverImageUrl: bookDetails.cover?.medium || "Cover image not available",
   }
-  console.log(bookData);
   return bookData;
 }
 
