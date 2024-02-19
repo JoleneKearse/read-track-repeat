@@ -8,8 +8,9 @@ export default {
       "orange-300": "#ff981a",
       "orange-500": "#ed5107",
       "purple-100": "#FFF0FF",
-      "purple-500": "#311D35",
-      "purple-700": "#7B315E",
+      "purple-300": "#9E5481",
+      "purple-500": "#7B315E",
+      "purple-700": "#311D35",
     },
     extend: {
       backgroundImage: {

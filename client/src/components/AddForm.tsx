@@ -28,9 +28,15 @@ const AddForm = () => {
         type="text" 
         name="" 
         id="searchInput"
-        className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-500 focus:border-purple-500" 
+        className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300" 
         placeholder="ISBN / Title / Author"
       />
+
+      <button type="button"
+        className="focus:outline-none text-purple-100 bg-orange-300 hover:bg-yellow-500 focus:ring-4 focus:ring-purple-500 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
+      >
+        Add book
+      </button>
     </form>
   );
 };
