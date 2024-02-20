@@ -1,16 +1,9 @@
 import React, { FormEvent, useRef } from "react";
+import { Book } from "../types"
 import fetchBook from "../../../api/getBookDetails";
 
 interface AddFormProps {
   onAddBook: (newBook: Book) => void;
-}
-
-interface Book {
-  title: string;
-  author: string;
-  published: string;
-  pages: number;
-  coverImageUrl?: string;
 }
 
 const AddForm: React.FC<AddFormProps> = ({ onAddBook }) => {

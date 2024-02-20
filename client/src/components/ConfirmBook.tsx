@@ -1,13 +1,5 @@
 import React from "react";
-import Book from "../App"
-
-// interface Book {
-//   title: string;
-//   author: string;
-//   published: string;
-//   pages: number;
-//   coverImageUrl?: string;
-// }
+import { Book } from "../types"
 
 interface ConfirmBookProps {
   books: Book[];
@@ -15,7 +7,7 @@ interface ConfirmBookProps {
 
 const ConfirmBook: React.FC<ConfirmBookProps> = ({ books }) => {
   return (
-    <main>
+    <main className="w-5/6 max-w-sm mx-auto">
       {books.map((book) => (
         <section>
           <img src={book.coverImageUrl} alt={book.title} />
