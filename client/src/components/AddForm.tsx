@@ -1,5 +1,5 @@
 import React, { FormEvent, useRef } from "react";
-import { Book } from "../types"
+import { Book } from "../types";
 import fetchBook from "../../../api/getBookDetails";
 
 interface AddFormProps {
