@@ -1,22 +1,26 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { SupabaseProvider } from "./context/SupabaseContext";
 import { Book } from "./types"
 import AddBookPage from "./pages/AddBookPage";
 
-function App() {
+const App: React.FC = () => {
   const [books, setBooks] = useState<Book[]>([]);
   const handleAddBook = (newBook: Book) => {
     setBooks([...books, newBook]);
   };
+
   return (
-    <Router>
-      <Routes>
-        <Route 
-          path="/" 
-          element={<AddBookPage books={books} handleAddBook={handleAddBook} />} 
-        />
-      </Routes>
-    </Router>
+    <SupabaseProvider>
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={<AddBookPage books={books} handleAddBook={handleAddBook} />}
+          />
+        </Routes>
+      </Router>
+    </SupabaseProvider>
   );
 }
 
