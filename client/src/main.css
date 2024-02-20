@@ -694,6 +694,10 @@ video {
   padding-top: 2rem;
 }
 
+.text-center {
+  text-align: center;
+}
+
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem;
@@ -816,4 +820,10 @@ video {
 .active\:bg-orange-100:active {
   --tw-bg-opacity: 1;
   background-color: rgb(255 194 120 / var(--tw-bg-opacity));
+}
+
+@media (min-width: 768px) {
+  .md\:max-w-md {
+    max-width: 28rem;
+  }
 }

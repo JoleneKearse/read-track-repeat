@@ -31,7 +31,10 @@ const AddForm: React.FC<AddFormProps> = ({ onAddBook }) => {
   };
 
   return (
-    <form className="w-5/6 max-w-sm mx-auto" onSubmit={handleSubmit}>
+    <form 
+      className="w-5/6 max-w-sm mx-auto md:max-w-md" 
+      onSubmit={handleSubmit}
+    >
       <label
         htmlFor="searchMethod"
         className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white"

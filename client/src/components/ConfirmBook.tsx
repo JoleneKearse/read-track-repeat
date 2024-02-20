@@ -7,7 +7,7 @@ interface ConfirmBookProps {
 
 const ConfirmBook: React.FC<ConfirmBookProps> = ({ books }) => {
   return (
-    <main className="w-5/6 max-w-sm py-20 mx-auto">
+    <main className="w-5/6 max-w-sm py-20 mx-auto md:max-w-md">
       {books.map((book) => (
         <section className="flex flex-col items-center justify-center p-6 bg-purple-700 border border-orange-200 rounded-lg">
           <img
