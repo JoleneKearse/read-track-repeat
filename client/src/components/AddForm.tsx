@@ -3,10 +3,10 @@ import { Book } from "../types";
 import fetchBook from "../../../api/getBookDetails";
 
 interface AddFormProps {
-  onAddBook: (newBook: Book) => void;
+  onSearch: (newBook: Book) => void;
 }
 
-const AddForm: React.FC<AddFormProps> = ({ onAddBook }) => {
+const AddForm: React.FC<AddFormProps> = ({ onSearch }) => {
   const searchMethodRef = useRef<HTMLSelectElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -25,9 +25,14 @@ const AddForm: React.FC<AddFormProps> = ({ onAddBook }) => {
     }
     // console.log(formData);
     // console.log(fetchBook(formData.input));
-    const newBook: Book = await fetchBook(formData.input);
-    console.log(newBook);
-    onAddBook(newBook);
+    const newBook: Book | null = await fetchBook(formData.input);
+    // console.log(newBook);
+    if (newBook) {
+      onSearch(newBook);
+    } else {
+      throw new Error("Book not found");
+    }
+    
   };
 
   return (
