@@ -5,7 +5,26 @@ import { Book } from "./types";
 import AddBookPage from "./pages/AddBookPage";
 import BooksReadPage from "./pages/BooksReadPage";
 
+interface NavLink {
+  name: string;
+  path: string;
+}
+
 const App: React.FC = () => {
+  const navLinks: NavLink[] = [
+    // {
+    //   name: "User",
+    //   path: "/user",
+    // },
+    {
+      name: "Add Book",
+      path: "/",
+    },
+    {
+      name: "Collection",
+      path: "/booksRead",
+    },
+  ]
   const [books, setBooks] = useState<Book[]>([]);
   const handleAddBook = (newBook: Book) => {
     setBooks([...books, newBook]);
@@ -18,10 +37,10 @@ const App: React.FC = () => {
           <Route
             path="/"
             element={
-              <AddBookPage books={books} handleAddBook={handleAddBook} />
+              <AddBookPage books={books} handleAddBook={handleAddBook} navLinks={navLinks} />
             }
           />
-          <Route path="/books" element={<BooksReadPage books={books} />} />
+          <Route path="/booksRead" element={<BooksReadPage books={books} navLinks={navLinks} />} />
         </Routes>
       </Router>
     </SupabaseProvider>
