@@ -6,12 +6,13 @@ import Cross from "/cross.svg";
 interface ConfirmBookProps {
   // books: Book[];
   searchedBook: Book;
+  handleCancelBook: () => void;
 }
 
-const ConfirmBook: React.FC<ConfirmBookProps> = ({ searchedBook }) => {
+const ConfirmBook: React.FC<ConfirmBookProps> = ({ searchedBook, handleCancelBook }) => {
   return (
-    <main className="w-5/6 max-w-sm py-20 mx-auto md:max-w-md">
-      <form className="flex flex-col items-center justify-center p-6 bg-purple-700 border border-orange-200 rounded-lg">
+    <section className="w-5/6 max-w-sm py-20 mx-auto md:max-w-md">
+      <article className="flex flex-col items-center justify-center p-6 bg-purple-700 border border-orange-200 rounded-lg">
         <img
           src={searchedBook.coverImageUrl}
           alt={searchedBook.title}
@@ -28,7 +29,7 @@ const ConfirmBook: React.FC<ConfirmBookProps> = ({ searchedBook }) => {
           {searchedBook.pages} pages
         </p>
         <div className="flex ml-[5rem] pb-8 md:ml-[6rem]">
-          <button type="submit">
+          <button type="button" onClick={handleCancelBook}>
             <img
               src={Cross}
               alt="cross"
@@ -45,8 +46,8 @@ const ConfirmBook: React.FC<ConfirmBookProps> = ({ searchedBook }) => {
             />
           </button>
         </div>
-      </form>
-    </main>
+      </article>
+    </section>
   );
 };
 

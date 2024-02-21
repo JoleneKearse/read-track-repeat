@@ -7,9 +7,11 @@ import { Book } from "../types";
 interface AddBookPageProps {
   books: Book[];
   handleAddBook: (newBook: Book) => void;
+  handleCancelBook: () => void;
+  // handleConfirmBook: (searchedBook: Book) => void;
 }
 
-const AddBookPage: React.FC<AddBookPageProps> = ({ books }) => {
+const AddBookPage: React.FC<AddBookPageProps> = () => {
   const [searchedBook, setSearchedBook] = useState<Book | null>(null);
   const handleSearch = async (book: Book) => {
     // console.log(book);
@@ -23,10 +25,17 @@ const AddBookPage: React.FC<AddBookPageProps> = ({ books }) => {
   //     setSearchedBook(null);
   //   }
   // };
-  // const handleCancelBook = () => {
-  //   // discard selection
-  //   setSearchedBook(null);
-  // };
+  const handleCancelBook = () => {
+    // event.preventDefault();
+    // discard selection
+    if (searchedBook) {
+      console.log("discard selection");
+      setTimeout(() => {
+        setSearchedBook(null);
+      }, 500);
+      // setSearchedBook(null);
+    }
+  };
 
   return (
     <section className="min-h-screen bg-bg-gradient">
@@ -34,7 +43,10 @@ const AddBookPage: React.FC<AddBookPageProps> = ({ books }) => {
       <AddForm onSearch={handleSearch} />
       {/* display ConfirmBook, once search is complete */}
       {searchedBook && (
-        <ConfirmBook searchedBook={searchedBook} />
+        <ConfirmBook
+          searchedBook={searchedBook}
+          handleCancelBook={handleCancelBook}
+        />
       )}
     </section>
   );
