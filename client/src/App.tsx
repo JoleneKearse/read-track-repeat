@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { SupabaseProvider } from "./context/SupabaseContext";
-import { Book } from "./types";
+import { Book, NavLink } from "./types";
 import AddBookPage from "./pages/AddBookPage";
 import BooksReadPage from "./pages/BooksReadPage";
-
-interface NavLink {
-  name: string;
-  path: string;
-}
+import User from "/user.svg";
+import AddBook from "/addBook.svg";
+import SearchBook from "/searchBook.svg";
 
 const App: React.FC = () => {
   const navLinks: NavLink[] = [
@@ -19,10 +17,14 @@ const App: React.FC = () => {
     {
       name: "Add Book",
       path: "/",
+      icon: AddBook,
+      alt: "Add Book"
     },
     {
       name: "Collection",
       path: "/booksRead",
+      icon: SearchBook,
+      alt: "Search Book",
     },
   ]
   const [books, setBooks] = useState<Book[]>([]);

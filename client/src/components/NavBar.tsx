@@ -1,7 +1,5 @@
 import { NavLink } from "react-router-dom";
-import User from "/user.svg";
-import Add from "/addBook.svg";
-import Search from "/searchBook.svg";
+import { NavLink as links } from "../types";
 
 const NavBar = ({ navLinks }) => {
   return (
@@ -10,25 +8,18 @@ const NavBar = ({ navLinks }) => {
         {/* <NavLink to="/user" >
           <img src={User} alt="user" />
         </NavLink> */}
-        <NavLink to="/" >
-          <img 
-            src={Add} 
-            alt="add books icon" 
-            className="w-8 hover:scale-105"
-            title="Add Books"
-          />
-        </NavLink>
-        <NavLink to="/booksRead" >
-          <img 
-            src={Search} 
-            alt="search books icon" 
-            className="w-8 hover:scale-105"
-            title="View Books"
-          />
-        </NavLink>
+        {navLinks.map((link) => (
+          <NavLink to={link.path} key={link.name} className={({ isActive }) => `w-8 ${isActive ? "opacity-50" : "hover:scale-105"}`}>
+            <img 
+            src={link.icon} 
+            alt={link.alt} 
+            title={link.alt} 
+            />
+          </NavLink>
+        ))}
       </ul>
     </nav>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;

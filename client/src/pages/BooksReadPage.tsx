@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../components/Header";
-import { Book } from "../types";
+import { Book, NavLink } from "../types";
 
 interface BooksReadPageProps {
   navLinks: NavLink[];
@@ -11,9 +11,9 @@ const BooksReadPage: React.FC<BooksReadPageProps> = ({ navLinks }) => {
   return (
     <section className="min-h-screen bg-bg-gradient">
       <Header />
-      {books && (
+      {/* {books && (
         <BookCollection books={books} navLinks={navLinks} />
-      )}
+      )} */}
     </section>
   )
 }
