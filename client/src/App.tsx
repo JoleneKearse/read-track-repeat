@@ -13,12 +13,14 @@ const App: React.FC = () => {
     // {
     //   name: "User",
     //   path: "/user",
+    //   icon: User,
+    //   alt: "User",
     // },
     {
       name: "Add Book",
       path: "/",
       icon: AddBook,
-      alt: "Add Book"
+      alt: "Add Book",
     },
     {
       name: "Collection",
@@ -26,7 +28,7 @@ const App: React.FC = () => {
       icon: SearchBook,
       alt: "Search Book",
     },
-  ]
+  ];
   const [books, setBooks] = useState<Book[]>([]);
   const handleAddBook = (newBook: Book) => {
     setBooks([...books, newBook]);
@@ -39,10 +41,17 @@ const App: React.FC = () => {
           <Route
             path="/"
             element={
-              <AddBookPage books={books} handleAddBook={handleAddBook} navLinks={navLinks} />
+              <AddBookPage
+                books={books}
+                handleAddBook={handleAddBook}
+                navLinks={navLinks}
+              />
             }
           />
-          <Route path="/booksRead" element={<BooksReadPage books={books} navLinks={navLinks} />} />
+          <Route
+            path="/booksRead"
+            element={<BooksReadPage books={books} navLinks={navLinks} />}
+          />
         </Routes>
       </Router>
     </SupabaseProvider>
