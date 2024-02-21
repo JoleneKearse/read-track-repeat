@@ -12,7 +12,7 @@ interface AddBookPageProps {
 const AddBookPage: React.FC<AddBookPageProps> = ({ books }) => {
   const [searchedBook, setSearchedBook] = useState<Book | null>(null);
   const handleSearch = async (book: Book) => {
-    console.log(book);
+    // console.log(book);
     setSearchedBook(book);
   };
   // const handleConfirmBook = async () => {

@@ -77,7 +77,7 @@ const AddForm: React.FC<AddFormProps> = ({ onSearch }) => {
         type="submit"
         className="focus:outline-none text-purple-100 bg-orange-300 hover:bg-yellow-500 focus:ring-4 focus:ring-purple-500 font-bold rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
       >
-        Add book
+        Check book
       </button>
     </form>
   );
