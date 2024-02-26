@@ -14,15 +14,19 @@ interface AddBookPageProps {
   handleSearch: (book: Book) => void;
 }
 
-const AddBookPage: React.FC<AddBookPageProps> = ({ navLinks, handleCancelBook, handleConfirmBook, handleSearch, searchedBook }) => {
-  
+const AddBookPage: React.FC<AddBookPageProps> = ({
+  navLinks,
+  handleCancelBook,
+  handleConfirmBook,
+  handleSearch,
+  searchedBook,
+}) => {
   return (
     <section className="min-h-screen bg-bg-gradient">
       <Header />
       <NavBar navLinks={navLinks} />
       <main>
         <AddForm onSearch={handleSearch} />
-        {/* display ConfirmBook, once search is complete */}
         {searchedBook && (
           <ConfirmBook
             searchedBook={searchedBook}

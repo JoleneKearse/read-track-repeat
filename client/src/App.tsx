@@ -39,6 +39,8 @@ const App: React.FC = () => {
 
   const handleConfirmBook = () => {
     if (searchedBook) {
+      // TODO: add date to book object
+      setSearchedBook({...searchedBook, dateFinished: date});
       // TODO: add book to db
       // await addBookToDb(searchedBook);
       console.log("Book to confirm:", searchedBook);

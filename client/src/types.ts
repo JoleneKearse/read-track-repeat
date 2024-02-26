@@ -4,6 +4,7 @@ export interface Book {
   published: string;
   pages: number;
   coverImageUrl?: string;
+  dateFinished?: string;
 }
 
 export interface NavLink {

@@ -1,4 +1,4 @@
-import React, { FormEvent, useRef } from "react";
+import React, { FormEvent, useRef, useState } from "react";
 import { Book } from "../types";
 import fetchBook from "../../../api/getBookDetails";
 
@@ -9,10 +9,13 @@ interface AddFormProps {
 const AddForm: React.FC<AddFormProps> = ({ onSearch }) => {
   const searchMethodRef = useRef<HTMLSelectElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const dateRef = useRef<HTMLInputElement>(null);
+  const [date, setDate] = useState("");
 
   const formData = {
     method: "",
     input: "",
+    dateFinished: "",
   };
 
   const handleSubmit = async (event: FormEvent) => {
@@ -22,6 +25,9 @@ const AddForm: React.FC<AddFormProps> = ({ onSearch }) => {
     }
     if (searchInputRef.current !== null) {
       formData.input = searchInputRef.current.value;
+    }
+    if (dateRef.current !== null) {
+      formData.dateFinished = dateRef.current.value;
     }
     // console.log(formData);
     // console.log(fetchBook(formData.input));
@@ -72,6 +78,20 @@ const AddForm: React.FC<AddFormProps> = ({ onSearch }) => {
         className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300"
         placeholder="ISBN / Title / Author"
       />
+
+      <label
+        htmlFor="dateFinished"
+        className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white"
+      >
+        Date Finished
+      </label>
+      <input
+        type="date"
+        ref={dateRef}
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
+        className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300"
+      /> 
 
       <button
         type="submit"
