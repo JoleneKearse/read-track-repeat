@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 import AddForm from "../components/AddForm";
@@ -8,39 +8,15 @@ import { Book, NavLink } from "../types";
 interface AddBookPageProps {
   navLinks: NavLink[];
   books: Book[];
+  searchedBook: Book | null;
   handleAddBook: (newBook: Book) => void;
   handleCancelBook: () => void;
   handleConfirmBook: () => void;
+  handleSearch: (book: Book) => void;
 }
 
-const AddBookPage: React.FC<AddBookPageProps> = ({ navLinks }) => {
-  const [searchedBook, setSearchedBook] = useState<Book | null>(null);
-
-  const handleSearch = async (book: Book) => {
-    // console.log(book);
-    setSearchedBook(book);
-  };
-
-  const handleConfirmBook = () => {
-    if (searchedBook) {
-      // TODO: add book to db
-      // await addBookToDb(searchedBook);
-      console.log("Book to confirm:", searchedBook);
-      setSearchedBook(null);
-    }
-  };
-
-  const handleCancelBook = () => {
-    // discard selection
-    if (searchedBook) {
-      console.log("discard selection");
-      setTimeout(() => {
-        setSearchedBook(null);
-      }, 500);
-      // setSearchedBook(null);
-    }
-  };
-
+const AddBookPage: React.FC<AddBookPageProps> = ({ navLinks, handleCancelBook, handleConfirmBook, handleSearch, searchedBook }) => {
+  
   return (
     <section className="min-h-screen bg-bg-gradient">
       <Header />
@@ -53,6 +29,7 @@ const AddBookPage: React.FC<AddBookPageProps> = ({ navLinks }) => {
             searchedBook={searchedBook}
             handleCancelBook={handleCancelBook}
             handleConfirmBook={handleConfirmBook}
+            handleSearch={handleSearch}
           />
         )}
       </main>

@@ -8,12 +8,14 @@ interface ConfirmBookProps {
   searchedBook: Book;
   handleCancelBook: () => void;
   handleConfirmBook: () => void;
+  handleSearch: (book: Book) => void;
 }
 
 const ConfirmBook: React.FC<ConfirmBookProps> = ({
   searchedBook,
   handleCancelBook,
   handleConfirmBook,
+  // handleSearch,
 }) => {
   return (
     <section className="w-5/6 max-w-sm py-20 mx-auto md:max-w-md">
