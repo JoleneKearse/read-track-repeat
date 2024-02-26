@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "../components/Header";
 import { Book, NavLink } from "../types";
+import Header from "../components/Header";
 
 interface BooksReadPageProps {
   navLinks: NavLink[];
@@ -15,7 +15,7 @@ const BooksReadPage: React.FC<BooksReadPageProps> = ({ navLinks }) => {
         <BookCollection books={books} navLinks={navLinks} />
       )} */}
     </section>
-  )
-}
+  );
+};
 
-export default BooksReadPage
+export default BooksReadPage;

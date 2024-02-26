@@ -1,14 +1,13 @@
-// import { useState } from "react";
+import { Book, NavLink } from "../types";
 import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 import AddForm from "../components/AddForm";
 import ConfirmBook from "../components/ConfirmBook";
-import { Book, NavLink } from "../types";
 
 interface AddBookPageProps {
   navLinks: NavLink[];
-  books: Book[];
   searchedBook: Book | null;
+  books: Book[];
   handleAddBook: (newBook: Book) => void;
   handleCancelBook: () => void;
   handleConfirmBook: () => void;
