@@ -29,13 +29,12 @@ const AddForm: React.FC<AddFormProps> = ({ onSearch }) => {
     if (dateRef.current !== null) {
       formData.dateFinished = dateRef.current.value;
     }
-    console.log(formData);
-    // console.log(fetchBook(formData.input));
+    // console.log(formData);
     const newBook: Book | null = await fetchBook(formData.input);
     // console.log(newBook);
     if (newBook) {
-      // TODO: can I modify this object to include the date or would the extra info get in the way of the API call?  And where is my API call anyway - /api/getBookDetails
-      const bookWithDate = {...newBook, dateFinished: formData.dateFinished };
+      // add dateFinished to Book object
+      const bookWithDate = { ...newBook, dateFinished: formData.dateFinished };
       onSearch(bookWithDate);
     } else {
       throw new Error("Book not found");

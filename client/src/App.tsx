@@ -39,8 +39,6 @@ const App: React.FC = () => {
 
   const handleConfirmBook = () => {
     if (searchedBook) {
-      // TODO: add date to book object HOW DO I get the value from AddForm's formData?
-      // setSearchedBook({...searchedBook, dateFinished: date});
       // TODO: add book to db
       // await addBookToDb(searchedBook);
       console.log("Book to confirm:", searchedBook);
