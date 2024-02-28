@@ -9,10 +9,12 @@ interface SupabaseProviderProps {
 const SupabaseClient = createClient(config.supabaseUrl, config.supabaseAnonKey);
 const SupabaseContext = createContext(SupabaseClient);
 export const useSupabase = () => useContext(SupabaseContext);
-export const SupabaseProvider: React.FC<SupabaseProviderProps> = ({ children }) => {
+export const SupabaseProvider: React.FC<SupabaseProviderProps> = ({
+  children,
+}) => {
   return (
     <SupabaseContext.Provider value={SupabaseClient}>
       {children}
     </SupabaseContext.Provider>
-  )
-}
+  );
+};
