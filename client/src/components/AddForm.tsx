@@ -36,6 +36,10 @@ const AddForm: React.FC<AddFormProps> = ({ onSearch }) => {
       // add dateFinished to Book object
       const bookWithDate = { ...newBook, dateFinished: formData.dateFinished };
       onSearch(bookWithDate);
+      // clear form data
+      if (searchMethodRef.current) searchMethodRef.current.value = "";
+      if (searchInputRef.current) searchInputRef.current.value = "";
+      setDate("");
     } else {
       throw new Error("Book not found");
     }
