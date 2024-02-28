@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { SupabaseProvider } from "./context/SupabaseContext";
+import { SupabaseProvider, useSupabase } from "./context/SupabaseContext";
 import { Book, NavLink } from "./types";
 import AddBookPage from "./pages/AddBookPage";
 import BooksReadPage from "./pages/BooksReadPage";
@@ -32,15 +32,30 @@ const App: React.FC = () => {
 
   const [searchedBook, setSearchedBook] = useState<Book | null>(null);
   const [books, setBooks] = useState<Book[]>([]);
+  const supabase = useSupabase();
 
   const handleAddBook = (newBook: Book) => {
     setBooks([...books, newBook]);
   };
 
-  const handleConfirmBook = () => {
+  const handleConfirmBook = async () => {
     if (searchedBook) {
-      // TODO: add book to db
-      // await addBookToDb(searchedBook);
+      const { data, error } = await supabase.from("books").insert([
+        {
+          title: searchedBook.title,
+          author: searchedBook.author,
+          published: searchedBook.published,
+          pages: searchedBook.pages,
+          cover_img_url: searchedBook.coverImageUrl,
+          date_finished: searchedBook.dateFinished,
+        },
+      ]);
+
+      if (error) {
+        console.log("Error:", error);
+      } else {
+        console.log("Data:", data);
+      }
       console.log("Book to confirm:", searchedBook);
       setSearchedBook(null);
     }

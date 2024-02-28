@@ -11,7 +11,7 @@ interface ApiResponse {
   authors: Author[];
   publish_date: string;
   number_of_pages: number;
-  cover: Cover;
+  cover?: Cover;
 }
 
 interface Book {
