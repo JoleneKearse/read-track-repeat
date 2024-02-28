@@ -32,7 +32,7 @@ const ConfirmBook: React.FC<ConfirmBookProps> = ({
           {searchedBook.author}
         </p>
         <p className="text-base tracking-wide text-purple-100">
-          Published in {searchedBook.published}
+          Published: {searchedBook.published}
         </p>
         <p className="pb-10 text-base tracking-wide text-purple-100">
           {searchedBook.pages} pages
