@@ -1,13 +1,13 @@
-import React, { useRef, useState } from "react";
-import { Book } from "../types";
+import { useRef, useState, FormEvent } from "react";
+// import { Book } from "../types";
 import NoBook from "/not-found.svg";
 
-interface NotFoundProps {
-  searcedBook: Book | null;
-  bookNotFound: boolean;
-}
+// interface NotFoundProps {
+//   searchedBook: Book | null;
+//   bookNotFound: boolean;
+// }
 
-const NotFound: React.FC<NotFoundProps> = ({ searchedBook, bookNotFound }) => {
+const NotFound = () => {
   const formData = {
     title: "",
     author: "",

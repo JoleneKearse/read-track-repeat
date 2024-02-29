@@ -43,14 +43,10 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
             handleCancelBook={handleCancelBook}
             handleConfirmBook={handleConfirmBook}
             handleSearch={handleSearch}
-            bookNotFound={bookNotFound}
           />
         )}
         {bookNotFound && (
-          <NotFound
-            searchedBook={searchedBook}
-            bookNotFound={bookNotFound}
-          />
+          <NotFound />
         )}
       </main>
     </section>
