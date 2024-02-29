@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Book, NavLink } from "../types";
 import Header from "../components/Header";
 import NavBar from "../components/NavBar";
@@ -12,6 +13,8 @@ interface AddBookPageProps {
   handleCancelBook: () => void;
   handleConfirmBook: () => void;
   handleSearch: (book: Book) => void;
+  bookNotFound: boolean;
+  setBookNotFound: (bookNotFound: boolean) => void;
 }
 
 const AddBookPage: React.FC<AddBookPageProps> = ({
@@ -21,18 +24,33 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
   handleSearch,
   searchedBook,
 }) => {
+  const [bookNotFound, setBookNotFound] = useState(false);
+
   return (
     <section className="min-h-screen bg-bg-gradient">
       <Header />
       <NavBar navLinks={navLinks} />
       <main>
-        <AddForm onSearch={handleSearch} />
+        <AddForm
+          onSearch={handleSearch}
+          bookNotFound={bookNotFound}
+          setBookNotFound={setBookNotFound}
+        />
         {searchedBook && (
           <ConfirmBook
             searchedBook={searchedBook}
             handleCancelBook={handleCancelBook}
             handleConfirmBook={handleConfirmBook}
             handleSearch={handleSearch}
+            bookNotFound={bookNotFound}
+          />
+        )}
+        {bookNotFound && (
+          <ConfirmBook
+            handleCancelBook={handleCancelBook}
+            handleConfirmBook={handleConfirmBook}
+            handleSearch={handleSearch}
+            bookNotFound={bookNotFound}
           />
         )}
       </main>

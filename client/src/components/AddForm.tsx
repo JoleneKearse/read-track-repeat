@@ -1,12 +1,18 @@
-import React, { FormEvent, useRef, useState } from "react";
+import React, { FormEvent, useRef, useState, useEffect } from "react";
 import { Book } from "../types";
-import fetchBook from "../../../api/getBookDetails";
+import fetchBookByIsbn from "../../../api/getBookDetails";
 
 interface AddFormProps {
   onSearch: (newBook: Book) => void;
+  bookNotFound: boolean;
+  setBookNotFound: (bookNotFound: boolean) => void;
 }
 
-const AddForm: React.FC<AddFormProps> = ({ onSearch }) => {
+const AddForm: React.FC<AddFormProps> = ({
+  onSearch,
+  bookNotFound,
+  setBookNotFound,
+}) => {
   const searchMethodRef = useRef<HTMLSelectElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const dateRef = useRef<HTMLInputElement>(null);
@@ -30,20 +36,29 @@ const AddForm: React.FC<AddFormProps> = ({ onSearch }) => {
       formData.dateFinished = dateRef.current.value;
     }
     // console.log(formData);
-    const newBook: Book | null = await fetchBook(formData.input);
+    const newBook: Book | null = await fetchBookByIsbn(formData.input);
     // console.log(newBook);
+
     if (newBook) {
       // add dateFinished to Book object
       const bookWithDate = { ...newBook, dateFinished: formData.dateFinished };
       onSearch(bookWithDate);
+
       // clear form data
-      if (searchMethodRef.current) searchMethodRef.current.value = "";
+      if (searchMethodRef.current)
+        searchMethodRef.current.value = "Choose search method";
       if (searchInputRef.current) searchInputRef.current.value = "";
       setDate("");
     } else {
-      throw new Error("Book not found");
+      setBookNotFound(true);
     }
   };
+
+  useEffect(() => {
+    if (bookNotFound) {
+      console.log(bookNotFound);
+    }
+  }, [bookNotFound]);
 
   return (
     <form

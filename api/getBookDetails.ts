@@ -22,32 +22,38 @@ interface Book {
   coverImageUrl?: string;
 }
 
-async function fetchBook(isbn: string): Promise<Book> {
-  const response = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`);
-  const data = await response.json();
-  // console.log(data);
-  const bookDetails: ApiResponse = data[`ISBN:${isbn}`]; 
-  // console.log("************************************");
-  // console.log(bookDetails);
-  
-  const bookData: Book = {
-    title: bookDetails?.title,
-    author: bookDetails?.authors.map(a => a.name).join(", "),
-    published: bookDetails?.publish_date,
-    pages: bookDetails?.number_of_pages,
-    coverImageUrl: bookDetails.cover?.medium || "Cover image not available",
+async function fetchBookByIsbn(isbn: string): Promise<Book> {
+  try {
+    const response = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`);
+    const data = await response.json();
+    // console.log(data);
+    const bookDetails: ApiResponse | undefined = data[`ISBN:${isbn}`]; 
+    // console.log("************************************");
+    if (!bookDetails) {
+      console.log("Book not found");
+      return null as unknown as Book;
+    }
+    console.log(bookDetails);
+
+    // handle books without image url
+    let coverImageUrl: string | undefined = "Cover image not available";
+    if (bookDetails.cover && bookDetails.cover.medium) {
+      coverImageUrl = bookDetails.cover.medium;
+    }
+    
+    const bookData: Book = {
+      title: bookDetails?.title,
+      author: bookDetails?.authors.map(a => a.name).join(", "),
+      published: bookDetails?.publish_date,
+      pages: bookDetails?.number_of_pages,
+      coverImageUrl: coverImageUrl,
+    }
+    console.log(bookDetails);
+    return bookData;
+  } catch (error) {
+    console.log(error);
+    return null as unknown as Book;
   }
-  return bookData;
 }
 
-export default fetchBook;
-
-// fetchBook("9780553418026");
-
-// {
-//   title: 'The Martian',
-//   author: 'Andy Weir',
-//   published: '2014',
-//   pages: 387,
-//   coverImageUrl: 'https://covers.openlibrary.org/b/id/11446888-M.jpg'
-// }
+export default fetchBookByIsbn;
