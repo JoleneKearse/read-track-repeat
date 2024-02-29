@@ -9,14 +9,14 @@ interface ConfirmBookProps {
   handleCancelBook: () => void;
   handleConfirmBook: () => void;
   handleSearch: (book: Book) => void;
-  bookNotFound: boolean;
+  // bookNotFound: boolean;
 }
 
 const ConfirmBook: React.FC<ConfirmBookProps> = ({
   searchedBook,
   handleCancelBook,
   handleConfirmBook,
-  bookNotFound,
+  // bookNotFound,
   // handleSearch,
 }) => {
   return (
@@ -59,13 +59,7 @@ const ConfirmBook: React.FC<ConfirmBookProps> = ({
             </button>
           </div>
         </article>
-      )}
-      {/* display error message */}
-      {bookNotFound && (
-        <article className="flex flex-col items-center justify-center p-6 bg-purple-700 border border-orange-200 rounded-lg">
-          <p>Sorry, I can't find your book!</p>
-        </article>
-      )}
+      )} 
     </section>
   );
 };

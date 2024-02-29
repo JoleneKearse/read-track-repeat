@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 import AddForm from "../components/AddForm";
 import ConfirmBook from "../components/ConfirmBook";
+import NotFound from "../components/NotFound";
 
 interface AddBookPageProps {
   navLinks: NavLink[];
@@ -46,10 +47,8 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
           />
         )}
         {bookNotFound && (
-          <ConfirmBook
-            handleCancelBook={handleCancelBook}
-            handleConfirmBook={handleConfirmBook}
-            handleSearch={handleSearch}
+          <NotFound
+            searchedBook={searchedBook}
             bookNotFound={bookNotFound}
           />
         )}
