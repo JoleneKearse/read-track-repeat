@@ -32,6 +32,8 @@ const App: React.FC = () => {
 
   const [searchedBook, setSearchedBook] = useState<Book | null>(null);
   const [books, setBooks] = useState<Book[]>([]);
+  const [bookNotFound, setBookNotFound] = useState(false);
+  const [addBook, setAddBook] = useState(true);
   const supabase = useSupabase();
 
   const handleAddBook = (newBook: Book) => {
@@ -61,6 +63,28 @@ const App: React.FC = () => {
     }
   };
 
+  const handleManuallyAddBook = async (newBook: Book) => {
+    if (newBook) {
+      const { data, error } = await supabase.from("books").insert([
+        {
+          title: newBook.title,
+          author: newBook.author,
+          published: null,
+          pages: null,
+          cover_img_url: null,
+          date_finished: newBook.dateFinished,
+        },
+      ]);
+
+      if (error) {
+        console.log("Error:", error);
+      } else {
+        setAddBook(false);
+        console.log("Manually added book:", data);
+      }
+    }
+  };
+
   const handleCancelBook = () => {
     // discard selection
     if (searchedBook) {
@@ -68,7 +92,6 @@ const App: React.FC = () => {
       setTimeout(() => {
         setSearchedBook(null);
       }, 500);
-      // setSearchedBook(null);
     }
   };
 
@@ -92,6 +115,11 @@ const App: React.FC = () => {
                 handleConfirmBook={handleConfirmBook}
                 searchedBook={searchedBook}
                 handleSearch={handleSearch}
+                bookNotFound={bookNotFound}
+                setBookNotFound={setBookNotFound}
+                handleManuallyAddBook={handleManuallyAddBook}
+                onSearch={handleSearch}
+                addBook={addBook}
               />
             }
           />
