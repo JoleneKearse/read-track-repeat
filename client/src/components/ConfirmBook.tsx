@@ -20,7 +20,7 @@ const ConfirmBook: React.FC<ConfirmBookProps> = ({
   // handleSearch,
 }) => {
   return (
-    <section className="w-5/6 max-w-sm py-20 mx-auto md:max-w-md">
+    <section className="w-5/6 max-w-sm py-32 mx-auto snap-center md:max-w-md">
       {searchedBook && (
         <article className="flex flex-col items-center justify-center p-6 bg-purple-700 border border-orange-200 rounded-lg">
           <img

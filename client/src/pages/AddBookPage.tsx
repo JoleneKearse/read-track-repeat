@@ -37,9 +37,11 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
   const [date, setDate] = useState("");
 
   return (
-    <section className="min-h-screen bg-bg-gradient">
-      <Header />
-      <NavBar navLinks={navLinks} />
+    <section className="min-h-screen bg-bg-gradient snap-y">
+      <div className="py-10">
+        <Header />
+        <NavBar navLinks={navLinks} />
+      </div>
       <main>
         <AddForm
           onSearch={handleSearch}

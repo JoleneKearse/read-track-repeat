@@ -65,7 +65,7 @@ const AddForm: React.FC<AddFormProps> = ({
 
   return (
     <form
-      className="w-5/6 max-w-sm mx-auto md:max-w-md"
+      className="w-5/6 max-w-sm mx-auto py-28 snap-center md:max-w-md"
       onSubmit={handleSubmit}
     >
       <label
