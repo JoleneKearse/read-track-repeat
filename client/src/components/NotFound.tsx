@@ -12,7 +12,7 @@ interface NotFoundProps {
 const NotFound: React.FC<NotFoundProps> = ({
   handleManuallyAddBook,
   addBook,
-  date
+  date,
 }) => {
   const formData = {
     title: "",
@@ -21,8 +21,6 @@ const NotFound: React.FC<NotFoundProps> = ({
   };
   const titleRef = useRef<HTMLInputElement>(null);
   const authorRef = useRef<HTMLInputElement>(null);
-  const dateRef = useRef({date});
-  // const [date, setDate] = useState("");
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -32,9 +30,7 @@ const NotFound: React.FC<NotFoundProps> = ({
     if (authorRef.current !== null) {
       formData.author = authorRef.current.value;
     }
-    if (dateRef.current !== null) {
-      formData.dateFinished = dateRef.current.value;
-    }
+    formData.dateFinished = date;
     const newBook: Book | null = formData;
     handleManuallyAddBook(newBook);
   };
@@ -99,14 +95,14 @@ const NotFound: React.FC<NotFoundProps> = ({
             htmlFor="dateFinished"
             className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white"
           >
-            Date Finished
+            Prior Filled Out Date
           </label>
           <input
             type="date"
-            ref={dateRef}
+            disabled
             value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300"
+            title="I remembered your date from above"
+            className="block mb-8 p-2.5 bg-orange-200 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 cursor-not-allowed"
           />
 
           <button

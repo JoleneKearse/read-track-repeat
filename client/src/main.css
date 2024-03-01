@@ -605,6 +605,10 @@ video {
   max-width: 24rem;
 }
 
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
 .flex-col {
   flex-direction: column;
 }
@@ -647,6 +651,11 @@ video {
 .bg-purple-700 {
   --tw-bg-opacity: 1;
   background-color: rgb(49 29 53 / var(--tw-bg-opacity));
+}
+
+.bg-orange-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 136 7 / var(--tw-bg-opacity));
 }
 
 .bg-bg-gradient {

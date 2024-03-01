@@ -1,4 +1,4 @@
-import React, { FormEvent, useRef, useState, useEffect } from "react";
+import React, { FormEvent, useRef, useEffect } from "react";
 import { Book } from "../types";
 import fetchBookByIsbn from "../../../api/getBookDetails";
 
@@ -20,7 +20,6 @@ const AddForm: React.FC<AddFormProps> = ({
   const searchMethodRef = useRef<HTMLSelectElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const dateRef = useRef<HTMLInputElement>(null);
-  // const [date, setDate] = useState("");
 
   const formData = {
     method: "",
