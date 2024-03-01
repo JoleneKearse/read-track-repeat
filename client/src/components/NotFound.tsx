@@ -1,4 +1,4 @@
-import React, { useRef, useState, FormEvent } from "react";
+import React, { useRef, FormEvent } from "react";
 import { Book } from "../types";
 import NoBook from "/not-found.svg";
 import Library from "/library.svg";
@@ -6,11 +6,13 @@ import Library from "/library.svg";
 interface NotFoundProps {
   handleManuallyAddBook: (newBook: Book) => void;
   addBook: boolean;
+  date: string;
 }
 
 const NotFound: React.FC<NotFoundProps> = ({
   handleManuallyAddBook,
   addBook,
+  date
 }) => {
   const formData = {
     title: "",
@@ -19,8 +21,8 @@ const NotFound: React.FC<NotFoundProps> = ({
   };
   const titleRef = useRef<HTMLInputElement>(null);
   const authorRef = useRef<HTMLInputElement>(null);
-  const dateRef = useRef<HTMLInputElement>(null);
-  const [date, setDate] = useState("");
+  const dateRef = useRef({date});
+  // const [date, setDate] = useState("");
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();

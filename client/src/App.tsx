@@ -58,7 +58,6 @@ const App: React.FC = () => {
       } else {
         console.log("Data:", data);
       }
-      console.log("Book to confirm:", searchedBook);
       setSearchedBook(null);
     }
   };
@@ -80,7 +79,6 @@ const App: React.FC = () => {
         console.log("Error:", error);
       } else {
         setAddBook(false);
-        console.log("Manually added book:", data);
       }
     }
   };
@@ -88,7 +86,6 @@ const App: React.FC = () => {
   const handleCancelBook = () => {
     // discard selection
     if (searchedBook) {
-      console.log("discard selection");
       setTimeout(() => {
         setSearchedBook(null);
       }, 500);

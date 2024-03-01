@@ -6,17 +6,21 @@ interface AddFormProps {
   onSearch: (newBook: Book) => void;
   bookNotFound: boolean;
   setBookNotFound: (bookNotFound: boolean) => void;
+  date: string;
+  setDate: (date: string) => void;
 }
 
 const AddForm: React.FC<AddFormProps> = ({
   onSearch,
   bookNotFound,
   setBookNotFound,
+  date,
+  setDate,
 }) => {
   const searchMethodRef = useRef<HTMLSelectElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const dateRef = useRef<HTMLInputElement>(null);
-  const [date, setDate] = useState("");
+  // const [date, setDate] = useState("");
 
   const formData = {
     method: "",

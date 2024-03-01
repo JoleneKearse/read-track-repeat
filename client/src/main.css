@@ -739,6 +739,11 @@ video {
   letter-spacing: 0.025em;
 }
 
+.text-orange-100 {
+  --tw-text-opacity: 1;
+  color: rgb(255 194 120 / var(--tw-text-opacity));
+}
+
 .text-orange-200 {
   --tw-text-opacity: 1;
   color: rgb(255 136 7 / var(--tw-text-opacity));
@@ -757,11 +762,6 @@ video {
 .text-purple-700 {
   --tw-text-opacity: 1;
   color: rgb(49 29 53 / var(--tw-text-opacity));
-}
-
-.text-orange-100 {
-  --tw-text-opacity: 1;
-  color: rgb(255 194 120 / var(--tw-text-opacity));
 }
 
 .opacity-50 {
