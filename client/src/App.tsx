@@ -52,6 +52,7 @@ const App: React.FC = () => {
           date_finished: searchedBook.dateFinished,
         },
       ]);
+      handleAddBook(searchedBook);
 
       if (error) {
         console.log("Error:", error);
@@ -74,6 +75,7 @@ const App: React.FC = () => {
           date_finished: newBook.dateFinished,
         },
       ]);
+      handleAddBook(newBook);
 
       if (error) {
         console.log("Error:", error);
@@ -96,6 +98,8 @@ const App: React.FC = () => {
     // console.log(book);
     setSearchedBook(book);
   };
+
+  console.log(books)
 
   return (
     <SupabaseProvider>
@@ -122,7 +126,12 @@ const App: React.FC = () => {
           />
           <Route
             path="/booksRead"
-            element={<BooksReadPage books={books} navLinks={navLinks} />}
+            element={
+            <BooksReadPage 
+              books={books} 
+              navLinks={navLinks} 
+            />
+          }
           />
         </Routes>
       </Router>
