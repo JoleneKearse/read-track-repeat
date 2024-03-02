@@ -33,13 +33,6 @@ async function fetchBookByIsbn(isbn: string): Promise<Book> {
       console.log("Book not found");
       return null as unknown as Book;
     }
-    console.log(bookDetails);
-
-    // handle books without image url
-    // let coverImageUrl: string | undefined = "Cover image not available";
-    // if (bookDetails.cover && bookDetails.cover.medium) {
-    //   coverImageUrl = bookDetails.cover.medium;
-    // }
     
     const bookData: Book = {
       title: bookDetails?.title,
@@ -48,7 +41,6 @@ async function fetchBookByIsbn(isbn: string): Promise<Book> {
       pages: bookDetails?.number_of_pages,
       coverImageUrl: bookDetails?.cover?.medium,
     }
-    console.log(bookDetails);
     return bookData;
   } catch (error) {
     console.log(error);

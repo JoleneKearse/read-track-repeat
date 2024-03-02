@@ -109,8 +109,6 @@ const App: React.FC = () => {
       //   data.map((book) => handleAddBook(book));
       // }
       setBooks(data);
-      console.log("Books:", books);
-      // console.log("Data:", data);
     }
   };
 

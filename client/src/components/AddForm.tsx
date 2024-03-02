@@ -40,12 +40,12 @@ const AddForm: React.FC<AddFormProps> = ({
     }
     // console.log(formData);
     const newBook: Book | null = await fetchBookByIsbn(formData.input);
-    console.log(newBook);
+    // console.log(newBook);
 
     if (newBook) {
       // add dateFinished to Book object
       const bookWithDate = { ...newBook, dateFinished: formData.dateFinished };
-      console.log(bookWithDate);
+      // console.log(bookWithDate);
       // TODO: add key
       onSearch(bookWithDate);
 
