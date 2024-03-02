@@ -108,7 +108,9 @@ const App: React.FC = () => {
       // {
       //   data.map((book) => handleAddBook(book));
       // }
-      setBooks(data);
+      // setBooks(data);
+      // reverse the books array
+      setBooks(data.reverse());
     }
   };
 
