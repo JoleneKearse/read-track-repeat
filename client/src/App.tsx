@@ -99,7 +99,20 @@ const App: React.FC = () => {
     setSearchedBook(book);
   };
 
-  console.log(books)
+  const handleDataFetch = async () => {
+    const { data, error } = await supabase.from("books").select("*");
+    if (error) {
+      console.log("Error:", error);
+    } else {
+      // handleAddBook(data as unknown as Book);
+      // {
+      //   data.map((book) => handleAddBook(book));
+      // }
+      setBooks(data);
+      console.log("Books:", books);
+      // console.log("Data:", data);
+    }
+  };
 
   return (
     <SupabaseProvider>
@@ -127,11 +140,12 @@ const App: React.FC = () => {
           <Route
             path="/booksRead"
             element={
-            <BooksReadPage 
-              books={books} 
-              navLinks={navLinks} 
-            />
-          }
+              <BooksReadPage
+                books={books}
+                navLinks={navLinks}
+                handleDataFetch={handleDataFetch}
+              />
+            }
           />
         </Routes>
       </Router>

@@ -36,17 +36,17 @@ async function fetchBookByIsbn(isbn: string): Promise<Book> {
     console.log(bookDetails);
 
     // handle books without image url
-    let coverImageUrl: string | undefined = "Cover image not available";
-    if (bookDetails.cover && bookDetails.cover.medium) {
-      coverImageUrl = bookDetails.cover.medium;
-    }
+    // let coverImageUrl: string | undefined = "Cover image not available";
+    // if (bookDetails.cover && bookDetails.cover.medium) {
+    //   coverImageUrl = bookDetails.cover.medium;
+    // }
     
     const bookData: Book = {
       title: bookDetails?.title,
       author: bookDetails?.authors.map(a => a.name).join(", "),
       published: bookDetails?.publish_date,
       pages: bookDetails?.number_of_pages,
-      coverImageUrl: coverImageUrl,
+      coverImageUrl: bookDetails?.cover?.medium,
     }
     console.log(bookDetails);
     return bookData;

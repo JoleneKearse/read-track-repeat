@@ -4,12 +4,13 @@ import Cover from "/cover.svg"
 
 interface BookCollectionProps {
   books: Book[];
+  handleDataFetch: () => void;
 }
 
 const BookCollection: React.FC<BookCollectionProps> = ({ books }) => {
-  console.log(books);
+  
   return (
-    <section className="min-h-screen bg-bg-gradient snap-y">
+    <section className="min-h-screen snap-y">
       {books.map((book) => (
         <article className="flex flex-col items-center justify-center w-3/5 p-4 mx-auto my-10 text-center bg-purple-700 border border-orange-200 rounded-lg">
           <img
