@@ -4,8 +4,10 @@ import { SupabaseProvider, useSupabase } from "./context/SupabaseContext";
 import { Book, NavLink } from "./types";
 import AddBookPage from "./pages/AddBookPage";
 import BooksReadPage from "./pages/BooksReadPage";
+import BooksSearchPage from "./pages/BooksSearchPage";
 // import User from "/user.svg";
 import AddBook from "/addBook.svg";
+import ViewBook from "/viewBook.svg";
 import SearchBook from "/searchBook.svg";
 
 const App: React.FC = () => {
@@ -25,8 +27,14 @@ const App: React.FC = () => {
     {
       name: "Collection",
       path: "/booksRead",
+      icon: ViewBook,
+      alt: "View Book Collection",
+    },
+    {
+      name: "Search Book",
+      path: "/bookSearch",
       icon: SearchBook,
-      alt: "Search Book",
+      alt: "Search Books",
     },
   ];
 
@@ -92,6 +100,7 @@ const App: React.FC = () => {
         setSearchedBook(null);
       }, 500);
     }
+    setSearchedBook(null);
   };
 
   const handleSearch = async (book: Book) => {
@@ -144,6 +153,15 @@ const App: React.FC = () => {
                 books={books}
                 navLinks={navLinks}
                 handleDataFetch={handleDataFetch}
+              />
+            }
+          />
+          <Route
+            path="/bookSearch"
+            element={
+              <BooksSearchPage
+                books={books}
+                navLinks={navLinks}
               />
             }
           />
