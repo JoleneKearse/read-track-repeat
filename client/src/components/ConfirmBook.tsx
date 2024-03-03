@@ -40,13 +40,17 @@ const ConfirmBook: React.FC<ConfirmBookProps> = ({
           <p className="text-xl tracking-wide text-orange-200">
             {searchedBook.author}
           </p>
-          <p className="text-base tracking-wide text-purple-100">
-            Published: {searchedBook.published}
-          </p>
-          <p className="pb-10 text-base tracking-wide text-purple-100">
-            {searchedBook.pages} pages
-          </p>
-          <div className="flex ml-[5rem] pb-8 md:ml-[6rem]">
+          {searchedBook.published && (
+            <p className="text-base tracking-wide text-purple-100">
+              Published: {searchedBook.published}
+            </p>
+          )}
+          {searchedBook.pages && (
+            <p className="text-base tracking-wide text-purple-100">
+              {searchedBook.pages} pages
+            </p>
+          )}
+          <div className="flex ml-[5rem] pt-10 pb-8 md:ml-[6rem]">
             <button type="button" onClick={handleCancelBook}>
               <img
                 src={Cross}
