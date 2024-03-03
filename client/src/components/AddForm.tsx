@@ -1,6 +1,10 @@
 import React, { FormEvent, useRef, useEffect } from "react";
 import { Book } from "../types";
-import { fetchBookByIsbn, fetchBookByTitle } from "../../../api/getBookDetails";
+import {
+  fetchBookByIsbn,
+  fetchBookByTitle,
+  fetchBookByAuthor,
+} from "../../../api/getBookDetails";
 
 interface AddFormProps {
   onSearch: (newBook: Book) => void;
@@ -48,6 +52,9 @@ const AddForm: React.FC<AddFormProps> = ({
         break;
       case "title":
         newBook = await fetchBookByTitle(formData.input);
+        break;
+      case "author":
+        newBook = await fetchBookByAuthor(formData.input);
         break;
       default:
         console.log("invalid search method");

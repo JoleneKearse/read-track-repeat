@@ -75,3 +75,27 @@ export async function fetchBookByTitle(title: string): Promise<Book | null>{
     return null as unknown as Book;
   }
 }
+
+export async function fetchBookByAuthor(author: string): Promise<Book | null>{
+  try {
+    const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${encodeURIComponent(author)}`);
+    const data = await response.json();
+    console.log(data["items"][0]["volumeInfo"]);
+    const bookDetails: ApiResponse | undefined = data["items"][0]["volumeInfo"];
+    if (!bookDetails) {
+      console.log("Book not found");
+      return null as unknown as Book;
+    }
+    const bookData: Book = {
+      title: bookDetails?.title,
+      author: bookDetails?.authors.map(a => a.name).join(", "),
+      published: bookDetails?.publishedDate,
+      pages: bookDetails?.pageCount,
+      coverImageUrl: bookDetails?.imageLinks?.thumbnail,
+    }
+    return bookData;
+  } catch (error) {
+    console.log(error);
+    return null as unknown as Book;
+  }
+}

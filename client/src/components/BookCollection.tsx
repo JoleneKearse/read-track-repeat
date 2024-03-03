@@ -9,7 +9,7 @@ interface BookCollectionProps {
 
 const BookCollection: React.FC<BookCollectionProps> = ({ books }) => {
   return (
-    <section className="min-h-screen snap-y">
+    <section className="min-h-screen snap-y md:grid md:grid-cols-2 lg:grid-cols-4">
       {books.map((book) => (
         <article
           key={book.id}
