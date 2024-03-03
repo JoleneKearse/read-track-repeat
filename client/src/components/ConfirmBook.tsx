@@ -2,6 +2,7 @@ import React from "react";
 import { Book } from "../types";
 import Check from "/check.svg";
 import Cross from "/cross.svg";
+import Cover from "/cover.svg";
 
 interface ConfirmBookProps {
   // books: Book[];
@@ -22,9 +23,14 @@ const ConfirmBook: React.FC<ConfirmBookProps> = ({
   return (
     <section className="w-5/6 max-w-sm py-32 mx-auto snap-center md:max-w-md">
       {searchedBook && (
-        <article key={searchedBook.id} className="flex flex-col items-center justify-center p-6 bg-purple-700 border border-orange-200 rounded-lg">
+        <article
+          key={searchedBook.id}
+          className="flex flex-col items-center justify-center p-6 bg-purple-700 border border-orange-200 rounded-lg"
+        >
           <img
-            src={searchedBook.coverImageUrl}
+            src={
+              searchedBook.coverImageUrl ? searchedBook.coverImageUrl : Cover
+            }
             alt={searchedBook.title}
             className="w-3/4 pt-8 pb-10"
           />
@@ -59,7 +65,7 @@ const ConfirmBook: React.FC<ConfirmBookProps> = ({
             </button>
           </div>
         </article>
-      )} 
+      )}
     </section>
   );
 };

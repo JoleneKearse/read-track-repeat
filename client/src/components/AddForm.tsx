@@ -1,6 +1,6 @@
 import React, { FormEvent, useRef, useEffect } from "react";
 import { Book } from "../types";
-import fetchBookByIsbn from "../../../api/getBookDetails";
+import { fetchBookByIsbn, fetchBookByTitle } from "../../../api/getBookDetails";
 
 interface AddFormProps {
   onSearch: (newBook: Book) => void;
@@ -39,7 +39,24 @@ const AddForm: React.FC<AddFormProps> = ({
       formData.dateFinished = dateRef.current.value;
     }
     // console.log(formData);
-    const newBook: Book | null = await fetchBookByIsbn(formData.input);
+
+    // fetch by search method
+    let newBook: Book | null = null;
+    switch (formData.method) {
+      case "isbn":
+        newBook = await fetchBookByIsbn(formData.input);
+        break;
+      case "title":
+        newBook = await fetchBookByTitle(formData.input);
+        break;
+      default:
+        console.log("invalid search method");
+    }
+
+    if (formData.method === "isbn") {
+      newBook = await fetchBookByIsbn(formData.input);
+    }
+    // const newBook: Book | null = await fetchBookByIsbn(formData.input);
     // console.log(newBook);
 
     if (newBook) {
