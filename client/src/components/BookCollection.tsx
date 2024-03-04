@@ -13,11 +13,19 @@ const BookCollection: React.FC<BookCollectionProps> = ({ books }) => {
       <p className="text-2xl font-bold tracking-wide text-center text-purple-200">
         {books.length} books tracked
       </p>
-      <section className="min-h-screen snap-y md:grid md:grid-cols-2 lg:grid-cols-4">
+      <section
+        className={`justify-center min-h-screen scroll snap-y  ${
+          books.length <= 3
+            ? "lg:flex lg:gap-10"
+            : "md:grid md:grid-cols-2 lg:grid-cols-4 md:h-auto md:py-64"
+        }`}
+      >
         {books.map((book) => (
           <article
             key={book.id}
-            className="flex flex-col items-center justify-center w-3/5 p-4 mx-auto my-10 text-center bg-purple-700 border border-orange-200 rounded-lg"
+            className={`flex flex-col items-center justify-center flex-none w-3/5 p-4 mx-auto my-10 text-center bg-purple-700 border border-orange-200 rounded-lg ${
+              books.length <= 3 ? "lg:max-w-xs" : ""
+            }`}
           >
             <img
               src={book.cover_img_url ? book.cover_img_url : Cover}

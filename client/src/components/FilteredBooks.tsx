@@ -23,7 +23,7 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({ filteredBooks }) => {
           
           <article
             key={book.id}
-            className={`flex flex-col items-center justify-center flex-none w-3/5 p-4 mx-auto my-10 text-center bg-purple-700 border border-orange-200 rounded-lg ${filteredBooks.length <= 3? "lg:max-w-fit lg:p-10" : ""}`}
+            className={`flex flex-col items-center justify-center flex-none w-3/5 p-4 mx-auto my-10 text-center bg-purple-700 border border-orange-200 rounded-lg ${filteredBooks.length <= 3? "lg:max-w-xs" : ""}`}
           >
             <img
               src={book.cover_img_url ? book.cover_img_url : Cover}
