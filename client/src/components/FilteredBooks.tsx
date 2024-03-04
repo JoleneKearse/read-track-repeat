@@ -11,7 +11,7 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({ filteredBooks }) => {
     <>
       {filteredBooks.length !== 0 ? (
         <p className="text-2xl font-bold tracking-wide text-center text-purple-200">
-          {filteredBooks.length} books found
+          {filteredBooks.length} book{filteredBooks.length === 1 ? "" : "s"} found
         </p>
       ) : (
         // TODO: change to loader
