@@ -10,7 +10,9 @@ interface BookCollectionProps {
 const BookCollection: React.FC<BookCollectionProps> = ({ books }) => {
   return (
     <>
-      <p className="text-2xl font-bold tracking-wide text-center text-purple-200">{books.length} books tracked</p>
+      <p className="text-2xl font-bold tracking-wide text-center text-purple-200">
+        {books.length} books tracked
+      </p>
       <section className="min-h-screen snap-y md:grid md:grid-cols-2 lg:grid-cols-4">
         {books.map((book) => (
           <article
@@ -25,7 +27,9 @@ const BookCollection: React.FC<BookCollectionProps> = ({ books }) => {
             <h3 className="text-2xl font-bold tracking-wide text-orange-200">
               {book.title}
             </h3>
-            <p className="text-xl tracking-wide text-orange-200">{book.author}</p>
+            <p className="text-xl tracking-wide text-orange-200">
+              {book.author}
+            </p>
             {book.published && (
               <p className="text-base tracking-wide text-purple-100">
                 Published: {book.published}

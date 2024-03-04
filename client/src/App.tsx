@@ -113,12 +113,6 @@ const App: React.FC = () => {
     if (error) {
       console.log("Error:", error);
     } else {
-      // handleAddBook(data as unknown as Book);
-      // {
-      //   data.map((book) => handleAddBook(book));
-      // }
-      // setBooks(data);
-      // reverse the books array
       setBooks(data.reverse());
     }
   };
@@ -162,6 +156,7 @@ const App: React.FC = () => {
               <BooksSearchPage
                 books={books}
                 navLinks={navLinks}
+                handleDataFetch={handleDataFetch}
               />
             }
           />
