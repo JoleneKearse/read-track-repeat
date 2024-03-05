@@ -13,11 +13,12 @@ export default {
       "purple-500": "#7B315E",
       "purple-600": "#4A2D48",
       "purple-700": "#311D35",
-      "overlay": "#00000026"
+      overlay: "#00000026",
     },
     extend: {
       backgroundImage: {
-        "bg-gradient": "radial-gradient(ellipse at 50% 90%, #7B315E, #4A2D48, #311D35)",
+        "bg-gradient":
+          "radial-gradient(ellipse at 50% 90%, #7B315E, #4A2D48, #311D35)",
         "orange-gradient":
           "linear-gradient(to right, #ff8807, #ff981a, #ed5107)",
       },
