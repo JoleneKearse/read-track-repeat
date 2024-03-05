@@ -25,7 +25,7 @@ const ConfirmBook: React.FC<ConfirmBookProps> = ({
       {searchedBook && (
         <article
           key={searchedBook.id}
-          className="flex flex-col items-center justify-center p-6 bg-purple-700 border border-orange-200 rounded-lg"
+          className="flex flex-col items-center justify-center p-6 border border-orange-200 rounded-lg bg-overlay"
         >
           <img
             src={
