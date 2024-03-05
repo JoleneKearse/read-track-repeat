@@ -681,11 +681,6 @@ video {
   background-color: rgb(255 136 7 / var(--tw-bg-opacity));
 }
 
-.bg-orange-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 152 26 / var(--tw-bg-opacity));
-}
-
 .bg-overlay {
   background-color: #00000026;
 }
@@ -697,6 +692,10 @@ video {
 
 .bg-bg-gradient {
   background-image: radial-gradient(ellipse at 50% 90%, #7B315E, #4A2D48, #311D35);
+}
+
+.bg-orange-gradient {
+  background-image: linear-gradient(to right, #ff8807, #ed5107);
 }
 
 .p-2 {
@@ -832,10 +831,20 @@ video {
   opacity: 0.5;
 }
 
-.shadow-2xl {
-  --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
+.shadow-sm {
+  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.shadow-orange-100 {
+  --tw-shadow-color: #ffc278;
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.shadow-orange-200 {
+  --tw-shadow-color: #ff8807;
+  --tw-shadow: var(--tw-shadow-colored);
 }
 
 .filter {
@@ -873,6 +882,10 @@ video {
 .hover\:border-purple-300:hover {
   --tw-border-opacity: 1;
   border-color: rgb(158 84 129 / var(--tw-border-opacity));
+}
+
+.hover\:bg-active-gradient:hover {
+  background-image: linear-gradient(to right, #ed5107, #ff8807);
 }
 
 .focus\:border-purple-300:focus {
