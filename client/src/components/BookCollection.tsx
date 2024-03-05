@@ -32,10 +32,10 @@ const BookCollection: React.FC<BookCollectionProps> = ({ books }) => {
               alt={book.title}
               className="w-2/5 pt-8 pb-10"
             />
-            <h3 className="text-2xl font-bold tracking-wide text-orange-200">
+            <h3 className="text-2xl font-bold tracking-wide text-orange-200 text-balance">
               {book.title}
             </h3>
-            <p className="text-xl tracking-wide text-orange-200">
+            <p className="text-xl tracking-wide text-orange-200 text-balance">
               {book.author}
             </p>
             {book.published && (

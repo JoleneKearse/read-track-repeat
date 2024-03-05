@@ -34,10 +34,10 @@ const ConfirmBook: React.FC<ConfirmBookProps> = ({
             alt={searchedBook.title}
             className="w-3/4 pt-8 pb-10"
           />
-          <h3 className="text-2xl font-bold tracking-wide text-orange-200">
+          <h3 className="text-2xl font-bold tracking-wide text-orange-200 text-balance">
             {searchedBook.title}
           </h3>
-          <p className="text-xl tracking-wide text-orange-200">
+          <p className="text-xl tracking-wide text-orange-200 text-balance">
             {searchedBook.author}
           </p>
           {searchedBook.published && (

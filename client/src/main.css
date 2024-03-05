@@ -654,6 +654,10 @@ video {
   gap: 1.5rem;
 }
 
+.text-balance {
+  text-wrap: balance;
+}
+
 .rounded-lg {
   border-radius: 0.5rem;
 }
