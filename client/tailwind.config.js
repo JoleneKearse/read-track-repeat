@@ -19,8 +19,8 @@ export default {
       backgroundImage: {
         "bg-gradient":
           "radial-gradient(ellipse at 50% 90%, #7B315E, #4A2D48, #311D35)",
-        "orange-gradient":
-          "linear-gradient(to right, #ff8807, #ff981a, #ed5107)",
+        "orange-gradient": "linear-gradient(to right, #ff8807, #ed5107)",
+        "active-gradient": "linear-gradient(to right, #ed5107, #ff8807)",
       },
     },
   },

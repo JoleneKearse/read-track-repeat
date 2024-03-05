@@ -64,7 +64,7 @@ const ConfirmBook: React.FC<ConfirmBookProps> = ({
                 src={Check}
                 alt="check"
                 title="Add to collection"
-                className="w-1/3 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full"
+                className="w-1/3 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full hover:bg-active-gradient"
               />
             </button>
           </div>
