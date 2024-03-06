@@ -24,7 +24,7 @@ const BookCollection: React.FC<BookCollectionProps> = ({ sortedBooks }) => {
           <article
             key={book.id}
             className={`flex flex-col items-center justify-center flex-none w-3/5 p-4 mx-auto my-10 text-center bg-overlay border border-orange-200 rounded-lg shadow-sm shadow-orange-200 ${
-              sortedBooks.length <= 3 ? "lg:max-w-xs" : ""
+              sortedBooks.length <= 3 ? "lg:max-w-xs lg:max-h-[450px]" : ""
             }`}
           >
             <img

@@ -30,7 +30,7 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({ filteredBooks }) => {
           <article
             key={book.id}
             className={`flex flex-col items-center justify-center flex-none w-3/5 p-4 mx-auto my-10 text-center bg-overlay border border-orange-200 shadow-sm shadow-orange-200 rounded-lg ${
-              filteredBooks.length <= 3 ? "lg:max-w-xs" : ""
+              filteredBooks.length <= 3 ? "lg:max-w-xs lg:max-h-[450px]" : ""
             }`}
           >
             <img
