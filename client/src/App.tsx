@@ -160,6 +160,7 @@ const App: React.FC = () => {
                 handleDataFetch={handleDataFetch}
                 sortBooksByDateFinished={sortBooksByDateFinished}
                 setSortedBooks={setSortedBooks}
+                sortedBooks={sortedBooks}
               />
             }
           />

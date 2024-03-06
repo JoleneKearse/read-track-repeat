@@ -64,10 +64,12 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
       <Header />
       <NavBar navLinks={navLinks} />
       <SearchBooks handleSearch={handleSearch} />
-      {filteredBooks && (
-        <FilteredBooks
-          filteredBooks={filteredBooks}
-        />
+      {filteredBooks.length >= 1 ? (
+        <FilteredBooks filteredBooks={filteredBooks} />
+      ) : (
+        <p className="p-3 mb-10 text-3xl font-bold text-center text-purple-100 bg-orange-gradient">
+          No results!
+        </p>
       )}
     </section>
   );
