@@ -155,12 +155,11 @@ const App: React.FC = () => {
             path="/booksRead"
             element={
               <BooksReadPage
-                books={books}
                 navLinks={navLinks}
+                books={books}
                 handleDataFetch={handleDataFetch}
                 sortBooksByDateFinished={sortBooksByDateFinished}
                 setSortedBooks={setSortedBooks}
-                sortedBooks={sortedBooks}
               />
             }
           />
@@ -168,12 +167,12 @@ const App: React.FC = () => {
             path="/bookSearch"
             element={
               <BooksSearchPage
-                books={books}
                 navLinks={navLinks}
+                books={books}
                 handleDataFetch={handleDataFetch}
                 sortBooksByDateFinished={sortBooksByDateFinished}
                 setSortedBooks={setSortedBooks}
-                sortedBooks={sortedBooks}
+                // sortedBooks={sortedBooks}
               />
             }
           />

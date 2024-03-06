@@ -22,7 +22,6 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
   handleDataFetch,
   sortBooksByDateFinished,
   setSortedBooks,
-  sortedBooks,
 }) => {
   useEffect(() => {
     handleDataFetch();
@@ -56,7 +55,7 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
         console.log("invalid search parameters");
         break;
     }
-    const sorted: Book[] = sortBooksByDateFinished(filtered);
+    const sorted: Book[] | null = sortBooksByDateFinished(filtered);
     setFilteredBooks(sorted);
   };
 
@@ -68,8 +67,6 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
       {filteredBooks && (
         <FilteredBooks
           filteredBooks={filteredBooks}
-          // setSortedBooks={setSortedBooks}
-          // sortedBooks={sortedBooks}
         />
       )}
     </section>
