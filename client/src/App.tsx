@@ -42,6 +42,8 @@ const App: React.FC = () => {
   const [books, setBooks] = useState<Book[]>([]);
   const [bookNotFound, setBookNotFound] = useState(false);
   const [addBook, setAddBook] = useState(true);
+  const [sortedBooks, setSortedBooks] = useState<Book[]>([]);
+
   const supabase = useSupabase();
 
   const handleAddBook = (newBook: Book) => {
@@ -117,6 +119,16 @@ const App: React.FC = () => {
     }
   };
 
+  const sortBooksByDateFinished = (books: Book[]) => {
+    const sortedBooks = [...books].sort((a, b) => {
+      const dateA = new Date(a.date_finished);
+      const dateB = new Date(b.date_finished);
+      // keep `getTime()` here to satisfy type safety
+      return dateB.getTime() - dateA.getTime();
+    });
+    return sortedBooks;
+  };
+
   return (
     <SupabaseProvider>
       <Router>
@@ -148,6 +160,9 @@ const App: React.FC = () => {
                 setBooks={setBooks}
                 navLinks={navLinks}
                 handleDataFetch={handleDataFetch}
+                sortBooksByDateFinished={sortBooksByDateFinished}
+                setSortedBooks={setSortedBooks}
+                sortedBooks={sortedBooks}
               />
             }
           />

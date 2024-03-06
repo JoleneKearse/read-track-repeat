@@ -9,33 +9,25 @@ interface BooksReadPageProps {
   books: Book[];
   setBooks: (books: Book[]) => void;
   handleDataFetch: () => void;
-  // sortBooksByDateFinished: (books: Book[]) => void;
+  sortBooksByDateFinished: (books: Book[]) => void;
+  setSortedBooks: (books: Book[]) => void;
+  sortedBooks: Book[];
 }
 
 const BooksReadPage: React.FC<BooksReadPageProps> = ({
   navLinks,
   books,
   handleDataFetch,
-  // setBooks,
+  sortBooksByDateFinished,
+  setSortedBooks,
+  sortedBooks,
 }) => {
-  const [sortedBooks, setSortedBooks] = useState<Book[]>([]);
-
-  const sortBooksByDateFinished = (books: Book[]) => {
-    const sortedBooks = [...books].sort((a, b) => {
-      const dateA = new Date(a.date_finished);
-      const dateB = new Date(b.date_finished);
-
-      return dateB.getTime() - dateA.getTime();
-    });
-    return sortedBooks;
-  };
-
   useEffect(() => {
     handleDataFetch();
   }, []);
 
   useEffect(() => {
-    const sorted = sortBooksByDateFinished(books);
+    const sorted: Book[] = sortBooksByDateFinished(books);
     setSortedBooks(sorted);
   }, [books]);
 
@@ -44,7 +36,12 @@ const BooksReadPage: React.FC<BooksReadPageProps> = ({
       <Header />
       <NavBar navLinks={navLinks} />
       {books && (
-        <BookCollection books={books} handleDataFetch={handleDataFetch} sortedBooks={sortedBooks} />
+        <BookCollection
+          books={books}
+          handleDataFetch={handleDataFetch}
+          setSortedBooks={setSortedBooks}
+          sortedBooks={sortedBooks}
+        />
       )}
     </section>
   );

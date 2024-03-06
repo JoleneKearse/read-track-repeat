@@ -3,10 +3,11 @@ import { Book } from "../types";
 import Cover from "/cover.svg";
 
 interface BookCollectionProps {
-  // books: Book[];
+  books: Book[];
   handleDataFetch: () => void;
-  // sortBooksByDateFinished: (books: Book[]) => void;
+  sortBooksByDateFinished: (books: Book[]) => void;
   sortedBooks: Book[];
+  setSortedBooks: (books: Book[]) => void;
 }
 
 const BookCollection: React.FC<BookCollectionProps> = ({ sortedBooks }) => {
