@@ -4,6 +4,9 @@ import Cover from "/cover.svg";
 
 interface FilteredBooksProps {
   filteredBooks: Book[];
+  // sortBooksByDateFinished: (books: Book[]) => void;
+  // sortedBooks: Book[];
+  // setSortedBooks: (books: Book[]) => void;
 }
 
 const FilteredBooks: React.FC<FilteredBooksProps> = ({ filteredBooks }) => {

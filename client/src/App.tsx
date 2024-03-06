@@ -106,7 +106,6 @@ const App: React.FC = () => {
   };
 
   const handleSearch = async (book: Book) => {
-    // console.log(book);
     setSearchedBook(book);
   };
 
@@ -173,6 +172,9 @@ const App: React.FC = () => {
                 books={books}
                 navLinks={navLinks}
                 handleDataFetch={handleDataFetch}
+                sortBooksByDateFinished={sortBooksByDateFinished}
+                setSortedBooks={setSortedBooks}
+                sortedBooks={sortedBooks}
               />
             }
           />

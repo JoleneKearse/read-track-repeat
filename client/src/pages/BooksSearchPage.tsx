@@ -11,16 +11,27 @@ interface BooksSearchPageProps {
   navLinks: NavLink[];
   books: Book[];
   handleDataFetch: () => void;
+  sortBooksByDateFinished: (books: Book[]) => void;
+  setSortedBooks: (books: Book[]) => void;
+  sortedBooks: Book[];
 }
 
 const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
   navLinks,
   books,
   handleDataFetch,
+  sortBooksByDateFinished,
+  setSortedBooks,
+  sortedBooks,
 }) => {
   useEffect(() => {
     handleDataFetch();
   }, []);
+
+  useEffect(() => {
+    const sorted: Book[] = sortBooksByDateFinished(books);
+    setSortedBooks(sorted);
+  }, [books]);
 
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
 
@@ -30,25 +41,23 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
     switch (method) {
       case "year":
         filtered = books.filter((book) => book.date_finished.includes(input));
-        console.log(filtered);
         break;
       case "title":
         filtered = books.filter((book) =>
           book.title.toLowerCase().includes(input.toLowerCase())
         );
-        console.log(filtered);
         break;
       case "author":
         filtered = books.filter((book) =>
           book.author.toLowerCase().includes(input.toLowerCase())
         );
-        console.log(filtered);
         break;
       default:
         console.log("invalid search parameters");
         break;
     }
-    setFilteredBooks(filtered);
+    const sorted: Book[] = sortBooksByDateFinished(filtered);
+    setFilteredBooks(sorted);
   };
 
   return (
@@ -56,7 +65,13 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
       <Header />
       <NavBar navLinks={navLinks} />
       <SearchBooks handleSearch={handleSearch} />
-      {filteredBooks && <FilteredBooks filteredBooks={filteredBooks} />}
+      {filteredBooks && (
+        <FilteredBooks
+          filteredBooks={filteredBooks}
+          // setSortedBooks={setSortedBooks}
+          // sortedBooks={sortedBooks}
+        />
+      )}
     </section>
   );
 };
