@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Book, NavLink } from "../types";
 import Header from "../components/Header";
 import NavBar from "../components/NavBar";
@@ -7,7 +7,6 @@ import BookCollection from "../components/BookCollection";
 interface BooksReadPageProps {
   navLinks: NavLink[];
   books: Book[];
-  setBooks: (books: Book[]) => void;
   handleDataFetch: () => void;
   sortBooksByDateFinished: (books: Book[]) => void;
   setSortedBooks: (books: Book[]) => void;
@@ -37,9 +36,7 @@ const BooksReadPage: React.FC<BooksReadPageProps> = ({
       <NavBar navLinks={navLinks} />
       {books && (
         <BookCollection
-          books={books}
           handleDataFetch={handleDataFetch}
-          setSortedBooks={setSortedBooks}
           sortedBooks={sortedBooks}
         />
       )}

@@ -156,7 +156,6 @@ const App: React.FC = () => {
             element={
               <BooksReadPage
                 books={books}
-                setBooks={setBooks}
                 navLinks={navLinks}
                 handleDataFetch={handleDataFetch}
                 sortBooksByDateFinished={sortBooksByDateFinished}
