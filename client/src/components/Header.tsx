@@ -1,5 +1,3 @@
-import React from "react";
-
 const Header = () => {
   return (
     <header className="w-5/6 max-w-sm mx-auto md:max-w-md">
