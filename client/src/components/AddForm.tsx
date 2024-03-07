@@ -96,14 +96,14 @@ const AddForm: React.FC<AddFormProps> = ({
     >
       <label
         htmlFor="searchMethod"
-        className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white"
+        className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
       >
         Choose search method
       </label>
       <select
         name=""
         id="searchMethod"
-        className="bg-orange-100 border border-orange-200 text-purple-700 text-sm tracking-wide rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 mb-8"
+        className="bg-orange-100 border border-orange-200 text-purple-700 text-sm tracking-wide rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 mb-8 md:text-lg"
         ref={searchMethodRef}
       >
         <option defaultValue="">Choose search method</option>
@@ -114,7 +114,7 @@ const AddForm: React.FC<AddFormProps> = ({
 
       <label
         htmlFor="searchInput"
-        className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white"
+        className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
       >
         Book detail
       </label>
@@ -123,13 +123,13 @@ const AddForm: React.FC<AddFormProps> = ({
         ref={searchInputRef}
         name=""
         id="searchInput"
-        className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300"
+        className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
         placeholder="ISBN / Title / Author"
       />
 
       <label
         htmlFor="dateFinished"
-        className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white"
+        className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
       >
         Date Finished
       </label>
@@ -138,12 +138,12 @@ const AddForm: React.FC<AddFormProps> = ({
         ref={dateRef}
         value={date}
         onChange={(e) => setDate(e.target.value)}
-        className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300"
+        className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
       />
 
       <button
         type="submit"
-        className="focus:outline-none text-purple-100 bg-orange-gradient hover:bg-yellow-500 focus:ring-4 focus:ring-purple-500 font-bold rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 hover:bg-active-gradient"
+        className="focus:outline-none text-purple-100 bg-orange-gradient hover:bg-yellow-500 focus:ring-4 focus:ring-purple-500 font-bold rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 hover:bg-active-gradient md:text-lg"
       >
         Check book
       </button>

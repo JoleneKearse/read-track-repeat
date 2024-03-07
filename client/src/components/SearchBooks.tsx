@@ -25,7 +25,7 @@ const SearchBooks: React.FC<SearchBooksProps> = ({ handleSearch }) => {
     >
       <label
         htmlFor="sortingMethod"
-        className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white"
+        className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
       >
         Choose sorting method
       </label>
@@ -33,7 +33,7 @@ const SearchBooks: React.FC<SearchBooksProps> = ({ handleSearch }) => {
         name=""
         id="sortingMethod"
         ref={sortingMethodRef}
-        className="bg-orange-100 border border-orange-200 text-purple-700 text-sm tracking-wide rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 mb-8"
+        className="bg-orange-100 border border-orange-200 text-purple-700 text-sm tracking-wide rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 mb-8 md:text-lg"
       >
         <option defaultValue="">Choose sorting method</option>
         <option value="year">Year</option>
@@ -43,7 +43,7 @@ const SearchBooks: React.FC<SearchBooksProps> = ({ handleSearch }) => {
 
       <label
         htmlFor="criteriaInput"
-        className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white"
+        className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
       >
         What are we searching for?
       </label>
@@ -52,13 +52,13 @@ const SearchBooks: React.FC<SearchBooksProps> = ({ handleSearch }) => {
         name=""
         id="criteriaInput"
         ref={criteriaInputRef}
-        className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300"
-        placeholder="Year: 2020, Title: The Martian, Author: Andy Weir"
+        className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
+        placeholder="2020 / The Martian / Andy Weir"
       />
 
       <button
         type="submit"
-        className="focus:outline-none text-purple-100 bg-orange-gradient hover:bg-yellow-500 focus:ring-4 focus:ring-purple-500 font-bold rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 hover:bg-active-gradient"
+        className="focus:outline-none text-purple-100 bg-orange-gradient hover:bg-yellow-500 focus:ring-4 focus:ring-purple-500 font-bold rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 hover:bg-active-gradient md:text-lg"
       >
         Filter books
       </button>

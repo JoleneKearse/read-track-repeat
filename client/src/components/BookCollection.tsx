@@ -23,7 +23,7 @@ const BookCollection: React.FC<BookCollectionProps> = ({ sortedBooks }) => {
         {sortedBooks.map((book) => (
           <article
             key={book.id}
-            className={`flex flex-col items-center justify-center flex-none w-3/5 p-4 mx-auto my-10 text-center bg-overlay border border-orange-200 rounded-lg shadow-sm shadow-orange-200 ${
+            className={`flex flex-col items-center justify-center flex-none w-3/5 p-4 mx-auto my-10 text-center bg-overlay border border-orange-200 rounded-lg shadow-lg shadow-orange-200a ${
               sortedBooks.length <= 3 ? "lg:max-w-xs lg:max-h-[450px]" : ""
             }`}
           >
