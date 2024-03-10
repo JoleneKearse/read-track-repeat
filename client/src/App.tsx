@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import { SupabaseProvider, useSupabase } from "./context/SupabaseContext";
+
 import { Book, NavLink } from "./types";
+
 import AddBookPage from "./pages/AddBookPage";
 import BooksReadPage from "./pages/BooksReadPage";
 import BooksSearchPage from "./pages/BooksSearchPage";
+
 // import User from "/user.svg";
 import AddBook from "/addBook.svg";
 import ViewBook from "/viewBook.svg";
