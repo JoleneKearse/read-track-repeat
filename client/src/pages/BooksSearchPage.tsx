@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 import { Book, NavLink } from "../types";
+import { useSupabase } from "../context/SupabaseContext";
+import { Database } from "../types/supabase";
 
 import Header from "../components/Header";
 import NavBar from "../components/NavBar";
@@ -10,8 +12,8 @@ import FilteredBooks from "../components/FilteredBooks";
 interface BooksSearchPageProps {
   navLinks: NavLink[];
   books: Book[];
-  handleDataFetch: () => void;
-  sortBooksByDateFinished: (books: Book[]) => void;
+  // handleDataFetch: () => void;
+  searchBooksByYear: (books: Book[]) => void;
   setSortedBooks: (books: Book[]) => void;
   sortedBooks: Book[];
 }
@@ -19,32 +21,46 @@ interface BooksSearchPageProps {
 const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
   navLinks,
   books,
-  handleDataFetch,
-  sortBooksByDateFinished,
+  // handleDataFetch,
+  searchBooksByYear,
   setSortedBooks,
 }) => {
-  useEffect(() => {
-    handleDataFetch();
-  }, []);
+  // useEffect(() => {
+  //   handleDataFetch();
+  // }, []);
 
-  useEffect(() => {
-    const sorted: Book[] = sortBooksByDateFinished(books);
-    setSortedBooks(sorted);
-  }, [books]);
+  //
 
+  const supabase = useSupabase();
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
 
-  const handleSearch = (method: string, input: string) => {
+  const searchBooksByTitle = async (title: string) => {
+    const sortedBooks: Book[] = [];
+
+    const { data, error } = await supabase
+      .from("books")
+      .select("*")
+      .ilike("title", `%${title}%`);
+
+    if (error) {
+      console.log("Error:", error);
+      return [];
+    } else {
+      setFilteredBooks(data);
+    }
+    return filteredBooks;
+  };
+
+  const handleSearch = async (method: string, input: string) => {
     let filtered: Book[] = [];
     // set search method
     switch (method) {
       case "year":
-        filtered = books.filter((book) => book.date_finished.includes(input));
+        await searchBooksByYear(input);
         break;
       case "title":
-        filtered = books.filter((book) =>
-          book.title.toLowerCase().includes(input.toLowerCase())
-        );
+        console.log(method);
+        await searchBooksByTitle(input);
         break;
       case "author":
         filtered = books.filter((book) =>
@@ -55,8 +71,8 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
         console.log("invalid search parameters");
         break;
     }
-    const sorted: Book[] | null = sortBooksByDateFinished(filtered);
-    setFilteredBooks(sorted);
+    // const sorted: Book[] | null = searchBooksByYear(filtered);
+    // setFilteredBooks(sorted);
   };
 
   return (
@@ -74,5 +90,4 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
     </section>
   );
 };
-
 export default BooksSearchPage;

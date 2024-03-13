@@ -3,28 +3,28 @@ import { Book } from "../types";
 import Cover from "/cover.svg";
 
 interface BookCollectionProps {
-  handleDataFetch: () => void;
-  sortedBooks: Book[];
+  handleDataFetch: () => Book[];
+  books: Book[];
 }
 
-const BookCollection: React.FC<BookCollectionProps> = ({ sortedBooks }) => {
+const BookCollection: React.FC<BookCollectionProps> = ({ books }) => {
   return (
     <>
       <p className="text-2xl font-bold tracking-wide text-center text-purple-200">
-        {sortedBooks.length} books tracked
+        {books.length} books tracked
       </p>
       <section
         className={`justify-center min-h-screen scroll snap-y  ${
-          sortedBooks.length <= 3
+          books.length <= 3
             ? "lg:flex lg:gap-10"
             : "md:grid md:grid-cols-2 lg:grid-cols-4 md:h-auto md:py-64"
         }`}
       >
-        {sortedBooks.map((book) => (
+        {books.map((book) => (
           <article
             key={book.id}
             className={`flex flex-col items-center justify-center flex-none w-3/5 p-4 mx-auto my-10 text-center bg-overlay border border-orange-200 rounded-lg shadow-lg shadow-orange-200a ${
-              sortedBooks.length <= 3 ? "lg:max-w-xs lg:max-h-[450px]" : ""
+              books.length <= 3 ? "lg:max-w-xs lg:max-h-[450px]" : ""
             }`}
           >
             <img

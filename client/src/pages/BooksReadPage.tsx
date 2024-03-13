@@ -7,39 +7,26 @@ import BookCollection from "../components/BookCollection";
 interface BooksReadPageProps {
   navLinks: NavLink[];
   books: Book[];
-  handleDataFetch: () => void;
-  sortBooksByDateFinished: (books: Book[]) => void;
-  setSortedBooks: (books: Book[]) => void;
-  sortedBooks: Book[];
+  handleDataFetch: () => Book[];
 }
 
 const BooksReadPage: React.FC<BooksReadPageProps> = ({
   navLinks,
   books,
   handleDataFetch,
-  sortBooksByDateFinished,
-  setSortedBooks,
-  sortedBooks,
 }) => {
   useEffect(() => {
     handleDataFetch();
   }, []);
 
-  useEffect(() => {
-    const sorted: Book[] = sortBooksByDateFinished(books);
-    setSortedBooks(sorted);
-  }, [books]);
-
   return (
     <section className="min-h-screen bg-bg-gradient">
       <Header />
       <NavBar navLinks={navLinks} />
-      {books && (
-        <BookCollection
-          handleDataFetch={handleDataFetch}
-          sortedBooks={sortedBooks}
-        />
-      )}
+      <BookCollection
+        handleDataFetch={handleDataFetch}
+        books={books}
+      />
     </section>
   );
 };

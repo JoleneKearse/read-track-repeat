@@ -767,6 +767,11 @@ video {
   padding-bottom: 8rem;
 }
 
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
 .pb-10 {
   padding-bottom: 2.5rem;
 }
@@ -847,6 +852,11 @@ video {
 .text-purple-700 {
   --tw-text-opacity: 1;
   color: rgb(49 29 53 / var(--tw-text-opacity));
+}
+
+.text-orange-300 {
+  --tw-text-opacity: 1;
+  color: rgb(255 152 26 / var(--tw-text-opacity));
 }
 
 .opacity-50 {

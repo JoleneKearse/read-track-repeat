@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { SupabaseProvider, useSupabase } from "./context/SupabaseContext";
 
 import { Book, NavLink } from "./types";
+import { Database } from "../src/types/supabase";
 
 import AddBookPage from "./pages/AddBookPage";
 import BooksReadPage from "./pages/BooksReadPage";
@@ -56,21 +57,23 @@ const App: React.FC = () => {
 
   const handleConfirmBook = async () => {
     if (searchedBook) {
-      const { data, error } = await supabase.from("books").insert([
-        {
-          title: searchedBook.title,
-          author: searchedBook.author,
-          published: searchedBook.published,
-          pages: searchedBook.pages,
-          cover_img_url: searchedBook.coverImageUrl,
-          date_finished: searchedBook.dateFinished,
-        },
-      ]);
-      handleAddBook(searchedBook);
+      const bookToInsert: Database["public"]["Tables"]["books"]["Insert"] = {
+        title: searchedBook.title,
+        author: searchedBook.author,
+        published: searchedBook.published || null,
+        pages: searchedBook.pages || null,
+        cover_img_url: searchedBook.cover_img_url || null,
+        date_finished: searchedBook.date_finished || null,
+      };
+      const { data, error } = await supabase
+        .from("books")
+        .insert([bookToInsert]);
 
       if (error) {
         console.log("Error:", error);
-      } else {
+      } else if (data) {
+        const addedBook = data;
+        handleAddBook(addedBook);
         console.log("Data:", data);
       }
       setSearchedBook(null);
@@ -79,28 +82,31 @@ const App: React.FC = () => {
 
   const handleManuallyAddBook = async (newBook: Book) => {
     if (newBook) {
-      const { data, error } = await supabase.from("books").insert([
-        {
-          title: newBook.title,
-          author: newBook.author,
-          published: null,
-          pages: null,
-          cover_img_url: null,
-          date_finished: newBook.dateFinished,
-        },
-      ]);
-      handleAddBook(newBook);
+      const bookToInsert: Database["public"]["Tables"]["books"]["Insert"] = {
+        title: newBook.title,
+        author: newBook.author,
+        published: newBook.published || null,
+        pages: newBook.pages || null,
+        cover_img_url: newBook.cover_img_url || null,
+        // must be camelCase to manually add book
+        date_finished: newBook.dateFinished || null,
+      };
+      const { data, error } = await supabase
+        .from("books")
+        .insert([bookToInsert]);
 
       if (error) {
         console.log("Error:", error);
-      } else {
-        setAddBook(false);
+      } else if (data) {
+        const addedBook = data;
+        handleAddBook(addedBook);
+        console.log("Data:", data);
       }
+      setAddBook(false);
     }
   };
 
   const handleCancelBook = () => {
-    // discard selection
     if (searchedBook) {
       setTimeout(() => {
         setSearchedBook(null);
@@ -114,21 +120,39 @@ const App: React.FC = () => {
   };
 
   const handleDataFetch = async () => {
-    const { data, error } = await supabase.from("books").select("*");
+    const { data, error } = await supabase
+      .from("books")
+      .select("*")
+      .order("date_finished", { ascending: false });
     if (error) {
       console.log("Error:", error);
     } else {
-      setBooks(data.reverse());
+      setBooks(data);
     }
   };
 
-  const sortBooksByDateFinished = (books: Book[]) => {
-    const sortedBooks = [...books].sort((a, b) => {
-      const dateA = new Date(a.date_finished);
-      const dateB = new Date(b.date_finished);
-      // keep `getTime()` here to satisfy type safety
-      return dateB.getTime() - dateA.getTime();
-    });
+  const searchBooksByYear = async (year: string) => {
+    let sortedBooks: Book[] = [];
+
+    // const startDate = `${year}-01-01`;
+    // const endDate = `${year}-12-31`;
+    const startDate = `${year}`;
+    const endDate = `${year}`;
+
+    const { data, error } = await supabase
+      .from("books")
+      .select(`EXTRACT(year FROM date_finished) AS year`)
+      .gte("date_finished", startDate)
+      .lte("date_finished", endDate)
+      .order("date_finished", { ascending: true });
+
+    if (error) {
+      console.log("Error:", error);
+      return [];
+    } else {
+      sortedBooks = data;
+      console.log(sortedBooks);
+    }
     return sortedBooks;
   };
 
@@ -162,9 +186,6 @@ const App: React.FC = () => {
                 navLinks={navLinks}
                 books={books}
                 handleDataFetch={handleDataFetch}
-                sortBooksByDateFinished={sortBooksByDateFinished}
-                setSortedBooks={setSortedBooks}
-                sortedBooks={sortedBooks}
               />
             }
           />
@@ -175,7 +196,7 @@ const App: React.FC = () => {
                 navLinks={navLinks}
                 books={books}
                 handleDataFetch={handleDataFetch}
-                sortBooksByDateFinished={sortBooksByDateFinished}
+                searchBooksByYear={searchBooksByYear}
                 setSortedBooks={setSortedBooks}
                 // sortedBooks={sortedBooks}
               />

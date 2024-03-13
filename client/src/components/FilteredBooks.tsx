@@ -33,6 +33,10 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({ filteredBooks }) => {
               filteredBooks.length <= 3 ? "lg:max-w-xs lg:max-h-[450px]" : ""
             }`}
           >
+            <p className="py-8 text-2xl tracking-wide text-orange-300 text-balance">
+              You finished this book on{" "}
+              <span className="font-bold">{book.date_finished}</span>
+            </p>
             <img
               src={book.cover_img_url ? book.cover_img_url : Cover}
               alt={book.title}
