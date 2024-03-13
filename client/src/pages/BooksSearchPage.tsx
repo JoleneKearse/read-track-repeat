@@ -35,8 +35,6 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
 
   const searchBooksByTitle = async (title: string) => {
-    const sortedBooks: Book[] = [];
-
     const { data, error } = await supabase
       .from("books")
       .select("*")
@@ -51,8 +49,23 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
     return filteredBooks;
   };
 
+  const searchBooksByAuthor = async (author: string) => {
+    const { data, error } = await supabase
+      .from("books")
+      .select("*")
+      .ilike("author", `%${author}%`);
+
+    if (error) {
+      console.log("Error:", error);
+      return [];
+    } else {
+      setFilteredBooks(data);
+    }
+    return filteredBooks;
+  };
+
   const handleSearch = async (method: string, input: string) => {
-    let filtered: Book[] = [];
+    const filtered: Book[] = [];
     // set search method
     switch (method) {
       case "year":
@@ -63,9 +76,7 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
         await searchBooksByTitle(input);
         break;
       case "author":
-        filtered = books.filter((book) =>
-          book.author.toLowerCase().includes(input.toLowerCase())
-        );
+        await searchBooksByAuthor(input);
         break;
       default:
         console.log("invalid search parameters");
