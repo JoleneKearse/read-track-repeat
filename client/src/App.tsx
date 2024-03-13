@@ -131,31 +131,6 @@ const App: React.FC = () => {
     }
   };
 
-  const searchBooksByYear = async (year: string) => {
-    let sortedBooks: Book[] = [];
-
-    // const startDate = `${year}-01-01`;
-    // const endDate = `${year}-12-31`;
-    const startDate = `${year}`;
-    const endDate = `${year}`;
-
-    const { data, error } = await supabase
-      .from("books")
-      .select(`EXTRACT(year FROM date_finished) AS year`)
-      .gte("date_finished", startDate)
-      .lte("date_finished", endDate)
-      .order("date_finished", { ascending: true });
-
-    if (error) {
-      console.log("Error:", error);
-      return [];
-    } else {
-      sortedBooks = data;
-      console.log(sortedBooks);
-    }
-    return sortedBooks;
-  };
-
   return (
     <SupabaseProvider>
       <Router>
@@ -196,7 +171,6 @@ const App: React.FC = () => {
                 navLinks={navLinks}
                 books={books}
                 handleDataFetch={handleDataFetch}
-                searchBooksByYear={searchBooksByYear}
                 setSortedBooks={setSortedBooks}
                 // sortedBooks={sortedBooks}
               />

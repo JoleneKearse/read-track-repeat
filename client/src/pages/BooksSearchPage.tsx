@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { Book, NavLink } from "../types";
 import { useSupabase } from "../context/SupabaseContext";
-import { Database } from "../types/supabase";
+// import { Database } from "../types/supabase";
 
 import Header from "../components/Header";
 import NavBar from "../components/NavBar";
@@ -12,25 +12,12 @@ import FilteredBooks from "../components/FilteredBooks";
 interface BooksSearchPageProps {
   navLinks: NavLink[];
   books: Book[];
-  // handleDataFetch: () => void;
-  searchBooksByYear: (books: Book[]) => void;
-  setSortedBooks: (books: Book[]) => void;
-  sortedBooks: Book[];
 }
 
 const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
   navLinks,
   books,
-  // handleDataFetch,
-  searchBooksByYear,
-  setSortedBooks,
 }) => {
-  // useEffect(() => {
-  //   handleDataFetch();
-  // }, []);
-
-  //
-
   const supabase = useSupabase();
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
 
@@ -38,7 +25,8 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
     const { data, error } = await supabase
       .from("books")
       .select("*")
-      .ilike("title", `%${title}%`);
+      .ilike("title", `%${title}%`)
+      .order("date_finished", { ascending: false });
 
     if (error) {
       console.log("Error:", error);
@@ -53,7 +41,8 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
     const { data, error } = await supabase
       .from("books")
       .select("*")
-      .ilike("author", `%${author}%`);
+      .ilike("author", `%${author}%`)
+      .order("date_finished", { ascending: false });
 
     if (error) {
       console.log("Error:", error);
@@ -64,9 +53,28 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
     return filteredBooks;
   };
 
+  const searchBooksByYear = async (year: string) => {
+    const startDate = `${year}-01-01`;
+    const endDate = `${year}-12-31`;
+
+    const { data, error } = await supabase
+      .from("books")
+      .select("*")
+      .gte("date_finished", startDate)
+      .lte("date_finished", endDate)
+      .order("date_finished", { ascending: false });
+
+    if (error) {
+      console.error("Error:", error);
+      return [];
+    } else {
+      setFilteredBooks(data);
+    }
+
+    return filteredBooks;
+  };
+
   const handleSearch = async (method: string, input: string) => {
-    const filtered: Book[] = [];
-    // set search method
     switch (method) {
       case "year":
         await searchBooksByYear(input);
@@ -82,8 +90,6 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
         console.log("invalid search parameters");
         break;
     }
-    // const sorted: Book[] | null = searchBooksByYear(filtered);
-    // setFilteredBooks(sorted);
   };
 
   return (
