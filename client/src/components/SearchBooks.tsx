@@ -2,6 +2,7 @@ import React, { useRef, FormEvent } from "react";
 
 interface SearchBooksProps {
   handleSearch: (method: string, input: string) => void;
+  // setSearching: (searching: boolean) => void;
 }
 
 const SearchBooks: React.FC<SearchBooksProps> = ({ handleSearch }) => {

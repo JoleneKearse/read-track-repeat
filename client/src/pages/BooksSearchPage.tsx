@@ -16,6 +16,7 @@ interface BooksSearchPageProps {
 
 const BooksSearchPage: React.FC<BooksSearchPageProps> = ({ navLinks }) => {
   const supabase = useSupabase();
+  const [loading, setLoading] = useState<boolean>(false);
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
   const filteredBooksRef = useRef<HTMLDivElement>(null);
 
@@ -75,6 +76,10 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({ navLinks }) => {
   };
 
   const handleSearch = async (method: string, input: string) => {
+    setTimeout(() => {
+      setLoading(true);
+    }, 500);
+    // setSearching(true);
     switch (method) {
       case "year":
         await searchBooksByYear(input);
@@ -89,6 +94,8 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({ navLinks }) => {
         console.log("invalid search parameters");
         break;
     }
+    setLoading(false);
+    //
   };
 
   useEffect(() => {
@@ -103,7 +110,12 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({ navLinks }) => {
       <NavBar navLinks={navLinks} />
       <SearchBooks handleSearch={handleSearch} />
       <div ref={filteredBooksRef}>
-        <FilteredBooks filteredBooks={filteredBooks} />
+        {/* {setTimeout(() => {
+          searching && <FilteredBooks filteredBooks={filteredBooks} />;
+        }, 500)} */}
+        {loading && (
+          <FilteredBooks filteredBooks={filteredBooks} />
+        )}
       </div>
     </section>
   );
