@@ -10,7 +10,7 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({ filteredBooks }) => {
   return (
     <>
       {filteredBooks.length !== 0 ? (
-        <p className="text-2xl font-bold tracking-wide text-center text-purple-200">
+        <p className="text-2xl font-bold tracking-wide text-center text-purple-200 mt-28">
           {filteredBooks.length} book{filteredBooks.length === 1 ? "" : "s"}{" "}
           found
         </p>
@@ -21,10 +21,10 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({ filteredBooks }) => {
       )}
 
       <section
-        className={`justify-center min-h-screen scroll snap-y  ${
+        className={`justify-center min-h-screen ${
           filteredBooks.length <= 3
             ? "lg:flex lg:gap-10"
-            : "md:grid md:grid-cols-2 lg:grid-cols-4 md:h-auto md:py-64"
+            : "md:grid md:grid-cols-2 lg:grid-cols-4 md:h-auto md:py-28"
         }`}
       >
         {filteredBooks.map((book) => (

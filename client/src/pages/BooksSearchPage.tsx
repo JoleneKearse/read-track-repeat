@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import { Book, NavLink } from "../types";
 import { useSupabase } from "../context/SupabaseContext";
@@ -17,6 +17,7 @@ interface BooksSearchPageProps {
 const BooksSearchPage: React.FC<BooksSearchPageProps> = ({ navLinks }) => {
   const supabase = useSupabase();
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
+  const filteredBooksRef = useRef<HTMLDivElement>(null);
 
   const handleSearchResponse = (
     data: Book[] | null,
@@ -52,7 +53,6 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({ navLinks }) => {
 
     query = query
       .ilike("author", authorPattern)
-      // .order("author", { ascending: false })
       .order("date_finished", { ascending: false });
 
     const { data, error } = await query;
@@ -91,12 +91,20 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({ navLinks }) => {
     }
   };
 
+  useEffect(() => {
+    if (filteredBooksRef.current && filteredBooks.length > 0) {
+      filteredBooksRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [filteredBooks]);
+
   return (
     <section className="min-h-screen bg-bg-gradient">
       <Header />
       <NavBar navLinks={navLinks} />
       <SearchBooks handleSearch={handleSearch} />
-      <FilteredBooks filteredBooks={filteredBooks} />
+      <div ref={filteredBooksRef}>
+        <FilteredBooks filteredBooks={filteredBooks} />
+      </div>
     </section>
   );
 };
