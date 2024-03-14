@@ -43,16 +43,18 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({ navLinks }) => {
 
   const searchBooksByAuthor = async (author: string) => {
     let query = supabase.from("books").select("*");
-    // account for middle initial 
-    if (author.split(" ").length > 2) {
-      const [first, _, last] = author.split(" ");
-      query = query.ilike("author", `%${first}%${last}%`)
-    } else {
-      query = query.ilike("author", `%${author}%`)
-    }
+    const [firstName, ...rest] = author.split(" ");
+    const lastName = rest.pop();
 
-    query = query.order("date_finished", { ascending: false });
-    
+    const authorPattern = lastName
+      ? `%${firstName}%${lastName ? `%${lastName}` : ""}%`
+      : `%${firstName}%`;
+
+    query = query
+      .ilike("author", authorPattern)
+      // .order("author", { ascending: false })
+      .order("date_finished", { ascending: false });
+
     const { data, error } = await query;
 
     return handleSearchResponse(data, error);
