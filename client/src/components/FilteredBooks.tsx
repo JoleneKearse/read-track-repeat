@@ -15,8 +15,9 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({ filteredBooks }) => {
           found
         </p>
       ) : (
-        // TODO: change to loader
-        <p className="text-2xl font-bold tracking-wide text-center text-purple-2"></p>
+        <p className="p-3 mb-10 text-3xl font-bold text-center text-purple-100 bg-orange-gradient">
+          No results!
+        </p>
       )}
 
       <section

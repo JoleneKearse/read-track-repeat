@@ -1,33 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { Book, NavLink } from "../types";
 import { useSupabase } from "../context/SupabaseContext";
-// import { Database } from "../types/supabase";
 
 import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 import SearchBooks from "../components/SearchBooks";
 import FilteredBooks from "../components/FilteredBooks";
+import { PostgrestError } from "@supabase/supabase-js";
 
 interface BooksSearchPageProps {
   navLinks: NavLink[];
   books: Book[];
 }
 
-const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
-  navLinks,
-  books,
-}) => {
+const BooksSearchPage: React.FC<BooksSearchPageProps> = ({ navLinks }) => {
   const supabase = useSupabase();
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
 
-  const searchBooksByTitle = async (title: string) => {
-    const { data, error } = await supabase
-      .from("books")
-      .select("*")
-      .ilike("title", `%${title}%`)
-      .order("date_finished", { ascending: false });
-
+  const handleSearchResponse = (
+    data: Book[] | null,
+    error: PostgrestError | null
+  ) => {
     if (error) {
       console.log("Error:", error);
       return [];
@@ -37,20 +31,31 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
     return filteredBooks;
   };
 
-  const searchBooksByAuthor = async (author: string) => {
+  const searchBooksByTitle = async (title: string) => {
     const { data, error } = await supabase
       .from("books")
       .select("*")
-      .ilike("author", `%${author}%`)
+      .ilike("title", `%${title}%`)
       .order("date_finished", { ascending: false });
 
-    if (error) {
-      console.log("Error:", error);
-      return [];
+    return handleSearchResponse(data, error);
+  };
+
+  const searchBooksByAuthor = async (author: string) => {
+    let query = supabase.from("books").select("*");
+    // account for middle initial 
+    if (author.split(" ").length > 2) {
+      const [first, _, last] = author.split(" ");
+      query = query.ilike("author", `%${first}%${last}%`)
     } else {
-      setFilteredBooks(data);
+      query = query.ilike("author", `%${author}%`)
     }
-    return filteredBooks;
+
+    query = query.order("date_finished", { ascending: false });
+    
+    const { data, error } = await query;
+
+    return handleSearchResponse(data, error);
   };
 
   const searchBooksByYear = async (year: string) => {
@@ -64,14 +69,7 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
       .lte("date_finished", endDate)
       .order("date_finished", { ascending: false });
 
-    if (error) {
-      console.error("Error:", error);
-      return [];
-    } else {
-      setFilteredBooks(data);
-    }
-
-    return filteredBooks;
+    return handleSearchResponse(data, error);
   };
 
   const handleSearch = async (method: string, input: string) => {
@@ -80,7 +78,6 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
         await searchBooksByYear(input);
         break;
       case "title":
-        console.log(method);
         await searchBooksByTitle(input);
         break;
       case "author":
@@ -97,13 +94,7 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
       <Header />
       <NavBar navLinks={navLinks} />
       <SearchBooks handleSearch={handleSearch} />
-      {filteredBooks.length >= 1 ? (
-        <FilteredBooks filteredBooks={filteredBooks} />
-      ) : (
-        <p className="p-3 mb-10 text-3xl font-bold text-center text-purple-100 bg-orange-gradient">
-          No results!
-        </p>
-      )}
+      <FilteredBooks filteredBooks={filteredBooks} />
     </section>
   );
 };
