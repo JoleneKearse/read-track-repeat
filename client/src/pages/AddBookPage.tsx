@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+
 import { Book, NavLink } from "../types";
+
 import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 import AddForm from "../components/AddForm";
@@ -33,8 +35,14 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
   handleManuallyAddBook,
   addBook,
 }) => {
-  // const [bookNotFound, setBookNotFound] = useState(false);
   const [date, setDate] = useState("");
+  const searchResultsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (searchResultsRef.current && searchedBook) {
+      searchResultsRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [searchedBook]);
 
   return (
     <section className="min-h-screen bg-bg-gradient snap-y">
@@ -50,14 +58,16 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
           date={date}
           setDate={setDate}
         />
-        {searchedBook && (
-          <ConfirmBook
-            searchedBook={searchedBook}
-            handleCancelBook={handleCancelBook}
-            handleConfirmBook={handleConfirmBook}
-            handleSearch={handleSearch}
-          />
-        )}
+        <div ref={searchResultsRef}>
+          {searchedBook && (
+            <ConfirmBook
+              searchedBook={searchedBook}
+              handleCancelBook={handleCancelBook}
+              handleConfirmBook={handleConfirmBook}
+              handleSearch={handleSearch}
+            />
+          )}
+        </div>
         {bookNotFound && (
           <NotFound
             handleManuallyAddBook={handleManuallyAddBook}

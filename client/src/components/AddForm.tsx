@@ -12,6 +12,7 @@ interface AddFormProps {
   setBookNotFound: (bookNotFound: boolean) => void;
   date: string;
   setDate: (date: string) => void;
+  setLoading: (loading: boolean) => void;
 }
 
 const AddForm: React.FC<AddFormProps> = ({
@@ -33,6 +34,7 @@ const AddForm: React.FC<AddFormProps> = ({
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+
     if (searchMethodRef.current !== null) {
       formData.method = searchMethodRef.current.value;
     }
@@ -42,7 +44,6 @@ const AddForm: React.FC<AddFormProps> = ({
     if (dateRef.current !== null) {
       formData.dateFinished = dateRef.current.value;
     }
-    // console.log(formData);
 
     // fetch by search method
     let newBook: Book | null = null;
@@ -63,13 +64,10 @@ const AddForm: React.FC<AddFormProps> = ({
     if (formData.method === "isbn") {
       newBook = await fetchBookByIsbn(formData.input);
     }
-    // const newBook: Book | null = await fetchBookByIsbn(formData.input);
-    // console.log(newBook);
 
     if (newBook) {
       // add dateFinished to Book object
       const bookWithDate = { ...newBook, dateFinished: formData.dateFinished };
-      // console.log(bookWithDate);
       // TODO: add key
       onSearch(bookWithDate);
 
@@ -81,8 +79,10 @@ const AddForm: React.FC<AddFormProps> = ({
     } else {
       setBookNotFound(true);
     }
+    setLoading(false);
   };
 
+  // TODO: check if this is necessary
   useEffect(() => {
     if (bookNotFound) {
       console.log(bookNotFound);

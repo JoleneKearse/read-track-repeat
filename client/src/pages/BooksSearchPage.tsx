@@ -76,10 +76,12 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({ navLinks }) => {
   };
 
   const handleSearch = async (method: string, input: string) => {
+    // TODO: Figure out why this is working in setTimeout by not by itself
     setTimeout(() => {
       setLoading(true);
     }, 500);
-    // setSearching(true);
+
+    // setLoading(true);
     switch (method) {
       case "year":
         await searchBooksByYear(input);
@@ -95,7 +97,6 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({ navLinks }) => {
         break;
     }
     setLoading(false);
-    //
   };
 
   useEffect(() => {
@@ -110,12 +111,7 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({ navLinks }) => {
       <NavBar navLinks={navLinks} />
       <SearchBooks handleSearch={handleSearch} />
       <div ref={filteredBooksRef}>
-        {/* {setTimeout(() => {
-          searching && <FilteredBooks filteredBooks={filteredBooks} />;
-        }, 500)} */}
-        {loading && (
-          <FilteredBooks filteredBooks={filteredBooks} />
-        )}
+        {loading && <FilteredBooks filteredBooks={filteredBooks} />}
       </div>
     </section>
   );
