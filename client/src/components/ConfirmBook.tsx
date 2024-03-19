@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Book } from "../types";
 import Check from "/check.svg";
+import Edit from "/edit.svg";
 import Cross from "/cross.svg";
 import Cover from "/cover.svg";
 
@@ -10,16 +11,17 @@ interface ConfirmBookProps {
   handleCancelBook: () => void;
   handleConfirmBook: () => void;
   handleSearch: (book: Book) => void;
-  // bookNotFound: boolean;
+  handleEditBook: () => void;
 }
 
 const ConfirmBook: React.FC<ConfirmBookProps> = ({
   searchedBook,
   handleCancelBook,
   handleConfirmBook,
-  // bookNotFound,
-  // handleSearch,
+  handleEditBook,
 }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  
   return (
     <section className="w-5/6 max-w-sm py-32 mx-auto snap-center md:max-w-md">
       {searchedBook && (
@@ -57,6 +59,14 @@ const ConfirmBook: React.FC<ConfirmBookProps> = ({
                 alt="cross"
                 title="Not my book"
                 className="w-1/3 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full"
+              />
+            </button>
+            <button type="button" onClick={handleEditBook}>
+              <img
+                src={Edit}
+                alt="edit book"
+                title="edit book"
+                className="w-2/3 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full"
               />
             </button>
             <button type="button" onClick={handleConfirmBook}>

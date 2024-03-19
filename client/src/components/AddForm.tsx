@@ -68,6 +68,7 @@ const AddForm: React.FC<AddFormProps> = ({
     if (newBook) {
       // add dateFinished to Book object
       const bookWithDate = { ...newBook, dateFinished: formData.dateFinished };
+      console.log(bookWithDate);
       // TODO: add key
       onSearch(bookWithDate);
 
@@ -79,7 +80,7 @@ const AddForm: React.FC<AddFormProps> = ({
     } else {
       setBookNotFound(true);
     }
-    setLoading(false);
+    // setLoading(false);
   };
 
   // TODO: check if this is necessary

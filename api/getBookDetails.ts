@@ -46,6 +46,7 @@ export async function fetchBookByIsbn(isbn: string): Promise<Book> {
       pages: bookDetails?.number_of_pages,
       coverImageUrl: bookDetails?.cover?.medium,
     }
+    // console.log(bookData);
     return bookData;
   } catch (error) {
     console.log(error);
@@ -55,6 +56,7 @@ export async function fetchBookByIsbn(isbn: string): Promise<Book> {
 
 export async function fetchBookByTitle(title: string): Promise<Book | null>{
   try {
+    console.log(`https://www.googleapis.com/books/v1/volumes?q=intitle:${encodeURIComponent(title)}`)
     const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${encodeURIComponent(title)}`);
     const data = await response.json();
     console.log(data["items"][0]["volumeInfo"]);
@@ -65,7 +67,7 @@ export async function fetchBookByTitle(title: string): Promise<Book | null>{
     }
     const bookData: Book = {
       title: bookDetails?.title,
-      author: bookDetails?.authors.map(a => a.name).join(", "),
+      author: bookDetails?.authors.join(", "),
       published: bookDetails?.publishedDate,
       pages: bookDetails?.pageCount,
       coverImageUrl: bookDetails?.imageLinks?.thumbnail,

@@ -62,8 +62,9 @@ const App: React.FC = () => {
         author: searchedBook.author,
         published: searchedBook.published || null,
         pages: searchedBook.pages || null,
-        cover_img_url: searchedBook.cover_img_url || null,
-        date_finished: searchedBook.date_finished || null,
+        // keep camelCase to add to db for image & date
+        cover_img_url: searchedBook.coverImageUrl || null,
+        date_finished: searchedBook.dateFinished || null,
       };
       const { data, error } = await supabase
         .from("books")
@@ -105,6 +106,10 @@ const App: React.FC = () => {
       setAddBook(false);
     }
   };
+
+  const handleEditBook = (book: Book) => {
+    console.log(book);
+  }
 
   const handleCancelBook = () => {
     if (searchedBook) {
@@ -151,6 +156,7 @@ const App: React.FC = () => {
                 handleManuallyAddBook={handleManuallyAddBook}
                 onSearch={handleSearch}
                 addBook={addBook}
+                handleEditBook={handleEditBook}
               />
             }
           />
