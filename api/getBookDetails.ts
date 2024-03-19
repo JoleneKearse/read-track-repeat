@@ -14,6 +14,7 @@ interface ApiResponse {
   publishedDate?: string;
   number_of_pages?: number;
   pageCount?: number;
+  pagination?: number;
   cover?: Cover;
   imageLinks?: Cover;
   thumbnail?: Cover;
@@ -32,7 +33,7 @@ export async function fetchBookByIsbn(isbn: string): Promise<Book> {
   try {
     const response = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`);
     const data = await response.json();
-    // console.log(data);
+    console.log(data);
     const bookDetails: ApiResponse | undefined = data[`ISBN:${isbn}`];
     if (!bookDetails) {
       console.log("Book not found");
@@ -43,10 +44,10 @@ export async function fetchBookByIsbn(isbn: string): Promise<Book> {
       title: bookDetails?.title,
       author: bookDetails?.authors.map(a => a.name).join(", "),
       published: bookDetails?.publish_date,
-      pages: bookDetails?.number_of_pages,
+      pages: bookDetails?.number_of_pages || bookDetails?.pagination,
       coverImageUrl: bookDetails?.cover?.medium,
     }
-    // console.log(bookData);
+    console.log(`data returned from ISBN: `, bookData);
     return bookData;
   } catch (error) {
     console.log(error);
@@ -60,11 +61,17 @@ export async function fetchBookByTitle(title: string): Promise<Book | null>{
     const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${encodeURIComponent(title)}`);
     const data = await response.json();
     console.log(data["items"][0]["volumeInfo"]);
+
+    // grab ISBN while we're at it
+    const isbn = data["items"][0]["volumeInfo"]["industryIdentifiers"][0]["identifier"];
+    console.log(isbn);
+
     const bookDetails: ApiResponse | undefined = data["items"][0]["volumeInfo"];
     if (!bookDetails) {
       console.log("Book not found");
       return null as unknown as Book;
     }
+
     const bookData: Book = {
       title: bookDetails?.title,
       author: bookDetails?.authors.join(", "),
@@ -72,6 +79,17 @@ export async function fetchBookByTitle(title: string): Promise<Book | null>{
       pages: bookDetails?.pageCount,
       coverImageUrl: bookDetails?.imageLinks?.thumbnail,
     }
+
+    console.log(`data returned from title: `, bookData);
+
+    // if any values missing, search by ISBN
+    const isDataMissing = Object.values(bookData).some((data) => !data);
+    if (isDataMissing && isbn) {
+      console.log("title not completed, searching by ISBN");
+      // console.log(fetchBookByIsbn(isbn))
+      return fetchBookByIsbn(isbn);
+    }
+
     return bookData;
   } catch (error) {
     console.log(error);
@@ -91,7 +109,7 @@ export async function fetchBookByAuthor(author: string): Promise<Book | null>{
     }
     const bookData: Book = {
       title: bookDetails?.title,
-      author: bookDetails?.authors.map(a => a.name).join(", "),
+      author: bookDetails?.authors.join(", "),
       published: bookDetails?.publishedDate,
       pages: bookDetails?.pageCount,
       coverImageUrl: bookDetails?.imageLinks?.thumbnail,
