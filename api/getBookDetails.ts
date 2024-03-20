@@ -83,11 +83,22 @@ export async function fetchBookByTitle(title: string): Promise<Book | null>{
     console.log(`data returned from title: `, bookData);
 
     // if any values missing, search by ISBN
-    const isDataMissing = Object.values(bookData).some((data) => !data);
+    const returnedDataValues = Object.values(bookData);
+    const isDataMissing = returnedDataValues.some((data) => !data);
     if (isDataMissing && isbn) {
       console.log("title not completed, searching by ISBN");
-      // console.log(fetchBookByIsbn(isbn))
-      return fetchBookByIsbn(isbn);
+
+      // find missing values 
+      const missingKeys = Object.keys(bookData).filter(key => !bookData[key as keyof Book]);
+      console.log("Missing keys:", missingKeys);
+      // search by ISBN
+      const additionalData = await fetchBookByIsbn(isbn);
+      if (additionalData) {
+        missingKeys.forEach(key => {
+          (bookData as any)[key] = (additionalData as any)[key];
+        })
+      }
+      return bookData;      
     }
 
     return bookData;
