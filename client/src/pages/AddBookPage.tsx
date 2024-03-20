@@ -7,6 +7,7 @@ import NavBar from "../components/NavBar";
 import AddForm from "../components/AddForm";
 import ConfirmBook from "../components/ConfirmBook";
 import NotFound from "../components/NotFound";
+import EditBook from "../components/EditBook";
 
 interface AddBookPageProps {
   navLinks: NavLink[];
@@ -22,6 +23,9 @@ interface AddBookPageProps {
   addBook: boolean;
   date: string;
   setDate: (date: string) => void;
+  handleEditBook: () => void;
+  isEditing: boolean;
+  setIsEditing: (isEditing: boolean) => void;
 }
 
 const AddBookPage: React.FC<AddBookPageProps> = ({
@@ -34,6 +38,9 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
   setBookNotFound,
   handleManuallyAddBook,
   addBook,
+  handleEditBook,
+  isEditing,
+  setIsEditing,
 }) => {
   const [date, setDate] = useState("");
   const searchResultsRef = useRef<HTMLDivElement>(null);
@@ -43,6 +50,10 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
       searchResultsRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [searchedBook]);
+
+  useEffect(() => {
+    console.log(`Editing state changed in AddBookPage: ${isEditing}`);
+  }, [isEditing]);
 
   return (
     <section className="min-h-screen bg-bg-gradient snap-y">
@@ -59,15 +70,25 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
           setDate={setDate}
         />
         <div ref={searchResultsRef}>
-          {searchedBook && (
+          {searchedBook && !isEditing && (
             <ConfirmBook
               searchedBook={searchedBook}
               handleCancelBook={handleCancelBook}
               handleConfirmBook={handleConfirmBook}
               handleSearch={handleSearch}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
             />
           )}
         </div>
+        {isEditing && (
+          <EditBook
+            searchedBook={searchedBook}
+            handleEditBook={handleEditBook}
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+          />
+        )}
         {bookNotFound && (
           <NotFound
             handleManuallyAddBook={handleManuallyAddBook}

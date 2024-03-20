@@ -47,6 +47,7 @@ const App: React.FC = () => {
   const [books, setBooks] = useState<Book[]>([]);
   const [bookNotFound, setBookNotFound] = useState(false);
   const [addBook, setAddBook] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
   const [sortedBooks, setSortedBooks] = useState<Book[]>([]);
 
   const supabase = useSupabase();
@@ -107,11 +108,15 @@ const App: React.FC = () => {
     }
   };
 
-  const handleEditBook = (book: Book) => {
-    console.log(book);
-  }
+  // const handleEditBook = () => {
+  //   console.log("clicked edit book");
+  //   setIsEditing(true);
+  //   console.log("clicked edit book");
+  //   console.log("isEditing", isEditing);
+  // };
 
   const handleCancelBook = () => {
+    console.log("isEditing", isEditing);
     if (searchedBook) {
       setTimeout(() => {
         setSearchedBook(null);
@@ -136,6 +141,15 @@ const App: React.FC = () => {
     }
   };
 
+  const handleEditBook = () => {
+    setIsEditing(true);
+    console.log("reached handleEditBook function")
+  };
+
+  useEffect(() => {
+    console.log(`Editing state changed in App: ${isEditing}`);
+  }, [isEditing]);
+
   return (
     <SupabaseProvider>
       <Router>
@@ -157,6 +171,8 @@ const App: React.FC = () => {
                 onSearch={handleSearch}
                 addBook={addBook}
                 handleEditBook={handleEditBook}
+                isEditing={isEditing}
+                setIsEditing={setIsEditing}
               />
             }
           />

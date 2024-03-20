@@ -65,6 +65,8 @@ const AddForm: React.FC<AddFormProps> = ({
       newBook = await fetchBookByIsbn(formData.input);
     }
 
+    // console.log("isEditing from AddForm", isEditing);
+
     if (newBook) {
       // add dateFinished to Book object
       const bookWithDate = { ...newBook, dateFinished: formData.dateFinished };
@@ -80,7 +82,6 @@ const AddForm: React.FC<AddFormProps> = ({
     } else {
       setBookNotFound(true);
     }
-    // setLoading(false);
   };
 
   // TODO: check if this is necessary
