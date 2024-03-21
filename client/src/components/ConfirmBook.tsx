@@ -54,7 +54,7 @@ const ConfirmBook: React.FC<ConfirmBookProps> = ({
               {searchedBook.pages} pages
             </p>
           )}
-          <div className="flex ml-[5rem] pt-10 pb-8 md:ml-[6rem]">
+          <div className="flex justify-center items-center pt-10 pb-8 ml-[2.25rem] md:ml-[4rem]">
             <button type="button" onClick={handleCancelBook}>
               <img
                 src={Cross}

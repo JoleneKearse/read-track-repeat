@@ -578,6 +578,22 @@ video {
   margin-top: 7rem;
 }
 
+.mr-\[5rem\] {
+  margin-right: 5rem;
+}
+
+.mr-\[3rem\] {
+  margin-right: 3rem;
+}
+
+.ml-\[2rem\] {
+  margin-left: 2rem;
+}
+
+.ml-\[2\.25rem\] {
+  margin-left: 2.25rem;
+}
+
 .block {
   display: block;
 }
@@ -962,6 +978,14 @@ video {
 @media (min-width: 768px) {
   .md\:ml-\[6rem\] {
     margin-left: 6rem;
+  }
+
+  .md\:ml-\[5rem\] {
+    margin-left: 5rem;
+  }
+
+  .md\:ml-\[4rem\] {
+    margin-left: 4rem;
   }
 
   .md\:grid {
