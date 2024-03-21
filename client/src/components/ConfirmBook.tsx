@@ -60,7 +60,7 @@ const ConfirmBook: React.FC<ConfirmBookProps> = ({
                 src={Cross}
                 alt="cross"
                 title="Not my book"
-                className="w-1/3 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full"
+                className="w-2/3 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full"
               />
             </button>
             <button type="button" onClick={() => setIsEditing(true)}>
@@ -76,7 +76,7 @@ const ConfirmBook: React.FC<ConfirmBookProps> = ({
                 src={Check}
                 alt="check"
                 title="Add to collection"
-                className="w-1/3 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full hover:bg-active-gradient"
+                className="w-2/3 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full"
               />
             </button>
           </div>
