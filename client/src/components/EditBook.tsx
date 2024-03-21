@@ -30,7 +30,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
         <p className="text-xl font-bold tracking-wide text-orange-200">
           Fill out any missing data
         </p>
-        <p className="text-base tracking-wide text-orange-200">
+        <p className="pb-10 text-base tracking-wide text-orange-200">
           I'm sorry I couldn't get it all for you!
         </p>
         {searchedBook.coverImageUrl ? (
@@ -135,14 +135,14 @@ const EditBook: React.FC<EditBookPageProps> = ({
             />
           </div>
         )}
-        <button type="submit">
-          <img
-            src={Check}
-            alt="check"
-            title="Add to collection"
-            className="w-1/6 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full"
-          />
-        </button>
+          <button type="submit" className="flex flex-col items-center justify-center py-10">
+            <img
+              src={Check}
+              alt="check"
+              title="Add to collection"
+              className="w-12 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full"
+            />
+          </button>
       </article>
     </form>
   );
