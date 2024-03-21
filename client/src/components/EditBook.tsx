@@ -42,7 +42,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
             className="w-3/4 pt-8 pb-10"
           />
         ) : (
-          <>
+          <div className="w-full py-4">
             <label
               htmlFor="coverImgInput"
               className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
@@ -55,28 +55,31 @@ const EditBook: React.FC<EditBookPageProps> = ({
               className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
               placeholder="https://m.media-amazon.com/images/G/15/apparel/rcxgs/tile._CB483369412_.gif"
             />
-          </>
+          </div>
         )}
 
-        <label
-          htmlFor="titleInput"
-          className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
-        >
-          Edit title or add series
-        </label>
-        <input
-          type="text"
-          id="titleInput"
-          className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
-          placeholder="Wrath of a Mad God: Darkwar Saga Book 3"
-        />
+        <div className="w-full py-4">
+          <label
+            htmlFor="titleInput"
+            className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
+          >
+            Edit title or add series
+          </label>
+          <input
+            type="text"
+            id="titleInput"
+            className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
+            // placeholder="Wrath of a Mad God: Darkwar Saga Book 3"
+            placeholder={`${searchedBook.title}: (series book number)`}
+          />
+        </div>
 
         {searchedBook.author ? (
           <p className="text-xl tracking-wide text-orange-200 text-balance">
             {searchedBook.author}
           </p>
         ) : (
-          <>
+          <div className="w-full py-4">
             <label
               htmlFor="authorInput"
               className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
@@ -89,7 +92,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
               className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
               placeholder="Stephen King, Nora Roberts"
             />
-          </>
+          </div>
         )}
 
         {searchedBook.published ? (
@@ -97,7 +100,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
             Published: {searchedBook.published}
           </p>
         ) : (
-          <>
+          <div className="w-full py-4">
             <label
               htmlFor="authorInput"
               className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
@@ -110,14 +113,14 @@ const EditBook: React.FC<EditBookPageProps> = ({
               className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
               placeholder="1999-12-31"
             />
-          </>
+          </div>
         )}
         {searchedBook.pages ? (
           <p className="text-base tracking-wide text-purple-100">
             {searchedBook.pages} pages
           </p>
         ) : (
-          <>
+          <div className="w-full py-4">
             <label
               htmlFor="pagesInput"
               className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
@@ -130,14 +133,14 @@ const EditBook: React.FC<EditBookPageProps> = ({
               className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
               placeholder="1001"
             />
-          </>
+          </div>
         )}
         <button type="submit">
           <img
             src={Check}
             alt="check"
             title="Add to collection"
-            className="w-1/3 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full hover:bg-active-gradient"
+            className="w-1/6 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full"
           />
         </button>
       </article>
