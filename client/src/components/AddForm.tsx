@@ -12,7 +12,7 @@ interface AddFormProps {
   setBookNotFound: (bookNotFound: boolean) => void;
   date: string;
   setDate: (date: string) => void;
-  setLoading: (loading: boolean) => void;
+  // setLoading: (loading: boolean) => void;
 }
 
 const AddForm: React.FC<AddFormProps> = ({
@@ -87,7 +87,7 @@ const AddForm: React.FC<AddFormProps> = ({
   // TODO: check if this is necessary
   useEffect(() => {
     if (bookNotFound) {
-      console.log(bookNotFound);
+      console.log("AddForm saying if book is not found", bookNotFound);
     }
   }, [bookNotFound]);
 

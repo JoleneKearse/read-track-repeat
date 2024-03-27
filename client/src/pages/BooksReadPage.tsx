@@ -15,6 +15,7 @@ const BooksReadPage: React.FC<BooksReadPageProps> = ({
   books,
   handleDataFetch,
 }) => {
+  
   useEffect(() => {
     handleDataFetch();
   }, []);

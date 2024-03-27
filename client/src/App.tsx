@@ -58,6 +58,7 @@ const App: React.FC = () => {
 
   const handleConfirmBook = async () => {
     if (searchedBook) {
+      console.log(searchedBook)
       const bookToInsert: Database["public"]["Tables"]["books"]["Insert"] = {
         title: searchedBook.title,
         author: searchedBook.author,
@@ -108,13 +109,6 @@ const App: React.FC = () => {
     }
   };
 
-  // const handleEditBook = () => {
-  //   console.log("clicked edit book");
-  //   setIsEditing(true);
-  //   console.log("clicked edit book");
-  //   console.log("isEditing", isEditing);
-  // };
-
   const handleCancelBook = () => {
     console.log("isEditing", isEditing);
     if (searchedBook) {
@@ -142,9 +136,18 @@ const App: React.FC = () => {
   };
 
   const handleEditBook = () => {
+    console.log("clicked edit book");
     setIsEditing(true);
-    console.log("reached handleEditBook function")
+    console.log("reached handleEditBook function");
+    console.log("isEditing", isEditing);
   };
+
+  // const handleEditBook = () => {
+  //   console.log("clicked edit book");
+  //   setIsEditing(true);
+  //   console.log("clicked edit book");
+  //   console.log("isEditing", isEditing);
+  // };
 
   useEffect(() => {
     console.log(`Editing state changed in App: ${isEditing}`);
@@ -190,11 +193,9 @@ const App: React.FC = () => {
             path="/bookSearch"
             element={
               <BooksSearchPage
-                navLinks={navLinks}
-                books={books}
-                handleDataFetch={handleDataFetch}
-                setSortedBooks={setSortedBooks}
-                // sortedBooks={sortedBooks}
+              navLinks={navLinks}
+              books={books}
+              handleDataFetch={handleDataFetch}
               />
             }
           />

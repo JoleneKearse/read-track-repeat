@@ -1,30 +1,41 @@
-import React from "react";
+import React, { FormEvent, useRef } from "react";
 import { Book } from "../types";
 import Cover from "/cover.svg";
 import Check from "/check.svg";
 
 interface EditBookPageProps {
   searchedBook: Book;
-  // handleEditBook: () => void;
+  handleEditBook: () => void;
   isEditing: boolean;
-  // setIsEditing: (isEditing: boolean) => void;
+  setIsEditing: (isEditing: boolean) => void;
   handleConfirmBook: () => void;
 }
 
 const EditBook: React.FC<EditBookPageProps> = ({
   searchedBook,
-  // handleEditBook,
+  handleEditBook,
   isEditing,
-  // setIsEditing,
+  setIsEditing,
   handleConfirmBook,
 }) => {
+  const coverImageUrlRef = useRef<HTMLInputElement>(null);
+  const titleRef = useRef<HTMLInputElement>(null);
+  const authorRef = useRef<HTMLInputElement>(null);
+  const pagesRef = useRef<HTMLInputElement>(null);
+  const publishedRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    console.log(`edit book: ${searchedBook}`);
+  };
+
   return (
     <form
       className="w-5/6 max-w-sm py-32 mx-auto snap-center md:max-w-md"
-      onSubmit={handleConfirmBook}
+      onSubmit={handleSubmit}
     >
       <article
-        key={searchedBook.id}
+        key={searchedBook.id | 1}
         className="flex flex-col items-center justify-center p-6 border border-orange-200 rounded-lg shadow-lg shadow-orange-200a bg-overlay"
       >
         <p className="text-xl font-bold tracking-wide text-orange-200">
@@ -33,6 +44,8 @@ const EditBook: React.FC<EditBookPageProps> = ({
         <p className="pb-10 text-base tracking-wide text-orange-200">
           I'm sorry I couldn't get it all for you!
         </p>
+
+        {/* CURRENT INFO */}
         {searchedBook.coverImageUrl ? (
           <img
             src={
@@ -51,6 +64,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
             </label>
             <input
               type="text"
+              ref={coverImageUrlRef}
               id="coverImgInput"
               className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
               placeholder="https://m.media-amazon.com/images/G/15/apparel/rcxgs/tile._CB483369412_.gif"
@@ -67,6 +81,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
           </label>
           <input
             type="text"
+            ref={titleRef}
             id="titleInput"
             className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
             // placeholder="Wrath of a Mad God: Darkwar Saga Book 3"
@@ -88,6 +103,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
             </label>
             <input
               type="text"
+              ref={authorRef}
               id="authorInput"
               className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
               placeholder="Stephen King, Nora Roberts"
@@ -109,6 +125,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
             </label>
             <input
               type="text"
+              ref={publishedRef}
               id="authorInput"
               className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
               placeholder="1999-12-31"
@@ -129,20 +146,25 @@ const EditBook: React.FC<EditBookPageProps> = ({
             </label>
             <input
               type="text"
+              ref={pagesRef}
               id="pagesInput"
               className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
               placeholder="1001"
             />
           </div>
         )}
-          <button type="submit" className="flex flex-col items-center justify-center py-10">
-            <img
-              src={Check}
-              alt="check"
-              title="Add to collection"
-              className="w-12 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full"
-            />
-          </button>
+        <button
+          type="button"
+          onClick={() => console.log("clicked edit book")}
+          className="flex flex-col items-center justify-center py-10"
+        >
+          <img
+            src={Check}
+            alt="check"
+            title="Update"
+            className="w-12 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full"
+          />
+        </button>
       </article>
     </form>
   );

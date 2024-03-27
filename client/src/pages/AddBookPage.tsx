@@ -23,7 +23,7 @@ interface AddBookPageProps {
   addBook: boolean;
   date: string;
   setDate: (date: string) => void;
-  handleEditBook: () => void;
+  handleEditBook: (book: Book) => void;
   isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
 }
@@ -70,7 +70,42 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
           setDate={setDate}
         />
         <div ref={searchResultsRef}>
-          {searchedBook && !isEditing && (
+          {searchedBook && (
+            <EditBook
+              searchedBook={searchedBook}
+              handleEditBook={handleEditBook}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+            />
+          )}
+          
+        </div>
+        {/* {isEditing && (
+          <EditBook
+            searchedBook={searchedBook}
+            handleEditBook={handleEditBook}
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+          />
+        )} */}
+        {/* {bookNotFound && (
+          <>
+            <NotFound
+              handleManuallyAddBook={handleManuallyAddBook}
+              addBook={addBook}
+              date={date}
+            />
+            <EditBook
+              searchedBook={searchedBook}
+              handleEditBook={handleEditBook}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+            />
+          </>
+        )} */}
+
+
+{/* {!isEditing ? (
             <ConfirmBook
               searchedBook={searchedBook}
               handleCancelBook={handleCancelBook}
@@ -78,24 +113,23 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
               handleSearch={handleSearch}
               isEditing={isEditing}
               setIsEditing={setIsEditing}
+              handleEditBook={handleEditBook}
             />
-          )}
-        </div>
-        {isEditing && (
-          <EditBook
-            searchedBook={searchedBook}
-            handleEditBook={handleEditBook}
-            isEditing={isEditing}
-            setIsEditing={setIsEditing}
-          />
-        )}
-        {bookNotFound && (
-          <NotFound
-            handleManuallyAddBook={handleManuallyAddBook}
-            addBook={addBook}
-            date={date}
-          />
-        )}
+          ) : (
+            <>
+            <NotFound
+              handleManuallyAddBook={handleManuallyAddBook}
+              addBook={addBook}
+              date={date}
+            />
+            <EditBook
+              searchedBook={searchedBook}
+              handleEditBook={handleEditBook}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+            />
+          </>
+          )} */}
       </main>
     </section>
   );

@@ -2,6 +2,7 @@ import React, { useRef, FormEvent } from "react";
 import { Book } from "../types";
 import NoBook from "/not-found.svg";
 import Library from "/library.svg";
+import EditBook from "./EditBook";
 
 interface NotFoundProps {
   handleManuallyAddBook: (newBook: Book) => void;
@@ -13,6 +14,7 @@ const NotFound: React.FC<NotFoundProps> = ({
   handleManuallyAddBook,
   addBook,
   date,
+  // handleEditBook: () => void;
 }) => {
   const formData = {
     title: "",
@@ -59,60 +61,69 @@ const NotFound: React.FC<NotFoundProps> = ({
       </article>
 
       {addBook && (
-        <form
-          className="w-5/6 max-w-sm py-32 mx-auto snap-center md:max-w-md"
-          onSubmit={handleSubmit}
-        >
-          <label
-            htmlFor="title"
-            className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white"
-          >
-            Title
-          </label>
-
-          <input
-            type="text"
-            id="title"
-            ref={titleRef}
-            className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300"
-            placeholder="The Martian"
-          />
-          <label
-            htmlFor="author"
-            className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white"
-          >
-            Author
-          </label>
-          <input
-            type="text"
-            id="author"
-            ref={authorRef}
-            className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300"
-            placeholder="Andy Weir"
-          />
-
-          <label
-            htmlFor="dateFinished"
-            className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white"
-          >
-            Prior Filled Out Date
-          </label>
-          <input
-            type="date"
-            disabled
-            value={date}
-            title="I remembered your date from above"
-            className="block mb-8 p-2.5 bg-orange-200 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 cursor-not-allowed"
-          />
-
-          <button
-            type="submit"
-            className="focus:outline-none text-purple-100 bg-orange-gradient hover:bg-yellow-500 focus:ring-4 focus:ring-purple-500 font-bold rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 hover:bg-active-gradient"
-          >
-            Add book
-          </button>
-        </form>
+        <EditBook
+        searchedBook={searchedBook}
+        handleEditBook={handleEditBook}
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+      />
       )}
+
+      {/* {addBook && (
+        // <form
+        //   className="w-5/6 max-w-sm py-32 mx-auto snap-center md:max-w-md"
+        //   onSubmit={handleSubmit}
+        // >
+        //   <label
+        //     htmlFor="title"
+        //     className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white"
+        //   >
+        //     Title
+        //   </label>
+
+        //   <input
+        //     type="text"
+        //     id="title"
+        //     ref={titleRef}
+        //     className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300"
+        //     placeholder="The Martian"
+        //   />
+        //   <label
+        //     htmlFor="author"
+        //     className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white"
+        //   >
+        //     Author
+        //   </label>
+        //   <input
+        //     type="text"
+        //     id="author"
+        //     ref={authorRef}
+        //     className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300"
+        //     placeholder="Andy Weir"
+        //   />
+
+        //   <label
+        //     htmlFor="dateFinished"
+        //     className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white"
+        //   >
+        //     Prior Filled Out Date
+        //   </label>
+        //   <input
+        //     type="date"
+        //     disabled
+        //     value={date}
+        //     title="I remembered your date from above"
+        //     className="block mb-8 p-2.5 bg-orange-200 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 cursor-not-allowed"
+        //   />
+
+        //   <button
+        //     type="submit"
+        //     className="focus:outline-none text-purple-100 bg-orange-gradient hover:bg-yellow-500 focus:ring-4 focus:ring-purple-500 font-bold rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 hover:bg-active-gradient"
+        //   >
+        //     Add book
+        //   </button>
+        // </form>
+      )} */}
     </section>
   );
 };
