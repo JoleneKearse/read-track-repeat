@@ -76,9 +76,10 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
               handleEditBook={handleEditBook}
               isEditing={isEditing}
               setIsEditing={setIsEditing}
+              handleCancelBook={handleCancelBook}
+              handleConfirmBook={handleConfirmBook}
             />
           )}
-          
         </div>
         {/* {isEditing && (
           <EditBook
@@ -104,8 +105,7 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
           </>
         )} */}
 
-
-{/* {!isEditing ? (
+        {/* {!isEditing ? (
             <ConfirmBook
               searchedBook={searchedBook}
               handleCancelBook={handleCancelBook}
