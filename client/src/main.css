@@ -836,6 +836,10 @@ video {
   padding-top: 2rem;
 }
 
+.pb-4 {
+  padding-bottom: 1rem;
+}
+
 .text-center {
   text-align: center;
 }
@@ -905,6 +909,11 @@ video {
 .text-purple-700 {
   --tw-text-opacity: 1;
   color: rgb(49 29 53 / var(--tw-text-opacity));
+}
+
+.text-purple-300 {
+  --tw-text-opacity: 1;
+  color: rgb(158 84 129 / var(--tw-text-opacity));
 }
 
 .opacity-50 {

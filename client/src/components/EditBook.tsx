@@ -42,7 +42,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
         className="flex flex-col items-center justify-center p-6 border border-orange-200 rounded-lg shadow-lg shadow-orange-200a bg-overlay"
       >
         <p className="text-2xl font-bold tracking-wide text-orange-200">
-          Personalize your book
+          Finalize your book's info
         </p>
         <p className="pb-10 text-base tracking-wide text-orange-200">
           If anything looks off, just click it and edit away!
@@ -79,28 +79,49 @@ const EditBook: React.FC<EditBookPageProps> = ({
         )}
 
         <div className="w-full py-4">
-          <label
-            htmlFor="titleInput"
-            className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
-          >
-            Edit title or add series for easier searching
-          </label>
-          <input
-            type="text"
-            ref={titleRef}
-            id="titleInput"
-            className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
-            // placeholder="Wrath of a Mad God: Darkwar Saga Book 3"
-            placeholder={`${searchedBook.title}: (series book number)`}
-          />
+          {searchedBook.title ? (
+            <>
+              <p className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg">
+                Edit title or add series for easier searching
+              </p>
+              <p className="pb-4 text-xl tracking-wide text-orange-200 text-balance">
+                <span
+                  className="px-1 font-bold text-purple-300 bg-purple-100 border-2 border-purple-100 rounded"
+                  contentEditable="true"
+                >
+                  {searchedBook.title}
+                </span>
+                : Series title / book number
+              </p>
+            </>
+          ) : (
+            <>
+              <label
+                htmlFor="titleInput"
+                className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
+              >
+                Edit title or add series for easier searching
+              </label>
+              <input
+                type="text"
+                ref={titleRef}
+                id="titleInput"
+                className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
+                // placeholder="Wrath of a Mad God: Darkwar Saga Book 3"
+                placeholder={`${searchedBook.title}: (series book number)`}
+              />
+            </>
+          )}
         </div>
 
         {searchedBook.author ? (
-          <p
-            className="text-xl tracking-wide text-orange-200 text-balance"
-            contentEditable="true"
-          >
-            {searchedBook.author}
+          <p className="pb-4 text-xl tracking-wide text-orange-200 text-balance">
+            <span
+              className="px-1 font-bold text-purple-300 bg-purple-100 border-2 border-purple-100 rounded"
+              contentEditable="true"
+            >
+              {searchedBook.author}
+            </span>
           </p>
         ) : (
           <div className="w-full py-4">
@@ -121,11 +142,14 @@ const EditBook: React.FC<EditBookPageProps> = ({
         )}
 
         {searchedBook.published ? (
-          <p
-            className="text-base tracking-wide text-purple-100"
-            contentEditable="true"
-          >
-            Published: {searchedBook.published}
+          <p className="pb-4 text-base tracking-wide text-purple-100">
+            Published:{" "}
+            <span
+              className="px-1 font-bold text-purple-300 bg-purple-100 border-2 border-purple-100 rounded"
+              contentEditable="true"
+            >
+              {searchedBook.published}
+            </span>
           </p>
         ) : (
           <div className="w-full py-4">
@@ -145,11 +169,14 @@ const EditBook: React.FC<EditBookPageProps> = ({
           </div>
         )}
         {searchedBook.pages ? (
-          <p
-            className="text-base tracking-wide text-purple-100"
-            contentEditable="true"
-          >
-            {searchedBook.pages} pages
+          <p className="text-base tracking-wide text-purple-100">
+            <span
+              className="px-1 font-bold text-purple-300 bg-purple-100 border-2 border-purple-100 rounded"
+              contentEditable="true"
+            >
+              {searchedBook.pages}
+            </span>{" "}
+            pages
           </p>
         ) : (
           <div className="w-full py-4">
