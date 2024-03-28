@@ -1,6 +1,7 @@
 import React, { FormEvent, useRef } from "react";
 import { Book } from "../types";
 import Cover from "/cover.svg";
+import Cross from "/cross.svg";
 import Check from "/check.svg";
 
 interface EditBookPageProps {
@@ -8,6 +9,7 @@ interface EditBookPageProps {
   handleEditBook: () => void;
   isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
+  handleCancelBook: () => void;
   handleConfirmBook: () => void;
 }
 
@@ -16,6 +18,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
   handleEditBook,
   isEditing,
   setIsEditing,
+  handleCancelBook,
   handleConfirmBook,
 }) => {
   const coverImageUrlRef = useRef<HTMLInputElement>(null);
@@ -38,11 +41,11 @@ const EditBook: React.FC<EditBookPageProps> = ({
         key={searchedBook.id | 1}
         className="flex flex-col items-center justify-center p-6 border border-orange-200 rounded-lg shadow-lg shadow-orange-200a bg-overlay"
       >
-        <p className="text-xl font-bold tracking-wide text-orange-200">
-          Fill out any missing data
+        <p className="text-2xl font-bold tracking-wide text-orange-200">
+          Personalize your book
         </p>
         <p className="pb-10 text-base tracking-wide text-orange-200">
-          I'm sorry I couldn't get it all for you!
+          If anything looks off, just click it and edit away!
         </p>
 
         {/* CURRENT INFO */}
@@ -60,7 +63,10 @@ const EditBook: React.FC<EditBookPageProps> = ({
               htmlFor="coverImgInput"
               className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
             >
-              Copied cover image link
+              Cover image link{" "}
+              <span className="px-1 text-purple-200 bg-purple-100 border-2 border-purple-100 rounded">
+                missing
+              </span>
             </label>
             <input
               type="text"
@@ -77,7 +83,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
             htmlFor="titleInput"
             className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
           >
-            Edit title or add series
+            Edit title or add series for easier searching
           </label>
           <input
             type="text"
@@ -90,7 +96,10 @@ const EditBook: React.FC<EditBookPageProps> = ({
         </div>
 
         {searchedBook.author ? (
-          <p className="text-xl tracking-wide text-orange-200 text-balance">
+          <p
+            className="text-xl tracking-wide text-orange-200 text-balance"
+            contentEditable="true"
+          >
             {searchedBook.author}
           </p>
         ) : (
@@ -112,7 +121,10 @@ const EditBook: React.FC<EditBookPageProps> = ({
         )}
 
         {searchedBook.published ? (
-          <p className="text-base tracking-wide text-purple-100">
+          <p
+            className="text-base tracking-wide text-purple-100"
+            contentEditable="true"
+          >
             Published: {searchedBook.published}
           </p>
         ) : (
@@ -133,7 +145,10 @@ const EditBook: React.FC<EditBookPageProps> = ({
           </div>
         )}
         {searchedBook.pages ? (
-          <p className="text-base tracking-wide text-purple-100">
+          <p
+            className="text-base tracking-wide text-purple-100"
+            contentEditable="true"
+          >
             {searchedBook.pages} pages
           </p>
         ) : (
@@ -153,18 +168,29 @@ const EditBook: React.FC<EditBookPageProps> = ({
             />
           </div>
         )}
-        <button
-          type="button"
-          onClick={() => console.log("clicked edit book")}
-          className="flex flex-col items-center justify-center py-10"
-        >
-          <img
-            src={Check}
-            alt="check"
-            title="Update"
-            className="w-12 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full"
-          />
-        </button>
+
+        <div className="flex justify-center items-center pt-10 pb-8 ml-[2.25rem] md:ml-[4rem]">
+          <button type="button" onClick={handleCancelBook}>
+            <img
+              src={Cross}
+              alt="cross"
+              title="Not my book"
+              className="w-1/3 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full"
+            />
+          </button>
+          <button
+            type="button"
+            onClick={() => console.log("clicked edit book")}
+            className="flex flex-col items-center justify-center py-10"
+          >
+            <img
+              src={Check}
+              alt="check"
+              title="Update"
+              className="w-1/3 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full"
+            />
+          </button>
+        </div>
       </article>
     </form>
   );
