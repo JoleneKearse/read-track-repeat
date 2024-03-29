@@ -41,44 +41,57 @@ const EditBook: React.FC<EditBookPageProps> = ({
         key={searchedBook.id | 1}
         className="flex flex-col items-center justify-center p-6 border border-orange-200 rounded-lg shadow-lg shadow-orange-200a bg-overlay"
       >
-        <p className="text-2xl font-bold tracking-wide text-orange-200">
+        <p className="pb-6 text-2xl font-bold tracking-wide text-orange-200">
           Finalize your book's info
         </p>
-        <p className="pb-10 text-base tracking-wide text-orange-200">
-          If anything looks off, just click it and edit away!
+        <p className="pb-4 text-base tracking-wide text-orange-200">
+          Fill in the{" "}
+          <span className="px-2 text-sm tracking-wide text-purple-500 bg-orange-100 border border-orange-200 rounded md:text-lg">
+            missing info
+          </span>{" "}
+          if desired.
+        </p>
+        <p className="pb-16 text-base tracking-wide text-orange-200">
+          Edit any of the{" "}
+          <span className="px-1 font-bold text-purple-300 bg-purple-100 border-2 border-purple-100 rounded">
+            info
+          </span>{" "}
+          if it's not quite right.
         </p>
 
         {/* CURRENT INFO */}
-        {searchedBook.coverImageUrl ? (
-          <img
-            src={
-              searchedBook.coverImageUrl ? searchedBook.coverImageUrl : Cover
-            }
-            alt={searchedBook.title}
-            className="w-3/4 pt-8 pb-10"
-          />
-        ) : (
-          <div className="w-full py-4">
-            <label
-              htmlFor="coverImgInput"
-              className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
-            >
-              Cover image link{" "}
-              <span className="px-1 text-purple-200 bg-purple-100 border-2 border-purple-100 rounded">
-                missing
-              </span>
-            </label>
-            <input
-              type="text"
-              ref={coverImageUrlRef}
-              id="coverImgInput"
-              className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
-              placeholder="https://m.media-amazon.com/images/G/15/apparel/rcxgs/tile._CB483369412_.gif"
+        {searchedBook.coverImageUrl && (
+          <>
+            <img
+              src={
+                searchedBook.coverImageUrl ? searchedBook.coverImageUrl : Cover
+              }
+              alt={searchedBook.title}
+              className="w-3/4 pt-8 pb-10"
             />
-          </div>
+            <p className="pb-4 text-base tracking-wide text-orange-200">
+              Not the book cover you were expecting? Click the help button to
+              find the one you want.
+            </p>
+          </>
         )}
+        <div className="w-full py-2">
+          <label
+            htmlFor="coverImgInput"
+            className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
+          >
+            Change the cover image
+          </label>
+          <input
+            type="text"
+            ref={coverImageUrlRef}
+            id="coverImgInput"
+            className="block w-full p-2 mb-8 text-sm tracking-wide text-gray-900 bg-orange-100 border border-orange-200 rounded-lg placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
+            placeholder="https://m.media-amazon.com/images/G/15/apparel/rcxgs/tile._CB483369412_.gif"
+          />
+        </div>
 
-        <div className="w-full py-4">
+        <div className="w-full py-2">
           {searchedBook.title ? (
             <>
               <p className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg">
@@ -86,12 +99,12 @@ const EditBook: React.FC<EditBookPageProps> = ({
               </p>
               <p className="pb-4 text-xl tracking-wide text-orange-200 text-balance">
                 <span
-                  className="px-1 font-bold text-purple-300 bg-purple-100 border-2 border-purple-100 rounded"
+                  className="block w-full px-1 font-bold text-purple-300 bg-purple-100 border-2 border-purple-100 rounded"
                   contentEditable="true"
                 >
                   {searchedBook.title}
                 </span>
-                : Series title / book number
+                <span className="block"></span>Series title / book number
               </p>
             </>
           ) : (
@@ -207,7 +220,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
           </button>
           <button
             type="button"
-            onClick={() => console.log("clicked edit book")}
+            onClick={handleConfirmBook}
             className="flex flex-col items-center justify-center py-10"
           >
             <img
