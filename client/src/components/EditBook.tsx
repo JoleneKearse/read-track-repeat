@@ -41,22 +41,15 @@ const EditBook: React.FC<EditBookPageProps> = ({
         key={searchedBook.id | 1}
         className="flex flex-col items-center justify-center p-6 border border-orange-200 rounded-lg shadow-lg shadow-orange-200a bg-overlay"
       >
-        <p className="pb-6 text-2xl font-bold tracking-wide text-orange-200">
+        <h2 className="pb-6 text-2xl font-bold tracking-wide text-orange-200">
           Finalize your book's info
-        </p>
-        <p className="pb-4 text-base tracking-wide text-orange-200">
-          Fill in the{" "}
-          <span className="px-2 text-sm tracking-wide text-purple-500 border border-orange-200 rounded bg-orange-100a md:text-lg">
-            missing info
-          </span>{" "}
-          if desired.
-        </p>
+        </h2>
         <p className="pb-16 text-base tracking-wide text-orange-200">
           Edit any of the{" "}
           <span className="px-1 font-bold text-orange-200 rounded bg-purple-100a">
             info
           </span>{" "}
-          if it's not quite right.
+          that's missing or not quite right.
         </p>
 
         {/* CURRENT INFO */}
@@ -69,7 +62,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
               alt={searchedBook.title}
               className="w-3/4 pt-8 pb-10"
             />
-            <p className="pb-4 text-base tracking-wide text-orange-200">
+            <p className="pb-4 text-base italic font-light tracking-wide text-orange-200">
               Not the book cover you were expecting? Click the help button to
               find the one you want.
             </p>
@@ -104,7 +97,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
                 >
                   {searchedBook.title}
                 </span>
-                <span className="block">
+                <span className="block italic font-light">
                   Ex: The Martian: Martian Series Book 1
                 </span>
               </p>
@@ -122,7 +115,6 @@ const EditBook: React.FC<EditBookPageProps> = ({
                 ref={titleRef}
                 id="titleInput"
                 className="block mb-8 p-2.5 bg-orange-100a text-purple-100 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-200 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
-                // placeholder="Wrath of a Mad God: Darkwar Saga Book 3"
                 placeholder={`${searchedBook.title}: (series book number)`}
               />
             </>
