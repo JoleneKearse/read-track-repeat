@@ -4,11 +4,13 @@ export default {
   theme: {
     colors: {
       "orange-100": "#ffc278",
+      "orange-100a": "#ffc27826",
       "orange-200": "#ff8807",
       "orange-200a": "#ff880726",
       "orange-300": "#ff981a",
       "orange-500": "#ed5107",
       "purple-100": "#FFF0FF",
+      "purple-100a": "#FFF0FF26",
       "purple-200": "#C67CA9",
       "purple-300": "#9E5481",
       "purple-500": "#7B315E",

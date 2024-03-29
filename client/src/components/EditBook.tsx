@@ -46,14 +46,14 @@ const EditBook: React.FC<EditBookPageProps> = ({
         </p>
         <p className="pb-4 text-base tracking-wide text-orange-200">
           Fill in the{" "}
-          <span className="px-2 text-sm tracking-wide text-purple-500 bg-orange-100 border border-orange-200 rounded md:text-lg">
+          <span className="px-2 text-sm tracking-wide text-purple-500 border border-orange-200 rounded bg-orange-100a md:text-lg">
             missing info
           </span>{" "}
           if desired.
         </p>
         <p className="pb-16 text-base tracking-wide text-orange-200">
           Edit any of the{" "}
-          <span className="px-1 font-bold text-orange-200 bg-purple-100 border-2 border-purple-100 rounded">
+          <span className="px-1 font-bold text-orange-200 rounded bg-purple-100a">
             info
           </span>{" "}
           if it's not quite right.
@@ -86,7 +86,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
             type="text"
             ref={coverImageUrlRef}
             id="coverImgInput"
-            className="block w-full p-2 mb-8 text-sm tracking-wide text-gray-900 bg-orange-100 border border-orange-200 rounded-lg placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
+            className="block w-full p-2 mb-8 text-sm tracking-wide text-purple-100 rounded-lg bg-orange-100a placeholder:text-purple-200 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
             placeholder="https://m.media-amazon.com/images/G/15/apparel/rcxgs/tile._CB483369412_.gif"
           />
         </div>
@@ -99,12 +99,14 @@ const EditBook: React.FC<EditBookPageProps> = ({
               </p>
               <p className="pb-4 text-xl tracking-wide text-orange-200 text-balance">
                 <span
-                  className="block w-full px-1 font-bold text-orange-200 bg-purple-100 border-2 border-purple-100 rounded"
+                  className="block w-full px-1 font-bold text-orange-200 rounded bg-orange-100a"
                   contentEditable="true"
                 >
                   {searchedBook.title}
                 </span>
-                <span className="block">Ex: The Martian: Martian Series Book 1</span>
+                <span className="block">
+                  Ex: The Martian: Martian Series Book 1
+                </span>
               </p>
             </>
           ) : (
@@ -119,7 +121,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
                 type="text"
                 ref={titleRef}
                 id="titleInput"
-                className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
+                className="block mb-8 p-2.5 bg-orange-100a text-purple-100 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-200 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
                 // placeholder="Wrath of a Mad God: Darkwar Saga Book 3"
                 placeholder={`${searchedBook.title}: (series book number)`}
               />
@@ -130,7 +132,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
         {searchedBook.author ? (
           <p className="pb-4 text-xl tracking-wide text-orange-200 text-balance">
             <span
-              className="px-1 font-bold text-orange-200 bg-purple-100 border-2 border-purple-100 rounded"
+              className="px-1 font-bold text-orange-200 rounded bg-orange-100a"
               contentEditable="true"
             >
               {searchedBook.author}
@@ -148,7 +150,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
               type="text"
               ref={authorRef}
               id="authorInput"
-              className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
+              className="block mb-8 p-2.5 bg-orange-100a text-purple-100 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-200 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
               placeholder="Stephen King, Nora Roberts"
             />
           </div>
@@ -158,7 +160,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
           <p className="pb-4 text-base tracking-wide text-purple-100">
             Published:{" "}
             <span
-              className="px-1 font-bold text-orange-200 bg-purple-100 border-2 border-purple-100 rounded"
+              className="px-1 font-bold text-orange-200 rounded bg-orange-100a"
               contentEditable="true"
             >
               {searchedBook.published}
@@ -176,7 +178,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
               type="text"
               ref={publishedRef}
               id="authorInput"
-              className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
+              className="block mb-8 p-2.5 bg-orange-100a text-purple-100 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-200 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
               placeholder="1999-12-31"
             />
           </div>
@@ -184,7 +186,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
         {searchedBook.pages ? (
           <p className="text-base tracking-wide text-purple-100">
             <span
-              className="px-1 font-bold text-orange-200 bg-purple-100 border-2 border-purple-100 rounded"
+              className="px-1 font-bold text-orange-200 rounded bg-orange-100a"
               contentEditable="true"
             >
               {searchedBook.pages}
@@ -203,7 +205,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
               type="text"
               ref={pagesRef}
               id="pagesInput"
-              className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
+              className="block mb-8 p-2.5 bg-orange-100a text-purple-100 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-200 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
               placeholder="1001"
             />
           </div>
