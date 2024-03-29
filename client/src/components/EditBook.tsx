@@ -53,7 +53,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
         </p>
         <p className="pb-16 text-base tracking-wide text-orange-200">
           Edit any of the{" "}
-          <span className="px-1 font-bold text-purple-300 bg-purple-100 border-2 border-purple-100 rounded">
+          <span className="px-1 font-bold text-orange-200 bg-purple-100 border-2 border-purple-100 rounded">
             info
           </span>{" "}
           if it's not quite right.
@@ -99,12 +99,12 @@ const EditBook: React.FC<EditBookPageProps> = ({
               </p>
               <p className="pb-4 text-xl tracking-wide text-orange-200 text-balance">
                 <span
-                  className="block w-full px-1 font-bold text-purple-300 bg-purple-100 border-2 border-purple-100 rounded"
+                  className="block w-full px-1 font-bold text-orange-200 bg-purple-100 border-2 border-purple-100 rounded"
                   contentEditable="true"
                 >
                   {searchedBook.title}
                 </span>
-                <span className="block"></span>Series title / book number
+                <span className="block">Ex: The Martian: Martian Series Book 1</span>
               </p>
             </>
           ) : (
@@ -130,7 +130,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
         {searchedBook.author ? (
           <p className="pb-4 text-xl tracking-wide text-orange-200 text-balance">
             <span
-              className="px-1 font-bold text-purple-300 bg-purple-100 border-2 border-purple-100 rounded"
+              className="px-1 font-bold text-orange-200 bg-purple-100 border-2 border-purple-100 rounded"
               contentEditable="true"
             >
               {searchedBook.author}
@@ -158,7 +158,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
           <p className="pb-4 text-base tracking-wide text-purple-100">
             Published:{" "}
             <span
-              className="px-1 font-bold text-purple-300 bg-purple-100 border-2 border-purple-100 rounded"
+              className="px-1 font-bold text-orange-200 bg-purple-100 border-2 border-purple-100 rounded"
               contentEditable="true"
             >
               {searchedBook.published}
@@ -184,7 +184,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
         {searchedBook.pages ? (
           <p className="text-base tracking-wide text-purple-100">
             <span
-              className="px-1 font-bold text-purple-300 bg-purple-100 border-2 border-purple-100 rounded"
+              className="px-1 font-bold text-orange-200 bg-purple-100 border-2 border-purple-100 rounded"
               contentEditable="true"
             >
               {searchedBook.pages}
