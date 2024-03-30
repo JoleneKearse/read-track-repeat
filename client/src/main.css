@@ -578,6 +578,10 @@ video {
   margin-top: 7rem;
 }
 
+.-mt-8 {
+  margin-top: -2rem;
+}
+
 .block {
   display: block;
 }
@@ -683,15 +687,6 @@ video {
   border-color: rgb(255 136 7 / var(--tw-border-opacity));
 }
 
-.border-orange-100 {
-  --tw-border-opacity: 1;
-  border-color: rgb(255 194 120 / var(--tw-border-opacity));
-}
-
-.border-orange-100a {
-  border-color: #ffc27826;
-}
-
 .bg-orange-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(255 194 120 / var(--tw-bg-opacity));
@@ -771,11 +766,6 @@ video {
   padding-right: 0.25rem;
 }
 
-.px-2 {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
-
 .px-5 {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
@@ -842,6 +832,10 @@ video {
 
 .pt-8 {
   padding-top: 2rem;
+}
+
+.pl-1 {
+  padding-left: 0.25rem;
 }
 
 .text-center {
@@ -918,11 +912,6 @@ video {
   color: rgb(198 124 169 / var(--tw-text-opacity));
 }
 
-.text-purple-500 {
-  --tw-text-opacity: 1;
-  color: rgb(123 49 94 / var(--tw-text-opacity));
-}
-
 .text-purple-700 {
   --tw-text-opacity: 1;
   color: rgb(49 29 53 / var(--tw-text-opacity));
@@ -943,6 +932,16 @@ video {
   --tw-shadow: var(--tw-shadow-colored);
 }
 
+.placeholder\:text-purple-200::-moz-placeholder {
+  --tw-text-opacity: 1;
+  color: rgb(198 124 169 / var(--tw-text-opacity));
+}
+
+.placeholder\:text-purple-200::placeholder {
+  --tw-text-opacity: 1;
+  color: rgb(198 124 169 / var(--tw-text-opacity));
+}
+
 .placeholder\:text-purple-500::-moz-placeholder {
   --tw-text-opacity: 1;
   color: rgb(123 49 94 / var(--tw-text-opacity));
@@ -953,14 +952,14 @@ video {
   color: rgb(123 49 94 / var(--tw-text-opacity));
 }
 
-.placeholder\:text-purple-200::-moz-placeholder {
+.placeholder\:text-orange-200::-moz-placeholder {
   --tw-text-opacity: 1;
-  color: rgb(198 124 169 / var(--tw-text-opacity));
+  color: rgb(255 136 7 / var(--tw-text-opacity));
 }
 
-.placeholder\:text-purple-200::placeholder {
+.placeholder\:text-orange-200::placeholder {
   --tw-text-opacity: 1;
-  color: rgb(198 124 169 / var(--tw-text-opacity));
+  color: rgb(255 136 7 / var(--tw-text-opacity));
 }
 
 .hover\:scale-105:hover {

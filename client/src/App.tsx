@@ -46,6 +46,7 @@ const App: React.FC = () => {
   const [searchedBook, setSearchedBook] = useState<Book | null>(null);
   const [books, setBooks] = useState<Book[]>([]);
   const [bookNotFound, setBookNotFound] = useState(false);
+  const [editedBook, setEditedBook] = useState<Book | null>(null);
   const [addBook, setAddBook] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [sortedBooks, setSortedBooks] = useState<Book[]>([]);
@@ -56,17 +57,16 @@ const App: React.FC = () => {
     setBooks([...books, newBook]);
   };
 
-  const handleConfirmBook = async () => {
-    if (searchedBook) {
-      console.log(searchedBook)
+  const handleConfirmBook = async (book: Book) => {
+    if (book) {
       const bookToInsert: Database["public"]["Tables"]["books"]["Insert"] = {
-        title: searchedBook.title,
-        author: searchedBook.author,
-        published: searchedBook.published || null,
-        pages: searchedBook.pages || null,
+        title: book.title,
+        author: book.author,
+        published: book.published || null,
+        pages: book.pages || null,
         // keep camelCase to add to db for image & date
-        cover_img_url: searchedBook.coverImageUrl || null,
-        date_finished: searchedBook.dateFinished || null,
+        cover_img_url: book.coverImageUrl || null,
+        date_finished: book.dateFinished || null,
       };
       const { data, error } = await supabase
         .from("books")
@@ -111,6 +111,7 @@ const App: React.FC = () => {
 
   const handleCancelBook = () => {
     console.log("isEditing", isEditing);
+    console.log("canceled book", searchedBook);
     if (searchedBook) {
       setTimeout(() => {
         setSearchedBook(null);
@@ -169,6 +170,8 @@ const App: React.FC = () => {
                 searchedBook={searchedBook}
                 handleSearch={handleSearch}
                 bookNotFound={bookNotFound}
+                editedBook={editedBook}
+                setEditedBook={setEditedBook}
                 setBookNotFound={setBookNotFound}
                 handleManuallyAddBook={handleManuallyAddBook}
                 onSearch={handleSearch}
@@ -193,9 +196,9 @@ const App: React.FC = () => {
             path="/bookSearch"
             element={
               <BooksSearchPage
-              navLinks={navLinks}
-              books={books}
-              handleDataFetch={handleDataFetch}
+                navLinks={navLinks}
+                books={books}
+                handleDataFetch={handleDataFetch}
               />
             }
           />

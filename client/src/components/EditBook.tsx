@@ -9,17 +9,18 @@ interface EditBookPageProps {
   handleEditBook: () => void;
   isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
+  editedBook: Book | null;
+  setEditedBook: (editedBook: Book | null) => void;
   handleCancelBook: () => void;
-  handleConfirmBook: () => void;
+  handleConfirmBook: (book: Book) => void;
 }
 
 const EditBook: React.FC<EditBookPageProps> = ({
   searchedBook,
-  handleEditBook,
-  isEditing,
-  setIsEditing,
   handleCancelBook,
   handleConfirmBook,
+  editedBook,
+  setEditedBook,
 }) => {
   const coverImageUrlRef = useRef<HTMLInputElement>(null);
   const titleRef = useRef<HTMLInputElement>(null);
@@ -29,7 +30,19 @@ const EditBook: React.FC<EditBookPageProps> = ({
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    console.log(`edit book: ${searchedBook}`);
+
+    const updatedBook: Book = {
+      coverImageUrl:
+        coverImageUrlRef.current?.value || searchedBook.coverImageUrl,
+      title: titleRef.current?.value || searchedBook.title,
+      author: authorRef.current?.value || searchedBook.author,
+      pages: pagesRef.current?.value
+        ? parseInt(pagesRef.current.value)
+        : searchedBook.pages,
+      published: publishedRef.current?.value || searchedBook.published,
+    };
+
+    handleConfirmBook(updatedBook);
   };
 
   return (
@@ -85,123 +98,85 @@ const EditBook: React.FC<EditBookPageProps> = ({
         </div>
 
         <div className="w-full py-2">
-          {searchedBook.title ? (
+          {searchedBook.title && (
             <>
-              <p className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg">
-                Edit title or add series for easier searching
-              </p>
-              <p className="pb-4 text-xl tracking-wide text-orange-200 text-balance">
-                <span
-                  className="block w-full px-1 font-bold text-orange-200 rounded bg-orange-100a"
-                  contentEditable="true"
-                >
-                  {searchedBook.title}
-                </span>
-                <span className="block italic font-light">
-                  Ex: The Martian: Martian Series Book 1
-                </span>
-              </p>
-            </>
-          ) : (
-            <>
-              <label
-                htmlFor="titleInput"
-                className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
-              >
+              <label className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg">
                 Edit title or add series for easier searching
               </label>
               <input
                 type="text"
                 ref={titleRef}
                 id="titleInput"
-                className="block mb-8 p-2.5 bg-orange-100a text-purple-100 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-200 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
-                placeholder={`${searchedBook.title}: (series book number)`}
+                className="block mb-8 p-2.5 bg-orange-100a text-orange-300 text-sm tracking-wide rounded-lg w-full placeholder:text-orange-200 font-bold focus:ring-purple-300 focus:border-purple-300 md:text-lg"
+                // placeholder={`${searchedBook.title}`}
+                defaultValue={searchedBook.title}
+              />
+              <p className="block pb-4 pl-1 -mt-8 text-xl italic font-light tracking-wide text-orange-200 text-balance">
+                Ex: Eloquent JavaScript: 4th edition
+              </p>
+            </>
+          )}
+        </div>
+
+        <div className="w-full py-2">
+          {searchedBook.author && (
+            <>
+              <label
+                htmlFor="authorInput"
+                className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
+              >
+                Author(s)
+              </label>
+              <input
+                type="text"
+                ref={authorRef}
+                id="authorInput"
+                className="block mb-8 p-2.5 bg-orange-100a text-orange-300 text-sm tracking-wide rounded-lg w-full placeholder:text-orange-200 font-bold focus:ring-purple-300 focus:border-purple-300 md:text-lg"
+                defaultValue={searchedBook.author}
               />
             </>
           )}
         </div>
 
-        {searchedBook.author ? (
-          <p className="pb-4 text-xl tracking-wide text-orange-200 text-balance">
-            <span
-              className="px-1 font-bold text-orange-200 rounded bg-orange-100a"
-              contentEditable="true"
-            >
-              {searchedBook.author}
-            </span>
-          </p>
-        ) : (
-          <div className="w-full py-4">
-            <label
-              htmlFor="authorInput"
-              className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
-            >
-              Author(s)
-            </label>
-            <input
-              type="text"
-              ref={authorRef}
-              id="authorInput"
-              className="block mb-8 p-2.5 bg-orange-100a text-purple-100 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-200 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
-              placeholder="Stephen King, Nora Roberts"
-            />
-          </div>
-        )}
+        <div className="w-full py-2">
+          {searchedBook.published && (
+            <>
+              <label
+                htmlFor="authorInput"
+                className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
+              >
+                Published date
+              </label>
+              <input
+                type="text"
+                ref={publishedRef}
+                id="authorInput"
+                className="block mb-8 p-2.5 bg-orange-100a text-orange-300 text-sm tracking-wide rounded-lg w-full placeholder:text-orange-200 font-bold focus:ring-purple-300 focus:border-purple-300 md:text-lg"
+                defaultValue={searchedBook.published}
+              />
+            </>
+          )}
+        </div>
 
-        {searchedBook.published ? (
-          <p className="pb-4 text-base tracking-wide text-purple-100">
-            Published:{" "}
-            <span
-              className="px-1 font-bold text-orange-200 rounded bg-orange-100a"
-              contentEditable="true"
-            >
-              {searchedBook.published}
-            </span>
-          </p>
-        ) : (
-          <div className="w-full py-4">
-            <label
-              htmlFor="authorInput"
-              className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
-            >
-              Published date
-            </label>
-            <input
-              type="text"
-              ref={publishedRef}
-              id="authorInput"
-              className="block mb-8 p-2.5 bg-orange-100a text-purple-100 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-200 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
-              placeholder="1999-12-31"
-            />
-          </div>
-        )}
-        {searchedBook.pages ? (
-          <p className="text-base tracking-wide text-purple-100">
-            <span
-              className="px-1 font-bold text-orange-200 rounded bg-orange-100a"
-              contentEditable="true"
-            >
-              {searchedBook.pages}
-            </span>{" "}
-            pages
-          </p>
-        ) : (
-          <div className="w-full py-4">
-            <label
-              htmlFor="pagesInput"
-              className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
-            >
-              Number of pages
-            </label>
-            <input
-              type="text"
-              ref={pagesRef}
-              id="pagesInput"
-              className="block mb-8 p-2.5 bg-orange-100a text-purple-100 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-200 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
-              placeholder="1001"
-            />
-          </div>
-        )}
+        <div className="w-full py-2">
+          {searchedBook.pages && (
+            <>
+              <label
+                htmlFor="pagesInput"
+                className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
+              >
+                Number of pages
+              </label>
+              <input
+                type="text"
+                ref={pagesRef}
+                id="pagesInput"
+                className="block mb-8 p-2.5 bg-orange-100a text-orange-300 text-sm tracking-wide rounded-lg w-full placeholder:text-orange-200 font-bold focus:ring-purple-300 focus:border-purple-300 md:text-lg"
+                defaultValue={searchedBook.pages}
+              />
+            </>
+          )}
+        </div>
 
         <div className="flex justify-center items-center pt-10 pb-8 ml-[2.25rem] md:ml-[4rem]">
           <button type="button" onClick={handleCancelBook}>
@@ -213,8 +188,8 @@ const EditBook: React.FC<EditBookPageProps> = ({
             />
           </button>
           <button
-            type="button"
-            onClick={handleConfirmBook}
+            type="submit"
+            // onClick={handleSubmit}
             className="flex flex-col items-center justify-center py-10"
           >
             <img
