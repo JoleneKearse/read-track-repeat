@@ -40,6 +40,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
         ? parseInt(pagesRef.current.value)
         : searchedBook.pages,
       published: publishedRef.current?.value || searchedBook.published,
+      dateFinished: searchedBook.dateFinished,
     };
 
     handleConfirmBook(updatedBook);
@@ -108,7 +109,6 @@ const EditBook: React.FC<EditBookPageProps> = ({
                 ref={titleRef}
                 id="titleInput"
                 className="block mb-8 p-2.5 bg-orange-100a text-orange-300 text-sm tracking-wide rounded-lg w-full placeholder:text-orange-200 font-bold focus:ring-purple-300 focus:border-purple-300 md:text-lg"
-                // placeholder={`${searchedBook.title}`}
                 defaultValue={searchedBook.title}
               />
               <p className="block pb-4 pl-1 -mt-8 text-xl italic font-light tracking-wide text-orange-200 text-balance">
