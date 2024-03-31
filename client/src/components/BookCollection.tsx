@@ -1,5 +1,6 @@
 import React from "react";
 import { Book } from "../types";
+import Edit from "/edit.svg";
 import Cover from "/cover.svg";
 
 interface BookCollectionProps {
@@ -23,7 +24,7 @@ const BookCollection: React.FC<BookCollectionProps> = ({ books }) => {
         {books.map((book) => (
           <article
             key={book.id}
-            className={`flex flex-col items-center justify-center flex-none w-3/5 p-4 mx-auto my-10 text-center bg-overlay border border-orange-200 rounded-lg shadow-lg shadow-orange-200a ${
+            className={`flex flex-col items-center justify-center flex-none w-3/5 p-4 mx-auto my-10 text-center bg-overlay border border-orange-200 rounded-lg shadow-lg shadow-orange-200a relative ${
               books.length <= 3 ? "lg:max-w-xs lg:max-h-[450px]" : ""
             }`}
           >
@@ -48,6 +49,14 @@ const BookCollection: React.FC<BookCollectionProps> = ({ books }) => {
                 {book.pages} pages
               </p>
             )}
+            <button>
+              <img
+                src={Edit}
+                alt="Edit book info"
+                title="Edit book info"
+                className="absolute opacity-40 w-9 bottom-3 right-3 hover:opacity-75 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full"
+              />
+            </button>
           </article>
         ))}
       </section>
