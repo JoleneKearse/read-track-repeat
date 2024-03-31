@@ -19,6 +19,8 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({ navLinks }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
   const filteredBooksRef = useRef<HTMLDivElement>(null);
+  const [searchMethod, setSearchMethod] = useState<string>("");
+  const [searchInput, setSearchInput] = useState<string>("");
 
   const handleSearchResponse = (
     data: Book[] | null,
@@ -84,12 +86,18 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({ navLinks }) => {
     // setLoading(true);
     switch (method) {
       case "year":
+        setSearchMethod("year");
+        setSearchInput(input);
         await searchBooksByYear(input);
         break;
       case "title":
+        setSearchMethod("title");
+        setSearchInput(input);
         await searchBooksByTitle(input);
         break;
       case "author":
+        setSearchMethod("author");
+        setSearchInput(input);
         await searchBooksByAuthor(input);
         break;
       default:
@@ -111,7 +119,13 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({ navLinks }) => {
       <NavBar navLinks={navLinks} />
       <SearchBooks handleSearch={handleSearch} />
       <div ref={filteredBooksRef}>
-        {loading && <FilteredBooks filteredBooks={filteredBooks} />}
+        {loading && (
+          <FilteredBooks
+            filteredBooks={filteredBooks}
+            searchMethod={searchMethod}
+            searchInput={searchInput}
+          />
+        )}
       </div>
     </section>
   );
