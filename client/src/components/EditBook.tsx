@@ -93,7 +93,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
             type="text"
             ref={coverImageUrlRef}
             id="coverImgInput"
-            className="block w-full p-2 mb-8 text-sm tracking-wide text-purple-100 rounded-lg bg-orange-100a placeholder:text-purple-200 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
+            className="block w-full px-2.5 mb-8 text-sm tracking-wide text-orange-200 rounded-lg bg-orange-100a placeholder:text-purple-200 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
             placeholder="https://m.media-amazon.com/images/G/15/apparel/rcxgs/tile._CB483369412_.gif"
           />
         </div>
@@ -108,7 +108,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
                 type="text"
                 ref={titleRef}
                 id="titleInput"
-                className="block mb-8 p-2.5 bg-orange-100a text-orange-300 text-sm tracking-wide rounded-lg w-full placeholder:text-orange-200 font-bold focus:ring-purple-300 focus:border-purple-300 md:text-lg"
+                className="block mb-8 px-2.5 bg-orange-100a text-orange-300 text-sm tracking-wide rounded-lg w-full placeholder:text-orange-200 font-bold focus:ring-purple-300 focus:border-purple-300 md:text-lg"
                 defaultValue={searchedBook.title}
               />
               <p className="block pb-4 pl-1 -mt-8 text-xl italic font-light tracking-wide text-orange-200 text-balance">
@@ -131,7 +131,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
                 type="text"
                 ref={authorRef}
                 id="authorInput"
-                className="block mb-8 p-2.5 bg-orange-100a text-orange-300 text-sm tracking-wide rounded-lg w-full placeholder:text-orange-200 font-bold focus:ring-purple-300 focus:border-purple-300 md:text-lg"
+                className="block mb-8 px-2.5 bg-orange-100a text-orange-300 text-sm tracking-wide rounded-lg w-full placeholder:text-orange-200 font-bold focus:ring-purple-300 focus:border-purple-300 md:text-lg"
                 defaultValue={searchedBook.author}
               />
             </>
@@ -151,7 +151,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
                 type="text"
                 ref={publishedRef}
                 id="authorInput"
-                className="block mb-8 p-2.5 bg-orange-100a text-orange-300 text-sm tracking-wide rounded-lg w-full placeholder:text-orange-200 font-bold focus:ring-purple-300 focus:border-purple-300 md:text-lg"
+                className="block mb-8 px-2.5 bg-orange-100a text-orange-300 text-sm tracking-wide rounded-lg w-full placeholder:text-orange-200 font-bold focus:ring-purple-300 focus:border-purple-300 md:text-lg"
                 defaultValue={searchedBook.published}
               />
             </>
@@ -171,7 +171,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
                 type="text"
                 ref={pagesRef}
                 id="pagesInput"
-                className="block mb-8 p-2.5 bg-orange-100a text-orange-300 text-sm tracking-wide rounded-lg w-full placeholder:text-orange-200 font-bold focus:ring-purple-300 focus:border-purple-300 md:text-lg"
+                className="block mb-8 px-2.5 bg-orange-100a text-orange-300 text-sm tracking-wide rounded-lg w-full placeholder:text-orange-200 font-bold focus:ring-purple-300 focus:border-purple-300 md:text-lg"
                 defaultValue={searchedBook.pages}
               />
             </>
