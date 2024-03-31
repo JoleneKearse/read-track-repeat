@@ -17,6 +17,10 @@ const SearchBooks: React.FC<SearchBooksProps> = ({ handleSearch }) => {
     if (method && input) {
       handleSearch(method, input);
     }
+
+    // clear form data
+    if (sortingMethodRef.current) sortingMethodRef.current.value = "Choose sorting method";
+    if (criteriaInputRef.current) criteriaInputRef.current.value = "";
   };
 
   return (
