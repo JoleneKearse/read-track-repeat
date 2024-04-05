@@ -14,6 +14,8 @@ interface BooksReadPageProps {
   setIsEditing: (isEditing: boolean) => void;
   editingBook: Book | null;
   setEditingBook: (editedBook: Book | null) => void;
+  handleCancelBook: () => void;
+  handleConfirmBook: () => void;
 }
 
 const BooksReadPage: React.FC<BooksReadPageProps> = ({
@@ -25,14 +27,16 @@ const BooksReadPage: React.FC<BooksReadPageProps> = ({
   setIsEditing,
   editingBook,
   setEditingBook,
+  handleCancelBook,
+  handleConfirmBook,
 }) => {
   useEffect(() => {
     handleDataFetch();
   }, []);
 
   useEffect(() => {
-    setIsEditing(true);
-    setEditingBook(editingBook)
+    console.log("isEditing changed in BooksReadPage", isEditing);
+    console.log(editingBook);
   }, [isEditing]);
 
   return (
@@ -42,7 +46,7 @@ const BooksReadPage: React.FC<BooksReadPageProps> = ({
 
       {isEditing && editingBook ? (
         <EditBook
-          searchedBook={searchedBook}
+          searchedBook={editingBook}
           handleEditBook={handleEditBook}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
@@ -50,7 +54,15 @@ const BooksReadPage: React.FC<BooksReadPageProps> = ({
           setEditingBook={setEditingBook}
         />
       ) : (
-        <BookCollection handleDataFetch={handleDataFetch} books={books} />
+        <BookCollection
+          handleDataFetch={handleDataFetch}
+          books={books}
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
+          editingBook={editingBook}
+          setEditingBook={setEditingBook}
+          handleEditBook={handleEditBook}
+        />
       )}
     </section>
   );

@@ -21,31 +21,61 @@ const EditBook: React.FC<EditBookPageProps> = ({
   handleConfirmBook,
   editingBook,
   setEditingBook,
+  handleEditBook,
 }) => {
   const coverImageUrlRef = useRef<HTMLInputElement>(null);
   const titleRef = useRef<HTMLInputElement>(null);
   const authorRef = useRef<HTMLInputElement>(null);
   const pagesRef = useRef<HTMLInputElement>(null);
   const publishedRef = useRef<HTMLInputElement>(null);
+  // TODO: Figure out another way to make this reusable
   const currentBook: Book = searchedBook || editingBook;
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    
-    const updatedBook: Book = {
-      coverImageUrl:
-        coverImageUrlRef.current?.value || currentBook.coverImageUrl,
-      title: titleRef.current?.value || currentBook.title,
-      author: authorRef.current?.value || currentBook.author,
-      pages: pagesRef.current?.value
-        ? parseInt(pagesRef.current.value)
-        : currentBook.pages,
-      published: publishedRef.current?.value || currentBook.published,
-      dateFinished: currentBook.dateFinished,
-    };
+    if (currentBook === searchedBook) {
+      const updatedBook: Book = {
+        coverImageUrl:
+          coverImageUrlRef.current?.value || currentBook.coverImageUrl,
+        title: titleRef.current?.value || currentBook.title,
+        author: authorRef.current?.value || currentBook.author,
+        pages: pagesRef.current?.value
+          ? parseInt(pagesRef.current.value)
+          : currentBook.pages,
+        published: publishedRef.current?.value || currentBook.published,
+        dateFinished: currentBook.dateFinished,
+      };
+  
+      handleConfirmBook(updatedBook);
+    } else {
+      const updatedBook: Book = {
+        coverImageUrl:
+          coverImageUrlRef.current?.value || editingBook.coverImageUrl,
+        title: titleRef.current?.value || editingBook.title,
+        author: authorRef.current?.value || editingBook.author,
+        pages: pagesRef.current?.value
+          ? parseInt(pagesRef.current.value)
+          : editingBook.pages,
+        published: publishedRef.current?.value || editingBook.published,
+        dateFinished: editingBook.dateFinished,
+      };
+  
+      handleEditBook(updatedBook);
+    }
+    // const updatedBook: Book = {
+    //   coverImageUrl:
+    //     coverImageUrlRef.current?.value || currentBook.coverImageUrl,
+    //   title: titleRef.current?.value || currentBook.title,
+    //   author: authorRef.current?.value || currentBook.author,
+    //   pages: pagesRef.current?.value
+    //     ? parseInt(pagesRef.current.value)
+    //     : currentBook.pages,
+    //   published: publishedRef.current?.value || currentBook.published,
+    //   dateFinished: currentBook.dateFinished,
+    // };
 
-    handleConfirmBook(updatedBook);
+    // handleConfirmBook(updatedBook);
   };
 
   return (

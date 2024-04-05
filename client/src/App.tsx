@@ -137,11 +137,31 @@ const App: React.FC = () => {
     }
   };
 
-  const handleEditBook = () => {
-    console.log("clicked edit book");
-    // setIsEditing(true);
-    console.log("reached handleEditBook function");
-    // console.log("isEditing", isEditing);
+  const handleEditBook = async (book: Book) => {
+    console.log("clicked edit book", book);
+    setIsEditing(true);
+    setEditingBook(book);
+
+    if (book && book.id) {
+      const updatedBook = {
+        title: book.title,
+        author: book.author,
+        published: book.published || null,
+        pages: book.pages || null,
+        cover_img_url: book.cover_img_url || null,
+        date_finished: book.date_finished || null,
+      };
+      const { data, error } = await supabase
+        .from("books")
+        .update(updatedBook)
+        .eq("id", book.id);
+
+      if (error) {
+        console.log("Error:", error);
+      } else if (data) {
+        console.log("Data:", data);
+      }
+    }
   };
 
   // const handleEditBook = () => {

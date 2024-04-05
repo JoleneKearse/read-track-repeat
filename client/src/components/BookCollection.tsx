@@ -7,6 +7,7 @@ interface BookCollectionProps {
   handleDataFetch: () => Book[];
   books: Book[];
   handleEditBook: (book: Book) => void;
+  isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
   setEditingBook: (editedBook: Book | null) => void;
 }
@@ -14,16 +15,13 @@ interface BookCollectionProps {
 const BookCollection: React.FC<BookCollectionProps> = ({
   books,
   handleEditBook,
+  isEditing,
   setIsEditing,
   setEditingBook,
 }) => {
   const handleSubmit = (book: Book) => {
-    console.log("edit button clicked for book", book);
-    setTimeout(() => {
-      setIsEditing(true);
-      setEditingBook(book);
-    }, 100);
-    // handleEditBook(book);
+    setIsEditing(true);
+    setEditingBook(book);
   };
 
   return (
