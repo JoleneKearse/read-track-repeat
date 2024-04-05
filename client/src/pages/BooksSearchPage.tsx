@@ -7,14 +7,23 @@ import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 import SearchBooks from "../components/SearchBooks";
 import FilteredBooks from "../components/FilteredBooks";
+import EditBook from "../components/EditBook";
 import { PostgrestError } from "@supabase/supabase-js";
 
 interface BooksSearchPageProps {
   navLinks: NavLink[];
   books: Book[];
+  handleEditBook: (book: Book) => void;
+  isEditing: boolean;
+  setIsEditing: (isEditing: boolean) => void;
 }
 
-const BooksSearchPage: React.FC<BooksSearchPageProps> = ({ navLinks }) => {
+const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
+  navLinks,
+  handleEditBook,
+  isEditing,
+  setIsEditing,
+}) => {
   const supabase = useSupabase();
   const [loading, setLoading] = useState<boolean>(false);
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
@@ -83,7 +92,6 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({ navLinks }) => {
       setLoading(true);
     }, 500);
 
-    // setLoading(true);
     switch (method) {
       case "year":
         setSearchMethod("year");
@@ -124,6 +132,19 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({ navLinks }) => {
             filteredBooks={filteredBooks}
             searchMethod={searchMethod}
             searchInput={searchInput}
+            handleEditBook={handleEditBook}
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+          />
+        )}
+        {isEditing && (
+          <EditBook
+            searchedBook={searchedBook}
+            handleEditBook={handleEditBook}
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+            editingBook={editingBook}
+            setEditingBook={setEditingBook}
           />
         )}
       </div>

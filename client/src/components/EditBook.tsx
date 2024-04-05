@@ -5,12 +5,12 @@ import Cross from "/cross.svg";
 import Check from "/check.svg";
 
 interface EditBookPageProps {
-  searchedBook: Book;
+  searchedBook: Book | null;
   handleEditBook: () => void;
   isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
-  editedBook: Book | null;
-  setEditedBook: (editedBook: Book | null) => void;
+  editingBook: Book | null;
+  setEditingBook: (editingBook: Book | null) => void;
   handleCancelBook: () => void;
   handleConfirmBook: (book: Book) => void;
 }
@@ -19,28 +19,30 @@ const EditBook: React.FC<EditBookPageProps> = ({
   searchedBook,
   handleCancelBook,
   handleConfirmBook,
-  editedBook,
-  setEditedBook,
+  editingBook,
+  setEditingBook,
 }) => {
   const coverImageUrlRef = useRef<HTMLInputElement>(null);
   const titleRef = useRef<HTMLInputElement>(null);
   const authorRef = useRef<HTMLInputElement>(null);
   const pagesRef = useRef<HTMLInputElement>(null);
   const publishedRef = useRef<HTMLInputElement>(null);
+  const currentBook: Book = searchedBook || editingBook;
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
+    
     const updatedBook: Book = {
       coverImageUrl:
-        coverImageUrlRef.current?.value || searchedBook.coverImageUrl,
-      title: titleRef.current?.value || searchedBook.title,
-      author: authorRef.current?.value || searchedBook.author,
+        coverImageUrlRef.current?.value || currentBook.coverImageUrl,
+      title: titleRef.current?.value || currentBook.title,
+      author: authorRef.current?.value || currentBook.author,
       pages: pagesRef.current?.value
         ? parseInt(pagesRef.current.value)
-        : searchedBook.pages,
-      published: publishedRef.current?.value || searchedBook.published,
-      dateFinished: searchedBook.dateFinished,
+        : currentBook.pages,
+      published: publishedRef.current?.value || currentBook.published,
+      dateFinished: currentBook.dateFinished,
     };
 
     handleConfirmBook(updatedBook);
@@ -52,7 +54,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
       onSubmit={handleSubmit}
     >
       <article
-        key={searchedBook.id | 1}
+        key={currentBook.id | 1}
         className="flex flex-col items-center justify-center p-6 border border-orange-200 rounded-lg shadow-lg shadow-orange-200a bg-overlay"
       >
         <h2 className="pb-6 text-2xl font-bold tracking-wide text-orange-200">
@@ -67,13 +69,13 @@ const EditBook: React.FC<EditBookPageProps> = ({
         </p>
 
         {/* CURRENT INFO */}
-        {searchedBook.coverImageUrl && (
+        {currentBook.coverImageUrl && (
           <>
             <img
               src={
-                searchedBook.coverImageUrl ? searchedBook.coverImageUrl : Cover
+                currentBook.coverImageUrl ? currentBook.coverImageUrl : Cover
               }
-              alt={searchedBook.title}
+              alt={currentBook.title}
               className="w-3/4 pt-8 pb-10"
             />
             <p className="pb-4 text-base italic font-light tracking-wide text-orange-200">
@@ -99,7 +101,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
         </div>
 
         <div className="w-full py-2">
-          {searchedBook.title && (
+          {currentBook.title && (
             <>
               <label className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg">
                 Edit title or add series for easier searching
@@ -109,7 +111,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
                 ref={titleRef}
                 id="titleInput"
                 className="block mb-8 px-2.5 bg-orange-100a text-orange-300 text-sm tracking-wide rounded-lg w-full placeholder:text-orange-200 font-bold focus:ring-purple-300 focus:border-purple-300 md:text-lg"
-                defaultValue={searchedBook.title}
+                defaultValue={currentBook.title}
               />
               <p className="block pb-4 pl-1 -mt-8 text-xl italic font-light tracking-wide text-orange-200 text-balance">
                 Ex: Eloquent JavaScript: 4th edition
@@ -119,7 +121,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
         </div>
 
         <div className="w-full py-2">
-          {searchedBook.author && (
+          {currentBook.author && (
             <>
               <label
                 htmlFor="authorInput"
@@ -132,14 +134,14 @@ const EditBook: React.FC<EditBookPageProps> = ({
                 ref={authorRef}
                 id="authorInput"
                 className="block mb-8 px-2.5 bg-orange-100a text-orange-300 text-sm tracking-wide rounded-lg w-full placeholder:text-orange-200 font-bold focus:ring-purple-300 focus:border-purple-300 md:text-lg"
-                defaultValue={searchedBook.author}
+                defaultValue={currentBook.author}
               />
             </>
           )}
         </div>
 
         <div className="w-full py-2">
-          {searchedBook.published && (
+          {currentBook.published && (
             <>
               <label
                 htmlFor="authorInput"
@@ -152,14 +154,14 @@ const EditBook: React.FC<EditBookPageProps> = ({
                 ref={publishedRef}
                 id="authorInput"
                 className="block mb-8 px-2.5 bg-orange-100a text-orange-300 text-sm tracking-wide rounded-lg w-full placeholder:text-orange-200 font-bold focus:ring-purple-300 focus:border-purple-300 md:text-lg"
-                defaultValue={searchedBook.published}
+                defaultValue={currentBook.published}
               />
             </>
           )}
         </div>
 
         <div className="w-full py-2">
-          {searchedBook.pages && (
+          {currentBook.pages || currentBook.pages == 0 && (
             <>
               <label
                 htmlFor="pagesInput"
@@ -172,7 +174,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
                 ref={pagesRef}
                 id="pagesInput"
                 className="block mb-8 px-2.5 bg-orange-100a text-orange-300 text-sm tracking-wide rounded-lg w-full placeholder:text-orange-200 font-bold focus:ring-purple-300 focus:border-purple-300 md:text-lg"
-                defaultValue={searchedBook.pages}
+                defaultValue={currentBook.pages}
               />
             </>
           )}

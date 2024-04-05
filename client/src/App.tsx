@@ -49,6 +49,7 @@ const App: React.FC = () => {
   const [editedBook, setEditedBook] = useState<Book | null>(null);
   const [addBook, setAddBook] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
+  const [editingBook, setEditingBook] = useState<Book | null>(null);
   const [sortedBooks, setSortedBooks] = useState<Book[]>([]);
 
   const supabase = useSupabase();
@@ -138,9 +139,9 @@ const App: React.FC = () => {
 
   const handleEditBook = () => {
     console.log("clicked edit book");
-    setIsEditing(true);
+    // setIsEditing(true);
     console.log("reached handleEditBook function");
-    console.log("isEditing", isEditing);
+    // console.log("isEditing", isEditing);
   };
 
   // const handleEditBook = () => {
@@ -189,6 +190,11 @@ const App: React.FC = () => {
                 navLinks={navLinks}
                 books={books}
                 handleDataFetch={handleDataFetch}
+                handleEditBook={handleEditBook}
+                isEditing={isEditing}
+                setIsEditing={setIsEditing}
+                editingBook={editingBook}
+                setEditingBook={setEditingBook}
               />
             }
           />
@@ -199,6 +205,11 @@ const App: React.FC = () => {
                 navLinks={navLinks}
                 books={books}
                 handleDataFetch={handleDataFetch}
+                handleEditBook={handleEditBook}
+                isEditing={isEditing}
+                setIsEditing={setIsEditing}
+                editingBook={editingBook}
+                setEditingBook={setEditingBook}
               />
             }
           />

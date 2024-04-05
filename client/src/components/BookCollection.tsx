@@ -6,9 +6,26 @@ import Cover from "/cover.svg";
 interface BookCollectionProps {
   handleDataFetch: () => Book[];
   books: Book[];
+  handleEditBook: (book: Book) => void;
+  setIsEditing: (isEditing: boolean) => void;
+  setEditingBook: (editedBook: Book | null) => void;
 }
 
-const BookCollection: React.FC<BookCollectionProps> = ({ books }) => {
+const BookCollection: React.FC<BookCollectionProps> = ({
+  books,
+  handleEditBook,
+  setIsEditing,
+  setEditingBook,
+}) => {
+  const handleSubmit = (book: Book) => {
+    console.log("edit button clicked for book", book);
+    setTimeout(() => {
+      setIsEditing(true);
+      setEditingBook(book);
+    }, 100);
+    // handleEditBook(book);
+  };
+
   return (
     <>
       <p className="text-2xl font-bold tracking-wide text-center text-purple-200">
@@ -49,7 +66,7 @@ const BookCollection: React.FC<BookCollectionProps> = ({ books }) => {
                 {book.pages} pages
               </p>
             )}
-            <button>
+            <button type="button" onClick={() => handleSubmit(book)}>
               <img
                 src={Edit}
                 alt="Edit book info"

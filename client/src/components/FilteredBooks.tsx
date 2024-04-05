@@ -7,13 +7,25 @@ interface FilteredBooksProps {
   filteredBooks: Book[];
   searchInput: string;
   searchMethod: string;
+  handleEditBook: (book: Book) => void;
+  isEditing: boolean;
+  setIsEditing: (isEditing: boolean) => void;
 }
 
 const FilteredBooks: React.FC<FilteredBooksProps> = ({
   filteredBooks,
   searchInput,
   searchMethod,
+  handleEditBook,
+  isEditing,
+  setIsEditing,
 }) => {
+  const handleSubmit = (book: Book) => {
+    console.log("edit button clicked");
+    setIsEditing(true);
+    handleEditBook(filteredBooks)
+  };
+
   return (
     <>
       {filteredBooks.length > 0 ? (
@@ -76,7 +88,7 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({
                 {book.pages} pages
               </p>
             )}
-            <button>
+            <button type="button" onClick={handleSubmit}>
               <img
                 src={Edit}
                 alt="Edit book info"
