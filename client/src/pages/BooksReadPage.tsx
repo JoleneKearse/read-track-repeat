@@ -16,6 +16,8 @@ interface BooksReadPageProps {
   setEditingBook: (editedBook: Book | null) => void;
   handleCancelBook: () => void;
   handleConfirmBook: () => void;
+  mode: "add" | "edit";
+  handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
 }
 
 const BooksReadPage: React.FC<BooksReadPageProps> = ({
@@ -29,6 +31,8 @@ const BooksReadPage: React.FC<BooksReadPageProps> = ({
   setEditingBook,
   handleCancelBook,
   handleConfirmBook,
+  mode,
+  handleModeChange
 }) => {
   useEffect(() => {
     handleDataFetch();
@@ -46,12 +50,15 @@ const BooksReadPage: React.FC<BooksReadPageProps> = ({
 
       {isEditing && editingBook ? (
         <EditBook
-          searchedBook={editingBook}
-          handleEditBook={handleEditBook}
+          searchedBook={null}
+          editingBook={editingBook}
+          // handleEditBook={handleEditBook}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
-          editingBook={editingBook}
           setEditingBook={setEditingBook}
+          onSubmit={handleEditBook}
+          mode="add"
+          handleModeChange={handleModeChange}
         />
       ) : (
         <BookCollection

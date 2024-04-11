@@ -12,7 +12,8 @@ interface AddFormProps {
   setBookNotFound: (bookNotFound: boolean) => void;
   date: string;
   setDate: (date: string) => void;
-  // setLoading: (loading: boolean) => void;
+  mode: "add" | "edit";
+  handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
 }
 
 const AddForm: React.FC<AddFormProps> = ({
@@ -21,6 +22,9 @@ const AddForm: React.FC<AddFormProps> = ({
   setBookNotFound,
   date,
   setDate,
+  mode,
+  setMode,
+  handleModeChange,
 }) => {
   const searchMethodRef = useRef<HTMLSelectElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -34,6 +38,7 @@ const AddForm: React.FC<AddFormProps> = ({
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    setMode
 
     if (searchMethodRef.current !== null) {
       formData.method = searchMethodRef.current.value;

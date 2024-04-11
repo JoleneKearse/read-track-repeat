@@ -51,6 +51,7 @@ const App: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingBook, setEditingBook] = useState<Book | null>(null);
   const [sortedBooks, setSortedBooks] = useState<Book[]>([]);
+  const [mode, setMode] = useState<"add" | "edit">("add");
 
   const supabase = useSupabase();
 
@@ -59,6 +60,7 @@ const App: React.FC = () => {
   };
 
   const handleConfirmBook = async (book: Book) => {
+    console.log(book);
     if (book) {
       const bookToInsert: Database["public"]["Tables"]["books"]["Insert"] = {
         title: book.title,
@@ -164,12 +166,18 @@ const App: React.FC = () => {
     }
   };
 
-  // const handleEditBook = () => {
-  //   console.log("clicked edit book");
-  //   setIsEditing(true);
-  //   console.log("clicked edit book");
-  //   console.log("isEditing", isEditing);
-  // };
+  const handleSubmit = (updatedBook: Book) => {
+    if (mode === "add") {
+      handleConfirmBook(updatedBook);
+    } else if (mode === "edit") {
+      handleEditBook(updatedBook);
+    }
+  };
+
+  const handleModeChange = (newMode: "add" | "edit", book?: Book) => {
+    setMode(newMode);
+    setEditedBook(book | null);
+  };
 
   useEffect(() => {
     console.log(`Editing state changed in App: ${isEditing}`);
@@ -188,10 +196,10 @@ const App: React.FC = () => {
                 navLinks={navLinks}
                 handleCancelBook={handleCancelBook}
                 handleConfirmBook={handleConfirmBook}
-                searchedBook={searchedBook}
+                // searchedBook={searchedBook}
                 handleSearch={handleSearch}
                 bookNotFound={bookNotFound}
-                editedBook={editedBook}
+                // editedBook={editedBook}
                 setEditedBook={setEditedBook}
                 setBookNotFound={setBookNotFound}
                 handleManuallyAddBook={handleManuallyAddBook}
@@ -200,6 +208,11 @@ const App: React.FC = () => {
                 handleEditBook={handleEditBook}
                 isEditing={isEditing}
                 setIsEditing={setIsEditing}
+                onSubmit={handleSubmit}
+                searchedBook={mode === "add" ? searchedBook : null}
+                editingBook={mode === "edit" ? editingBook : null}
+                mode={mode}
+                handleModeChange={handleModeChange}
               />
             }
           />
@@ -213,8 +226,12 @@ const App: React.FC = () => {
                 handleEditBook={handleEditBook}
                 isEditing={isEditing}
                 setIsEditing={setIsEditing}
-                editingBook={editingBook}
+                // editingBook={editingBook}
                 setEditingBook={setEditingBook}
+                searchedBook={mode === "add" ? searchedBook : null}
+                editingBook={mode === "edit" ? editingBook : null}
+                mode={mode}
+                handleModeChange={handleModeChange}
               />
             }
           />
@@ -228,8 +245,12 @@ const App: React.FC = () => {
                 handleEditBook={handleEditBook}
                 isEditing={isEditing}
                 setIsEditing={setIsEditing}
-                editingBook={editingBook}
+                // editingBook={editingBook}
                 setEditingBook={setEditingBook}
+                mode={mode}
+                handleModeChange={handleModeChange}
+                searchedBook={mode === "add" ? searchedBook : null}
+                editingBook={mode === "edit" ? editingBook : null}
               />
             }
           />

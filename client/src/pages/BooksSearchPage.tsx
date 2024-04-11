@@ -16,6 +16,9 @@ interface BooksSearchPageProps {
   handleEditBook: (book: Book) => void;
   isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
+  mode: "add" | "edit";
+  handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
+  onSubmit: (book: Book) => void;
 }
 
 const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
@@ -23,6 +26,9 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
   handleEditBook,
   isEditing,
   setIsEditing,
+  mode,
+  handleModeChange,
+  onSubmit,
 }) => {
   const supabase = useSupabase();
   const [loading, setLoading] = useState<boolean>(false);
@@ -145,6 +151,9 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
             setIsEditing={setIsEditing}
             editingBook={editingBook}
             setEditingBook={setEditingBook}
+            mode={mode}
+            handleModeChange={handleModeChange}
+            onSubmit={onSubmit}
           />
         )}
       </div>

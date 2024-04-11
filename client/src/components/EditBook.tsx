@@ -4,7 +4,7 @@ import Cover from "/cover.svg";
 import Cross from "/cross.svg";
 import Check from "/check.svg";
 
-interface EditBookPageProps {
+interface EditBookProps {
   searchedBook: Book | null;
   handleEditBook: () => void;
   isEditing: boolean;
@@ -13,15 +13,22 @@ interface EditBookPageProps {
   setEditingBook: (editingBook: Book | null) => void;
   handleCancelBook: () => void;
   handleConfirmBook: (book: Book) => void;
+  handleEditBook: (book: Book) => void;
+  onSubmit: (book: Book) => void;
+  mode: "add" | "edit";
+  handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
 }
 
-const EditBook: React.FC<EditBookPageProps> = ({
+const EditBook: React.FC<EditBookProps> = ({
   searchedBook,
   handleCancelBook,
   handleConfirmBook,
   editingBook,
   setEditingBook,
   handleEditBook,
+  onSubmit,
+  mode, 
+  handleModeChange,
 }) => {
   const coverImageUrlRef = useRef<HTMLInputElement>(null);
   const titleRef = useRef<HTMLInputElement>(null);
@@ -34,48 +41,19 @@ const EditBook: React.FC<EditBookPageProps> = ({
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    if (currentBook === searchedBook) {
-      const updatedBook: Book = {
-        coverImageUrl:
-          coverImageUrlRef.current?.value || currentBook.coverImageUrl,
-        title: titleRef.current?.value || currentBook.title,
-        author: authorRef.current?.value || currentBook.author,
-        pages: pagesRef.current?.value
-          ? parseInt(pagesRef.current.value)
-          : currentBook.pages,
-        published: publishedRef.current?.value || currentBook.published,
-        dateFinished: currentBook.dateFinished,
-      };
-  
-      handleConfirmBook(updatedBook);
-    } else {
-      const updatedBook: Book = {
-        coverImageUrl:
-          coverImageUrlRef.current?.value || editingBook.coverImageUrl,
-        title: titleRef.current?.value || editingBook.title,
-        author: authorRef.current?.value || editingBook.author,
-        pages: pagesRef.current?.value
-          ? parseInt(pagesRef.current.value)
-          : editingBook.pages,
-        published: publishedRef.current?.value || editingBook.published,
-        dateFinished: editingBook.dateFinished,
-      };
-  
-      handleEditBook(updatedBook);
-    }
-    // const updatedBook: Book = {
-    //   coverImageUrl:
-    //     coverImageUrlRef.current?.value || currentBook.coverImageUrl,
-    //   title: titleRef.current?.value || currentBook.title,
-    //   author: authorRef.current?.value || currentBook.author,
-    //   pages: pagesRef.current?.value
-    //     ? parseInt(pagesRef.current.value)
-    //     : currentBook.pages,
-    //   published: publishedRef.current?.value || currentBook.published,
-    //   dateFinished: currentBook.dateFinished,
-    // };
-
-    // handleConfirmBook(updatedBook);
+    const updatedBook: Book = {
+      coverImageUrl:
+        coverImageUrlRef.current?.value || currentBook.coverImageUrl,
+      title: titleRef.current?.value || currentBook.title,
+      author: authorRef.current?.value || currentBook.author,
+      pages: pagesRef.current?.value
+        ? parseInt(pagesRef.current.value)
+        : currentBook.pages,
+      published: publishedRef.current?.value || currentBook.published,
+      dateFinished: currentBook.dateFinished,
+    };
+    console.log(updatedBook);
+    onSubmit(updatedBook);
   };
 
   return (
@@ -191,7 +169,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
         </div>
 
         <div className="w-full py-2">
-          {currentBook.pages || currentBook.pages == 0 && (
+          {/* {currentBook.pages || currentBook.pages == 0 && ( */}
             <>
               <label
                 htmlFor="pagesInput"
@@ -207,7 +185,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
                 defaultValue={currentBook.pages}
               />
             </>
-          )}
+          {/* )} */}
         </div>
 
         <div className="flex justify-center items-center pt-10 pb-8 ml-[2.25rem] md:ml-[4rem]">
@@ -221,7 +199,7 @@ const EditBook: React.FC<EditBookPageProps> = ({
           </button>
           <button
             type="submit"
-            // onClick={handleSubmit}
+            onClick={handleSubmit}
             className="flex flex-col items-center justify-center py-10"
           >
             <img

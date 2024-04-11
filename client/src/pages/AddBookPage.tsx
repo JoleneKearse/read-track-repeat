@@ -28,6 +28,9 @@ interface AddBookPageProps {
   handleEditBook: (book: Book) => void;
   isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
+  onSubmit: (book: Book) => void;
+  mode: "add" | "edit";
+  handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
 }
 
 const AddBookPage: React.FC<AddBookPageProps> = ({
@@ -45,6 +48,9 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
   handleEditBook,
   isEditing,
   setIsEditing,
+  mode,
+  handleModeChange,
+  onSubmit
 }) => {
   const [date, setDate] = useState("");
   const searchResultsRef = useRef<HTMLDivElement>(null);
@@ -72,6 +78,11 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
           setBookNotFound={setBookNotFound}
           date={date}
           setDate={setDate}
+          searchedBook={mode === "add" ? searchedBook : null}
+          editingBook={mode === "edit" ? editingBook : null}
+          mode={mode}
+          handleModeChange={handleModeChange}
+          onSubmit={onSubmit}
         />
         <div ref={searchResultsRef}>
           {searchedBook && (
@@ -84,58 +95,12 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
               setEditingBook={setEditingBook}
               handleCancelBook={handleCancelBook}
               handleConfirmBook={handleConfirmBook}
+              handleModeChange={handleModeChange}
+              mode={mode}
+              onSubmit={onSubmit}
             />
           )}
         </div>
-        {/* {isEditing && (
-          <EditBook
-            searchedBook={searchedBook}
-            handleEditBook={handleEditBook}
-            isEditing={isEditing}
-            setIsEditing={setIsEditing}
-          />
-        )} */}
-        {/* {bookNotFound && (
-          <>
-            <NotFound
-              handleManuallyAddBook={handleManuallyAddBook}
-              addBook={addBook}
-              date={date}
-            />
-            <EditBook
-              searchedBook={searchedBook}
-              handleEditBook={handleEditBook}
-              isEditing={isEditing}
-              setIsEditing={setIsEditing}
-            />
-          </>
-        )} */}
-
-        {/* {!isEditing ? (
-            <ConfirmBook
-              searchedBook={searchedBook}
-              handleCancelBook={handleCancelBook}
-              handleConfirmBook={handleConfirmBook}
-              handleSearch={handleSearch}
-              isEditing={isEditing}
-              setIsEditing={setIsEditing}
-              handleEditBook={handleEditBook}
-            />
-          ) : (
-            <>
-            <NotFound
-              handleManuallyAddBook={handleManuallyAddBook}
-              addBook={addBook}
-              date={date}
-            />
-            <EditBook
-              searchedBook={searchedBook}
-              handleEditBook={handleEditBook}
-              isEditing={isEditing}
-              setIsEditing={setIsEditing}
-            />
-          </>
-          )} */}
       </main>
     </section>
   );
