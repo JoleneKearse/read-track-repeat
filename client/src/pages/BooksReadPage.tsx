@@ -16,7 +16,9 @@ interface BooksReadPageProps {
   setEditingBook: (editedBook: Book | null) => void;
   handleCancelBook: () => void;
   handleConfirmBook: () => void;
+  onSubmit: (book: Book) => void;
   mode: "add" | "edit";
+  setMode: (mode: "add" | "edit") => void;
   handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
 }
 
@@ -32,7 +34,9 @@ const BooksReadPage: React.FC<BooksReadPageProps> = ({
   handleCancelBook,
   handleConfirmBook,
   mode,
-  handleModeChange
+  setMode,
+  handleModeChange,
+  onSubmit,
 }) => {
   useEffect(() => {
     handleDataFetch();
@@ -40,7 +44,7 @@ const BooksReadPage: React.FC<BooksReadPageProps> = ({
 
   useEffect(() => {
     console.log("isEditing changed in BooksReadPage", isEditing);
-    console.log(editingBook);
+    // console.log(editingBook);
   }, [isEditing]);
 
   return (
@@ -52,13 +56,14 @@ const BooksReadPage: React.FC<BooksReadPageProps> = ({
         <EditBook
           searchedBook={null}
           editingBook={editingBook}
-          // handleEditBook={handleEditBook}
+          handleEditBook={handleEditBook}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
           setEditingBook={setEditingBook}
           onSubmit={handleEditBook}
           mode="add"
           handleModeChange={handleModeChange}
+          onSubmit={onSubmit}
         />
       ) : (
         <BookCollection
@@ -69,6 +74,9 @@ const BooksReadPage: React.FC<BooksReadPageProps> = ({
           editingBook={editingBook}
           setEditingBook={setEditingBook}
           handleEditBook={handleEditBook}
+          mode="add"
+          handleModeChange={handleModeChange}
+          onSubmit={onSubmit}
         />
       )}
     </section>

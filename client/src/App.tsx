@@ -167,6 +167,7 @@ const App: React.FC = () => {
   };
 
   const handleSubmit = (updatedBook: Book) => {
+    console.log("reached App handleSubmit", updatedBook);
     if (mode === "add") {
       handleConfirmBook(updatedBook);
     } else if (mode === "edit") {
@@ -176,7 +177,8 @@ const App: React.FC = () => {
 
   const handleModeChange = (newMode: "add" | "edit", book?: Book) => {
     setMode(newMode);
-    setEditedBook(book | null);
+    // handleSubmit(book);
+    // setEditedBook(book | null);
   };
 
   useEffect(() => {
@@ -196,10 +198,8 @@ const App: React.FC = () => {
                 navLinks={navLinks}
                 handleCancelBook={handleCancelBook}
                 handleConfirmBook={handleConfirmBook}
-                // searchedBook={searchedBook}
                 handleSearch={handleSearch}
                 bookNotFound={bookNotFound}
-                // editedBook={editedBook}
                 setEditedBook={setEditedBook}
                 setBookNotFound={setBookNotFound}
                 handleManuallyAddBook={handleManuallyAddBook}
@@ -226,12 +226,13 @@ const App: React.FC = () => {
                 handleEditBook={handleEditBook}
                 isEditing={isEditing}
                 setIsEditing={setIsEditing}
-                // editingBook={editingBook}
                 setEditingBook={setEditingBook}
                 searchedBook={mode === "add" ? searchedBook : null}
                 editingBook={mode === "edit" ? editingBook : null}
                 mode={mode}
+                setMode={setMode}
                 handleModeChange={handleModeChange}
+                onSubmit={handleSubmit}
               />
             }
           />
@@ -248,9 +249,11 @@ const App: React.FC = () => {
                 // editingBook={editingBook}
                 setEditingBook={setEditingBook}
                 mode={mode}
+                setMode={setMode}
                 handleModeChange={handleModeChange}
                 searchedBook={mode === "add" ? searchedBook : null}
                 editingBook={mode === "edit" ? editingBook : null}
+                onSubmit={handleSubmit}
               />
             }
           />

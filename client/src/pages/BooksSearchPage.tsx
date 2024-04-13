@@ -14,9 +14,14 @@ interface BooksSearchPageProps {
   navLinks: NavLink[];
   books: Book[];
   handleEditBook: (book: Book) => void;
+  handleCancelBook: () => void;
+  handleConfirmBook: () => void;
   isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
+  editingBook: Book | null;
+  setEditingBook: (editedBook: Book | null) => void;
   mode: "add" | "edit";
+  setMode: (mode: "add" | "edit") => void;
   handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
   onSubmit: (book: Book) => void;
 }
@@ -26,7 +31,12 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
   handleEditBook,
   isEditing,
   setIsEditing,
+  editingBook,
+  setEditingBook,
+  handleCancelBook,
+  handleConfirmBook,
   mode,
+  setMode,
   handleModeChange,
   onSubmit,
 }) => {
@@ -138,15 +148,20 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
             filteredBooks={filteredBooks}
             searchMethod={searchMethod}
             searchInput={searchInput}
+            mode={mode}
+            setMode={setMode}
             handleEditBook={handleEditBook}
+            editingBook={editingBook}
             isEditing={isEditing}
             setIsEditing={setIsEditing}
           />
         )}
         {isEditing && (
           <EditBook
-            searchedBook={searchedBook}
+            // searchedBook={searchedBook}
             handleEditBook={handleEditBook}
+            handleCancelBook={handleCancelBook}
+            handleConfirmBook={handleConfirmBook}
             isEditing={isEditing}
             setIsEditing={setIsEditing}
             editingBook={editingBook}

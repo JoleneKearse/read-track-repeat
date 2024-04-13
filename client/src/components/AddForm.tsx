@@ -38,7 +38,7 @@ const AddForm: React.FC<AddFormProps> = ({
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    setMode
+    handleModeChange("add", undefined);
 
     if (searchMethodRef.current !== null) {
       formData.method = searchMethodRef.current.value;

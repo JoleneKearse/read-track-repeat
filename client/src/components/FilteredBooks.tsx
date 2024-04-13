@@ -10,6 +10,11 @@ interface FilteredBooksProps {
   handleEditBook: (book: Book) => void;
   isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
+  editingBook: Book | null;
+  mode: "add" | "edit";
+  setMode: (mode: "add" | "edit") => void;
+  handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
+  onSubmit: (book: Book) => void;
 }
 
 const FilteredBooks: React.FC<FilteredBooksProps> = ({
@@ -19,11 +24,18 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({
   handleEditBook,
   isEditing,
   setIsEditing,
+  editingBook,
+  mode,
+  setMode,
+  handleModeChange,
+  onSubmit,
 }) => {
   const handleSubmit = (book: Book) => {
     console.log("edit button clicked");
     setIsEditing(true);
-    handleEditBook(filteredBooks)
+    // TODO: ADD TO bOOKSrEADpAGE TO SEE IF IT HELPS
+    handleModeChange("edit", book);
+    handleEditBook(filteredBooks);
   };
 
   return (
@@ -88,7 +100,7 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({
                 {book.pages} pages
               </p>
             )}
-            <button type="button" onClick={handleSubmit}>
+            <button type="button" onClick={() => handleSubmit}>
               <img
                 src={Edit}
                 alt="Edit book info"

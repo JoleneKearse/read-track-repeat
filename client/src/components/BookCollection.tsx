@@ -9,7 +9,12 @@ interface BookCollectionProps {
   handleEditBook: (book: Book) => void;
   isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
+  editingBook: Book | null;
   setEditingBook: (editedBook: Book | null) => void;
+  mode: "add" | "edit";
+  setMode: (mode: "add" | "edit") => void;
+  handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
+  onSubmit: (book: Book) => void;
 }
 
 const BookCollection: React.FC<BookCollectionProps> = ({
@@ -17,15 +22,25 @@ const BookCollection: React.FC<BookCollectionProps> = ({
   handleEditBook,
   isEditing,
   setIsEditing,
+  editingBook,
   setEditingBook,
+  mode,
+  setMode,
+  handleModeChange,
+  onSubmit,
 }) => {
   const handleSubmit = (book: Book) => {
+    console.log(book);
     setIsEditing(true);
+    handleModeChange("edit", book);
     setEditingBook(book);
+    // setMode("edit");
+    onSubmit(book);
   };
 
   return (
     <>
+      
       <p className="text-2xl font-bold tracking-wide text-center text-purple-200">
         {books.length} books tracked
       </p>

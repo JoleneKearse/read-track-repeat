@@ -27,7 +27,7 @@ const EditBook: React.FC<EditBookProps> = ({
   setEditingBook,
   handleEditBook,
   onSubmit,
-  mode, 
+  mode,
   handleModeChange,
 }) => {
   const coverImageUrlRef = useRef<HTMLInputElement>(null);
@@ -35,7 +35,7 @@ const EditBook: React.FC<EditBookProps> = ({
   const authorRef = useRef<HTMLInputElement>(null);
   const pagesRef = useRef<HTMLInputElement>(null);
   const publishedRef = useRef<HTMLInputElement>(null);
-  // TODO: Figure out another way to make this reusable
+  const dateFinishedRef = useRef<HTMLInputElement>(null);
   const currentBook: Book = searchedBook || editingBook;
 
   const handleSubmit = async (event: FormEvent) => {
@@ -169,23 +169,39 @@ const EditBook: React.FC<EditBookProps> = ({
         </div>
 
         <div className="w-full py-2">
-          {/* {currentBook.pages || currentBook.pages == 0 && ( */}
+          <label
+            htmlFor="pagesInput"
+            className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
+          >
+            Number of pages
+          </label>
+          <input
+            type="text"
+            ref={pagesRef}
+            id="pagesInput"
+            className="block mb-8 px-2.5 bg-orange-100a text-orange-300 text-sm tracking-wide rounded-lg w-full placeholder:text-orange-200 font-bold focus:ring-purple-300 focus:border-purple-300 md:text-lg"
+            defaultValue={currentBook.pages}
+          />
+        </div>
+
+        <div className="w-full py-2">
+          {currentBook.date_finished && (
             <>
               <label
-                htmlFor="pagesInput"
+                htmlFor="authorInput"
                 className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
               >
-                Number of pages
+                Date finished
               </label>
               <input
                 type="text"
-                ref={pagesRef}
-                id="pagesInput"
+                ref={dateFinishedRef}
+                id="dateFinishedInput"
                 className="block mb-8 px-2.5 bg-orange-100a text-orange-300 text-sm tracking-wide rounded-lg w-full placeholder:text-orange-200 font-bold focus:ring-purple-300 focus:border-purple-300 md:text-lg"
-                defaultValue={currentBook.pages}
+                defaultValue={currentBook.date_finished}
               />
             </>
-          {/* )} */}
+          )}
         </div>
 
         <div className="flex justify-center items-center pt-10 pb-8 ml-[2.25rem] md:ml-[4rem]">
