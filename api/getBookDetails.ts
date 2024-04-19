@@ -47,7 +47,7 @@ export async function fetchBookByIsbn(isbn: string): Promise<Book> {
     
     const bookData: Book = {
       title: bookDetails?.title,
-      author: bookDetails?.authors.map(a => a.name).join(", "),
+      author: bookDetails?.authors?.map(a => a.name).join(", ") || "",
       published: bookDetails?.publish_date,
       pages: bookDetails?.number_of_pages || bookDetails?.pagination,
       coverImageUrl: bookDetails?.cover?.medium,
@@ -82,7 +82,7 @@ export async function fetchBookByTitle(title: string): Promise<Book | null>{
 
     const bookData: Book = {
       title: bookDetails?.title,
-      author: bookDetails?.authors.join(", "),
+      author: bookDetails?.authors?.join(", ") || "",
       published: bookDetails?.publishedDate,
       pages: bookDetails?.pageCount,
       coverImageUrl: bookDetails?.imageLinks?.thumbnail,
@@ -128,7 +128,7 @@ export async function fetchBookByAuthor(author: string): Promise<Book | null>{
     }
     const bookData: Book = {
       title: bookDetails?.title,
-      author: bookDetails?.authors.join(", "),
+      author: bookDetails?.authors?.join(", ") || "",
       published: bookDetails?.publishedDate,
       pages: bookDetails?.pageCount,
       coverImageUrl: bookDetails?.imageLinks?.thumbnail,
