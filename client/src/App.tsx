@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { SupabaseProvider, useSupabase } from "./context/SupabaseContext";
@@ -47,18 +47,19 @@ const App: React.FC = () => {
   const [books, setBooks] = useState<Book[]>([]);
   const [bookNotFound, setBookNotFound] = useState(false);
   // const [editedBook, setEditedBook] = useState<Book | null>(null);
-  const [addBook, setAddBook] = useState(true);
+  // const [addBook, setAddBook] = useState(true);
+  const [date, setDate] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editingBook, setEditingBook] = useState<Book | null>(null);
   const [mode, setMode] = useState<"add" | "edit">("add");
 
   const supabase = useSupabase();
 
-  const handleAddBook = (newBook: Book) => {
+  const handleAddBook = useCallback((newBook: Book) => {
     setBooks([...books, newBook]);
-  };
+  }, [books]);
 
-  const handleConfirmBook = async (book: Book) => {
+  const handleConfirmBook = useCallback(async (book: Book) => {
     console.log(book);
     if (book) {
       const bookToInsert: Database["public"]["Tables"]["books"]["Insert"] = {
@@ -66,8 +67,9 @@ const App: React.FC = () => {
         author: book.author,
         published: book.published || null,
         pages: book.pages || null,
-        // keep camelCase to add to db for image & date
+        // @ts-expect-error: db expects snake_case rather than camelCase
         cover_img_url: book.coverImageUrl || null,
+        // @ts-expect-error: db expects snake_case rather than camelCase
         date_finished: book.dateFinished || null,
       };
       const { data, error } = await supabase
@@ -83,7 +85,7 @@ const App: React.FC = () => {
       }
       setSearchedBook(null);
     }
-  };
+  }, [handleAddBook, supabase]);
 
   // const handleManuallyAddBook = async (newBook: Book) => {
   //   if (newBook) {
@@ -139,7 +141,7 @@ const App: React.FC = () => {
     }
   };
 
-  const handleEditBook = async (book: Book) => {
+  const handleEditBook = useCallback(async (book: Book) => {
     console.log("clicked edit book", book!);
     setIsEditing(true);
     setEditingBook(book!);
@@ -165,9 +167,9 @@ const App: React.FC = () => {
       }
     }
     // setIsEditing(false);
-  };
+  }, [setIsEditing, setEditingBook, supabase]);
 
-  const handleSubmit = (updatedBook: Book) => {
+  const handleSubmit = useCallback((updatedBook: Book) => {
     if (updatedBook) {
       console.log("reached App handleSubmit", updatedBook);
       console.log(mode);
@@ -181,7 +183,7 @@ const App: React.FC = () => {
     } else {
       console.log("no updated book");
     }
-  };
+  }, [mode, handleConfirmBook, handleEditBook]);
 
   const handleModeChange = (newMode: "add" | "edit", book?: Book) => {
     console.log("Changing mode to:", newMode);
@@ -194,12 +196,12 @@ const App: React.FC = () => {
   useEffect(() => {
     console.log(`Editing state changed in App: ${isEditing}`);
     console.log(`Mode change logged in App to: ${mode}`);
-    if (mode === "edit" && editedBook !== null) {
+    if (mode === "edit" && editingBook !== null) {
       handleSubmit(editingBook!);
     } else {
       console.log("Book is null");
     }
-  }, [isEditing, mode]);
+  }, [isEditing, mode, editingBook, handleSubmit]);
 
   return (
     <SupabaseProvider>
@@ -216,11 +218,11 @@ const App: React.FC = () => {
                 handleConfirmBook={handleConfirmBook}
                 handleSearch={handleSearch}
                 bookNotFound={bookNotFound}
-                setEditedBook={setEditedBook}
+                setEditingBook={setEditingBook}
                 setBookNotFound={setBookNotFound}
                 // handleManuallyAddBook={handleManuallyAddBook}
                 onSearch={handleSearch}
-                addBook={addBook}
+                // addBook={addBook}
                 handleEditBook={handleEditBook}
                 isEditing={isEditing}
                 setIsEditing={setIsEditing}
@@ -229,6 +231,8 @@ const App: React.FC = () => {
                 editingBook={mode === "edit" ? editingBook : null}
                 mode={mode}
                 handleModeChange={handleModeChange}
+                date={date}
+                setDate={setDate}
               />
             }
           />
@@ -240,10 +244,12 @@ const App: React.FC = () => {
                 books={books}
                 handleDataFetch={handleDataFetch}
                 handleEditBook={handleEditBook}
+                handleCancelBook={handleCancelBook}
+                handleConfirmBook={handleConfirmBook}
                 isEditing={isEditing}
                 setIsEditing={setIsEditing}
                 setEditingBook={setEditingBook}
-                searchedBook={mode === "add" ? searchedBook : null}
+                // searchedBook={mode === "add" ? searchedBook : null}
                 editingBook={mode === "edit" ? editingBook : null}
                 mode={mode}
                 setMode={setMode}
@@ -258,8 +264,10 @@ const App: React.FC = () => {
               <BooksSearchPage
                 navLinks={navLinks}
                 books={books}
-                handleDataFetch={handleDataFetch}
+                // handleDataFetch={handleDataFetch}
                 handleEditBook={handleEditBook}
+                handleCancelBook={handleCancelBook}
+                handleConfirmBook={handleConfirmBook}
                 isEditing={isEditing}
                 setIsEditing={setIsEditing}
                 // editingBook={editingBook}
@@ -267,7 +275,7 @@ const App: React.FC = () => {
                 mode={mode}
                 setMode={setMode}
                 handleModeChange={handleModeChange}
-                searchedBook={mode === "add" ? searchedBook : null}
+                // searchedBook={mode === "add" ? searchedBook : null}
                 editingBook={mode === "edit" ? editingBook : null}
                 onSubmit={handleSubmit}
               />

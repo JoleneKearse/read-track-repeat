@@ -14,8 +14,8 @@ interface BooksSearchPageProps {
   navLinks: NavLink[];
   books: Book[];
   handleEditBook: (book: Book) => void;
-  handleCancelBook: () => void;
-  handleConfirmBook: () => void;
+  handleCancelBook: (book: Book) => void;
+  handleConfirmBook: (book: Book) => void;
   isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
   editingBook: Book | null;

@@ -8,14 +8,14 @@ import EditBook from "../components/EditBook";
 interface BooksReadPageProps {
   navLinks: NavLink[];
   books: Book[];
-  handleDataFetch: () => Book[];
+  handleDataFetch: () => Promise<void>;
   handleEditBook: (book: Book) => void;
   isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
   editingBook: Book | null;
   setEditingBook: (editedBook: Book | null) => void;
-  handleCancelBook: () => void;
-  handleConfirmBook: () => void;
+  handleCancelBook: (book: Book) => void;
+  handleConfirmBook: (book: Book) => void;
   onSubmit: (book: Book) => void;
   mode: "add" | "edit";
   setMode: (mode: "add" | "edit") => void;

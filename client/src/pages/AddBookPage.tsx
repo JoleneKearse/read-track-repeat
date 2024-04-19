@@ -14,15 +14,15 @@ interface AddBookPageProps {
   searchedBook: Book | null;
   books: Book[];
   handleAddBook: (newBook: Book) => void;
-  handleCancelBook: () => void;
-  handleConfirmBook: () => void;
+  handleCancelBook: (book: Book) => void;
+  handleConfirmBook: (book: Book) => void;
   handleSearch: (book: Book) => void;
   bookNotFound: boolean;
   setBookNotFound: (bookNotFound: boolean) => void;
   editingBook: Book | null;
   setEditingBook: (editedBook: Book | null) => void;
-  handleManuallyAddBook: () => void;
-  addBook: boolean;
+  // handleManuallyAddBook: () => void;
+  // addBook: boolean;
   date: string;
   setDate: (date: string) => void;
   handleEditBook: (book: Book) => void;
@@ -31,6 +31,8 @@ interface AddBookPageProps {
   onSubmit: (book: Book) => void;
   mode: "add" | "edit";
   handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
+  // added to resolve issue on App.tsx line 223
+  onSearch: (book: Book) => void;
 }
 
 const AddBookPage: React.FC<AddBookPageProps> = ({
