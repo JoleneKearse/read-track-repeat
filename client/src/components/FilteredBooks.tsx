@@ -11,6 +11,7 @@ interface FilteredBooksProps {
   isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
   editingBook: Book | null;
+  setEditingBook: (editedBook: Book | null) => void;
   mode: "add" | "edit";
   setMode: (mode: "add" | "edit") => void;
   handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
@@ -25,6 +26,7 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({
   isEditing,
   setIsEditing,
   editingBook,
+  setEditingBook,
   mode,
   setMode,
   handleModeChange,
@@ -33,9 +35,9 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({
   const handleSubmit = (book: Book) => {
     console.log("edit button clicked");
     setIsEditing(true);
-    // TODO: ADD TO bOOKSrEADpAGE TO SEE IF IT HELPS
     handleModeChange("edit", book);
-    handleEditBook(filteredBooks);
+    setEditingBook(book);
+    onSubmit(book);
   };
 
   return (

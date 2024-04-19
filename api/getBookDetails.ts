@@ -29,6 +29,11 @@ interface Book {
   coverImageUrl?: string;
 }
 
+interface IndustryIdentifiers {
+  type: string;
+  identifier: string;
+}
+
 export async function fetchBookByIsbn(isbn: string): Promise<Book> {
   try {
     const response = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`);
@@ -64,7 +69,7 @@ export async function fetchBookByTitle(title: string): Promise<Book | null>{
     // console.log(data["items"][0][]);
 
     // grab ISBN while we're at it
-    const industryIdentifiers = data["items"][0]["volumeInfo"]["industryIdentifiers"];
+    const industryIdentifiers: IndustryIdentifiers[] = data["items"][0]["volumeInfo"]["industryIdentifiers"];
     const isbn10Identifier = industryIdentifiers.find(identifier => identifier.type === "ISBN_10");
     const isbn = isbn10Identifier ? isbn10Identifier.identifier : 'No isbn 10 found';
     console.log(isbn);

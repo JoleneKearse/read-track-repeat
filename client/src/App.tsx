@@ -46,11 +46,10 @@ const App: React.FC = () => {
   const [searchedBook, setSearchedBook] = useState<Book | null>(null);
   const [books, setBooks] = useState<Book[]>([]);
   const [bookNotFound, setBookNotFound] = useState(false);
-  const [editedBook, setEditedBook] = useState<Book | null>(null);
+  // const [editedBook, setEditedBook] = useState<Book | null>(null);
   const [addBook, setAddBook] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [editingBook, setEditingBook] = useState<Book | null>(null);
-  const [sortedBooks, setSortedBooks] = useState<Book[]>([]);
   const [mode, setMode] = useState<"add" | "edit">("add");
 
   const supabase = useSupabase();
@@ -86,41 +85,42 @@ const App: React.FC = () => {
     }
   };
 
-  const handleManuallyAddBook = async (newBook: Book) => {
-    if (newBook) {
-      const bookToInsert: Database["public"]["Tables"]["books"]["Insert"] = {
-        title: newBook.title,
-        author: newBook.author,
-        published: newBook.published || null,
-        pages: newBook.pages || null,
-        cover_img_url: newBook.cover_img_url || null,
-        // must be camelCase to manually add book
-        date_finished: newBook.dateFinished || null,
-      };
-      const { data, error } = await supabase
-        .from("books")
-        .insert([bookToInsert]);
+  // const handleManuallyAddBook = async (newBook: Book) => {
+  //   if (newBook) {
+  //     const bookToInsert: Database["public"]["Tables"]["books"]["Insert"] = {
+  //       title: newBook.title,
+  //       author: newBook.author,
+  //       published: newBook.published || null,
+  //       pages: newBook.pages || null,
+  //       cover_img_url: newBook.cover_img_url || null,
+  //       // must be camelCase to manually add book
+  //       date_finished: newBook.dateFinished || null,
+  //     };
+  //     const { data, error } = await supabase
+  //       .from("books")
+  //       .insert([bookToInsert]);
 
-      if (error) {
-        console.log("Error:", error);
-      } else if (data) {
-        const addedBook = data;
-        handleAddBook(addedBook);
-        console.log("Data:", data);
-      }
-      setAddBook(false);
-    }
-  };
+  //     if (error) {
+  //       console.log("Error:", error);
+  //     } else if (data) {
+  //       const addedBook = data;
+  //       handleAddBook(addedBook);
+  //       console.log("Data:", data);
+  //     }
+  //     setAddBook(false);
+  //   }
+  // };
 
   const handleCancelBook = () => {
     console.log("isEditing", isEditing);
     console.log("canceled book", searchedBook);
-    if (searchedBook) {
+    if (searchedBook!) {
       setTimeout(() => {
         setSearchedBook(null);
       }, 500);
     }
     setSearchedBook(null);
+    setIsEditing(false);
   };
 
   const handleSearch = async (book: Book) => {
@@ -140,11 +140,11 @@ const App: React.FC = () => {
   };
 
   const handleEditBook = async (book: Book) => {
-    console.log("clicked edit book", book);
+    console.log("clicked edit book", book!);
     setIsEditing(true);
-    setEditingBook(book);
+    setEditingBook(book!);
 
-    if (book && book.id) {
+    if (book! && book.id) {
       const updatedBook = {
         title: book.title,
         author: book.author,
@@ -164,26 +164,42 @@ const App: React.FC = () => {
         console.log("Data:", data);
       }
     }
+    // setIsEditing(false);
   };
 
   const handleSubmit = (updatedBook: Book) => {
-    console.log("reached App handleSubmit", updatedBook);
-    if (mode === "add") {
-      handleConfirmBook(updatedBook);
-    } else if (mode === "edit") {
-      handleEditBook(updatedBook);
+    if (updatedBook) {
+      console.log("reached App handleSubmit", updatedBook);
+      console.log(mode);
+      if (mode === "add") {
+        console.log("adding new book", updatedBook);
+        handleConfirmBook(updatedBook);
+      } else if (mode === "edit") {
+        console.log("editing book", updatedBook);
+        handleEditBook(updatedBook);
+      }
+    } else {
+      console.log("no updated book");
     }
   };
 
   const handleModeChange = (newMode: "add" | "edit", book?: Book) => {
+    console.log("Changing mode to:", newMode);
     setMode(newMode);
-    // handleSubmit(book);
-    // setEditedBook(book | null);
+    if (book) {
+      setEditingBook(book);
+    }
   };
 
   useEffect(() => {
     console.log(`Editing state changed in App: ${isEditing}`);
-  }, [isEditing]);
+    console.log(`Mode change logged in App to: ${mode}`);
+    if (mode === "edit" && editedBook !== null) {
+      handleSubmit(editingBook!);
+    } else {
+      console.log("Book is null");
+    }
+  }, [isEditing, mode]);
 
   return (
     <SupabaseProvider>
@@ -202,7 +218,7 @@ const App: React.FC = () => {
                 bookNotFound={bookNotFound}
                 setEditedBook={setEditedBook}
                 setBookNotFound={setBookNotFound}
-                handleManuallyAddBook={handleManuallyAddBook}
+                // handleManuallyAddBook={handleManuallyAddBook}
                 onSearch={handleSearch}
                 addBook={addBook}
                 handleEditBook={handleEditBook}

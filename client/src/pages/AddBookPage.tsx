@@ -5,8 +5,8 @@ import { Book, NavLink } from "../types";
 import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 import AddForm from "../components/AddForm";
-import ConfirmBook from "../components/ConfirmBook";
-import NotFound from "../components/NotFound";
+// import ConfirmBook from "../components/ConfirmBook";
+// import NotFound from "../components/NotFound";
 import EditBook from "../components/EditBook";
 
 interface AddBookPageProps {
@@ -43,7 +43,7 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
   setBookNotFound,
   editingBook,
   setEditingBook,
-  handleManuallyAddBook,
+  // handleManuallyAddBook,
   addBook,
   handleEditBook,
   isEditing,
