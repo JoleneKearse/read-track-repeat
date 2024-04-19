@@ -14,9 +14,10 @@ interface AddBookPageProps {
   searchedBook: Book | null;
   books: Book[];
   handleAddBook: (newBook: Book) => void;
-  handleCancelBook: (book: Book) => void;
+  handleCancelBook: () => void;
   handleConfirmBook: (book: Book) => void;
-  handleSearch: (book: Book) => void;
+  handleSearch: (book: Book | null) => void;
+  // searchedBook={mode === "add" ? searchedBook : null};
   bookNotFound: boolean;
   setBookNotFound: (bookNotFound: boolean) => void;
   editingBook: Book | null;
@@ -32,7 +33,7 @@ interface AddBookPageProps {
   mode: "add" | "edit";
   handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
   // added to resolve issue on App.tsx line 223
-  onSearch: (book: Book) => void;
+  // onSearch: (book: Book) => void;
 }
 
 const AddBookPage: React.FC<AddBookPageProps> = ({
@@ -46,13 +47,13 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
   editingBook,
   setEditingBook,
   // handleManuallyAddBook,
-  addBook,
+  // addBook,
   handleEditBook,
   isEditing,
   setIsEditing,
   mode,
   handleModeChange,
-  onSubmit
+  onSubmit,
 }) => {
   const [date, setDate] = useState("");
   const searchResultsRef = useRef<HTMLDivElement>(null);
@@ -75,13 +76,13 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
       </div>
       <main>
         <AddForm
-          onSearch={handleSearch}
+          handleSearch={handleSearch}
           bookNotFound={bookNotFound}
           setBookNotFound={setBookNotFound}
           date={date}
           setDate={setDate}
           searchedBook={mode === "add" ? searchedBook : null}
-          editingBook={mode === "edit" ? editingBook : null}
+          // editingBook={mode === "edit" ? editingBook : null}
           mode={mode}
           handleModeChange={handleModeChange}
           onSubmit={onSubmit}

@@ -7,23 +7,25 @@ import {
 } from "../../../api/getBookDetails";
 
 interface AddFormProps {
-  onSearch: (newBook: Book) => void;
+  searchedBook: Book | null;
+  handleSearch: (book: Book) => void;
   bookNotFound: boolean;
   setBookNotFound: (bookNotFound: boolean) => void;
   date: string;
   setDate: (date: string) => void;
   mode: "add" | "edit";
   handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
+  onSubmit: (book: Book) => void;
 }
 
 const AddForm: React.FC<AddFormProps> = ({
-  onSearch,
+  handleSearch,
   bookNotFound,
   setBookNotFound,
   date,
   setDate,
-  mode,
-  setMode,
+  // mode,
+  // setMode,
   handleModeChange,
 }) => {
   const searchMethodRef = useRef<HTMLSelectElement>(null);
@@ -77,7 +79,7 @@ const AddForm: React.FC<AddFormProps> = ({
       const bookWithDate = { ...newBook, dateFinished: formData.dateFinished };
       console.log(bookWithDate);
       // TODO: add key
-      onSearch(bookWithDate);
+      handleSearch(bookWithDate);
 
       // clear form data
       if (searchMethodRef.current)

@@ -46,8 +46,6 @@ const App: React.FC = () => {
   const [searchedBook, setSearchedBook] = useState<Book | null>(null);
   const [books, setBooks] = useState<Book[]>([]);
   const [bookNotFound, setBookNotFound] = useState(false);
-  // const [editedBook, setEditedBook] = useState<Book | null>(null);
-  // const [addBook, setAddBook] = useState(true);
   const [date, setDate] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editingBook, setEditingBook] = useState<Book | null>(null);
@@ -55,37 +53,44 @@ const App: React.FC = () => {
 
   const supabase = useSupabase();
 
-  const handleAddBook = useCallback((newBook: Book) => {
-    setBooks([...books, newBook]);
-  }, [books]);
+  const handleAddBook = useCallback(
+    (newBook: Book) => {
+      setBooks([...books, newBook]);
+    },
+    [books]
+  );
 
-  const handleConfirmBook = useCallback(async (book: Book) => {
-    console.log(book);
-    if (book) {
-      const bookToInsert: Database["public"]["Tables"]["books"]["Insert"] = {
-        title: book.title,
-        author: book.author,
-        published: book.published || null,
-        pages: book.pages || null,
-        // @ts-expect-error: db expects snake_case rather than camelCase
-        cover_img_url: book.coverImageUrl || null,
-        // @ts-expect-error: db expects snake_case rather than camelCase
-        date_finished: book.dateFinished || null,
-      };
-      const { data, error } = await supabase
-        .from("books")
-        .insert([bookToInsert]);
+  const handleConfirmBook = useCallback(
+    async (book: Book) => {
+      console.log(book);
+      if (book) {
+        const bookToInsert: Database["public"]["Tables"]["books"]["Insert"] = {
+          title: book.title,
+          // @ts-expect-error: author could be undefined
+          author: book.author,
+          published: book.published || null,
+          pages: book.pages || null,
+          // @ts-expect-error: db expects snake_case rather than camelCase
+          cover_img_url: book.coverImageUrl || null,
+          // @ts-expect-error: db expects snake_case rather than camelCase
+          date_finished: book.dateFinished || null,
+        };
+        const { data, error } = await supabase
+          .from("books")
+          .insert([bookToInsert]);
 
-      if (error) {
-        console.log("Error:", error);
-      } else if (data) {
-        const addedBook = data;
-        handleAddBook(addedBook);
-        console.log("Data:", data);
+        if (error) {
+          console.log("Error:", error);
+        } else if (data) {
+          const addedBook = data;
+          handleAddBook(addedBook);
+          console.log("Data:", data);
+        }
+        setSearchedBook(null);
       }
-      setSearchedBook(null);
-    }
-  }, [handleAddBook, supabase]);
+    },
+    [handleAddBook, supabase]
+  );
 
   // const handleManuallyAddBook = async (newBook: Book) => {
   //   if (newBook) {
@@ -125,7 +130,7 @@ const App: React.FC = () => {
     setIsEditing(false);
   };
 
-  const handleSearch = async (book: Book) => {
+  const handleSearch = async (book: Book | null) => {
     setSearchedBook(book);
   };
 
@@ -137,53 +142,60 @@ const App: React.FC = () => {
     if (error) {
       console.log("Error:", error);
     } else {
+      // @ts-expect-error: date could be undefined
       setBooks(data);
     }
   };
 
-  const handleEditBook = useCallback(async (book: Book) => {
-    console.log("clicked edit book", book!);
-    setIsEditing(true);
-    setEditingBook(book!);
+  const handleEditBook = useCallback(
+    async (book: Book) => {
+      console.log("clicked edit book", book!);
+      setIsEditing(true);
+      setEditingBook(book!);
 
-    if (book! && book.id) {
-      const updatedBook = {
-        title: book.title,
-        author: book.author,
-        published: book.published || null,
-        pages: book.pages || null,
-        cover_img_url: book.cover_img_url || null,
-        date_finished: book.date_finished || null,
-      };
-      const { data, error } = await supabase
-        .from("books")
-        .update(updatedBook)
-        .eq("id", book.id);
+      if (book! && book.id) {
+        const updatedBook = {
+          title: book.title,
+          author: book.author,
+          published: book.published || null,
+          pages: book.pages || null,
+          cover_img_url: book.cover_img_url || null,
+          date_finished: book.date_finished || null,
+        };
+        const { data, error } = await supabase
+          .from("books")
+          .update(updatedBook)
+          .eq("id", book.id);
 
-      if (error) {
-        console.log("Error:", error);
-      } else if (data) {
-        console.log("Data:", data);
+        if (error) {
+          console.log("Error:", error);
+        } else if (data) {
+          console.log("Data:", data);
+        }
       }
-    }
-    // setIsEditing(false);
-  }, [setIsEditing, setEditingBook, supabase]);
+      // setIsEditing(false);
+    },
+    [setIsEditing, setEditingBook, supabase]
+  );
 
-  const handleSubmit = useCallback((updatedBook: Book) => {
-    if (updatedBook) {
-      console.log("reached App handleSubmit", updatedBook);
-      console.log(mode);
-      if (mode === "add") {
-        console.log("adding new book", updatedBook);
-        handleConfirmBook(updatedBook);
-      } else if (mode === "edit") {
-        console.log("editing book", updatedBook);
-        handleEditBook(updatedBook);
+  const handleSubmit = useCallback(
+    (updatedBook: Book) => {
+      if (updatedBook) {
+        console.log("reached App handleSubmit", updatedBook);
+        console.log(mode);
+        if (mode === "add") {
+          console.log("adding new book", updatedBook);
+          handleConfirmBook(updatedBook);
+        } else if (mode === "edit") {
+          console.log("editing book", updatedBook);
+          handleEditBook(updatedBook);
+        }
+      } else {
+        console.log("no updated book");
       }
-    } else {
-      console.log("no updated book");
-    }
-  }, [mode, handleConfirmBook, handleEditBook]);
+    },
+    [mode, handleConfirmBook, handleEditBook]
+  );
 
   const handleModeChange = (newMode: "add" | "edit", book?: Book) => {
     console.log("Changing mode to:", newMode);
@@ -221,7 +233,7 @@ const App: React.FC = () => {
                 setEditingBook={setEditingBook}
                 setBookNotFound={setBookNotFound}
                 // handleManuallyAddBook={handleManuallyAddBook}
-                onSearch={handleSearch}
+                // handleSearch={handleSearch}
                 // addBook={addBook}
                 handleEditBook={handleEditBook}
                 isEditing={isEditing}

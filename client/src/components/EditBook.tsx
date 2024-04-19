@@ -6,7 +6,7 @@ import Check from "/check.svg";
 
 interface EditBookProps {
   searchedBook: Book | null;
-  handleEditBook: () => void;
+  // handleEditBook: () => void;
   isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
   editingBook: Book | null;
