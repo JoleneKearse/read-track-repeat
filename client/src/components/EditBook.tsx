@@ -11,7 +11,7 @@ interface EditBookProps {
   setIsEditing: (isEditing: boolean) => void;
   editingBook: Book | null;
   setEditingBook: (editingBook: Book | null) => void;
-  handleCancelBook: () => void;
+  handleCancelBook: (book: Book) => void;
   handleConfirmBook: (book: Book) => void;
   handleEditBook: (book: Book) => void;
   onSubmit: (book: Book) => void;
@@ -40,9 +40,12 @@ const EditBook: React.FC<EditBookProps> = ({
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    console.log("MODE:", mode);
 
     const updatedBook: Book = {
+      // @ts-expect-error: db expects snake_case rather than camelCase
       coverImageUrl:
+      // @ts-expect-error: db expects snake_case rather than camelCase
         coverImageUrlRef.current?.value || currentBook.coverImageUrl,
       title: titleRef.current?.value || currentBook.title,
       author: authorRef.current?.value || currentBook.author,
@@ -50,10 +53,11 @@ const EditBook: React.FC<EditBookProps> = ({
         ? parseInt(pagesRef.current.value)
         : currentBook.pages,
       published: publishedRef.current?.value || currentBook.published,
+      // @ts-expect-error: db expects snake_case rather than camelCase
       dateFinished: currentBook.dateFinished,
     };
     console.log(updatedBook);
-    onSubmit(updatedBook);
+    handleConfirmBook(updatedBook);
   };
 
   return (
@@ -77,6 +81,7 @@ const EditBook: React.FC<EditBookProps> = ({
         </p>
 
         {/* CURRENT INFO */}
+        {/* @ts-expect-error: db expects snake_case rather than camelCase */}
         {currentBook.coverImageUrl && (
           <>
             <img

@@ -170,12 +170,12 @@ const App: React.FC = () => {
         if (error) {
           console.log("Error:", error);
         } else if (data) {
-          console.log("Data:", data);
+          handleConfirmBook(book);
         }
       }
-      // setIsEditing(false);
+      setIsEditing(false);
     },
-    [setIsEditing, setEditingBook, supabase]
+    [setIsEditing, setEditingBook, supabase, handleConfirmBook]
   );
 
   const handleSubmit = useCallback(
@@ -203,11 +203,13 @@ const App: React.FC = () => {
     if (book) {
       setEditingBook(book);
     }
+    if (newMode === "edit" && book) {
+      handleEditBook(book);
+    }
   };
 
+  // TODO: this is being triggered over and over again from BooksReadPage
   useEffect(() => {
-    console.log(`Editing state changed in App: ${isEditing}`);
-    console.log(`Mode change logged in App to: ${mode}`);
     if (mode === "edit" && editingBook !== null) {
       handleSubmit(editingBook!);
     } else {
@@ -232,9 +234,6 @@ const App: React.FC = () => {
                 bookNotFound={bookNotFound}
                 setEditingBook={setEditingBook}
                 setBookNotFound={setBookNotFound}
-                // handleManuallyAddBook={handleManuallyAddBook}
-                // handleSearch={handleSearch}
-                // addBook={addBook}
                 handleEditBook={handleEditBook}
                 isEditing={isEditing}
                 setIsEditing={setIsEditing}
@@ -264,9 +263,8 @@ const App: React.FC = () => {
                 // searchedBook={mode === "add" ? searchedBook : null}
                 editingBook={mode === "edit" ? editingBook : null}
                 mode={mode}
-                setMode={setMode}
                 handleModeChange={handleModeChange}
-                onSubmit={handleSubmit}
+                // onSubmit={handleSubmit}
               />
             }
           />

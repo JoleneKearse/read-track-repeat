@@ -32,8 +32,6 @@ interface AddBookPageProps {
   onSubmit: (book: Book) => void;
   mode: "add" | "edit";
   handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
-  // added to resolve issue on App.tsx line 223
-  // onSearch: (book: Book) => void;
 }
 
 const AddBookPage: React.FC<AddBookPageProps> = ({

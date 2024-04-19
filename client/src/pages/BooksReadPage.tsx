@@ -8,7 +8,7 @@ import EditBook from "../components/EditBook";
 interface BooksReadPageProps {
   navLinks: NavLink[];
   books: Book[];
-  handleDataFetch: () => Promise<void>;
+  handleDataFetch: () => void;
   handleEditBook: (book: Book) => void;
   isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
@@ -16,9 +16,7 @@ interface BooksReadPageProps {
   setEditingBook: (editedBook: Book | null) => void;
   handleCancelBook: (book: Book) => void;
   handleConfirmBook: (book: Book) => void;
-  onSubmit: (book: Book) => void;
   mode: "add" | "edit";
-  setMode: (mode: "add" | "edit") => void;
   handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
 }
 
@@ -34,18 +32,11 @@ const BooksReadPage: React.FC<BooksReadPageProps> = ({
   handleCancelBook,
   handleConfirmBook,
   mode,
-  setMode,
   handleModeChange,
-  onSubmit,
 }) => {
   useEffect(() => {
     handleDataFetch();
-  }, []);
-
-  useEffect(() => {
-    console.log("isEditing changed in BooksReadPage", isEditing);
-    // console.log(editingBook);
-  }, [isEditing]);
+  }, [books, handleDataFetch]);
 
   return (
     <section className="min-h-screen bg-bg-gradient">
@@ -54,29 +45,26 @@ const BooksReadPage: React.FC<BooksReadPageProps> = ({
 
       {isEditing && editingBook ? (
         <EditBook
-          searchedBook={null}
+          searchedBook={mode === "edit" ? editingBook : null}
           editingBook={editingBook}
           handleEditBook={handleEditBook}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
           setEditingBook={setEditingBook}
-          onSubmit={handleEditBook}
-          mode="add"
+          mode="edit"
           handleModeChange={handleModeChange}
-          onSubmit={onSubmit}
+          onSubmit={handleEditBook}
+          handleCancelBook={handleCancelBook}
+          handleConfirmBook={handleConfirmBook}
         />
       ) : (
         <BookCollection
           handleDataFetch={handleDataFetch}
           books={books}
-          isEditing={isEditing}
           setIsEditing={setIsEditing}
-          editingBook={editingBook}
           setEditingBook={setEditingBook}
-          handleEditBook={handleEditBook}
-          mode="add"
+          mode="edit"
           handleModeChange={handleModeChange}
-          onSubmit={onSubmit}
         />
       )}
     </section>
