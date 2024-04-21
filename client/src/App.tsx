@@ -92,32 +92,6 @@ const App: React.FC = () => {
     [handleAddBook, supabase]
   );
 
-  // const handleManuallyAddBook = async (newBook: Book) => {
-  //   if (newBook) {
-  //     const bookToInsert: Database["public"]["Tables"]["books"]["Insert"] = {
-  //       title: newBook.title,
-  //       author: newBook.author,
-  //       published: newBook.published || null,
-  //       pages: newBook.pages || null,
-  //       cover_img_url: newBook.cover_img_url || null,
-  //       // must be camelCase to manually add book
-  //       date_finished: newBook.dateFinished || null,
-  //     };
-  //     const { data, error } = await supabase
-  //       .from("books")
-  //       .insert([bookToInsert]);
-
-  //     if (error) {
-  //       console.log("Error:", error);
-  //     } else if (data) {
-  //       const addedBook = data;
-  //       handleAddBook(addedBook);
-  //       console.log("Data:", data);
-  //     }
-  //     setAddBook(false);
-  //   }
-  // };
-
   const handleCancelBook = () => {
     console.log("isEditing", isEditing);
     console.log("canceled book", searchedBook);
@@ -134,7 +108,7 @@ const App: React.FC = () => {
     setSearchedBook(book);
   };
 
-  const handleDataFetch = async () => {
+  const handleDataFetch = useCallback(async () => {
     const { data, error } = await supabase
       .from("books")
       .select("*")
@@ -142,10 +116,10 @@ const App: React.FC = () => {
     if (error) {
       console.log("Error:", error);
     } else {
-      // @ts-expect-error: date could be undefined
+      // @ts-expect-error: date could be undefined// @ts-expect-error: date could be undefined
       setBooks(data);
     }
-  };
+  }, [supabase]);
 
   const handleEditBook = useCallback(
     async (book: Book) => {
@@ -202,6 +176,7 @@ const App: React.FC = () => {
     setMode(newMode);
     if (book) {
       setEditingBook(book);
+      console.log(book)
     }
     if (newMode === "edit" && book) {
       handleEditBook(book);
@@ -287,7 +262,7 @@ const App: React.FC = () => {
                 handleModeChange={handleModeChange}
                 // searchedBook={mode === "add" ? searchedBook : null}
                 editingBook={mode === "edit" ? editingBook : null}
-                onSubmit={handleSubmit}
+                // onSubmit={handleSubmit}
               />
             }
           />

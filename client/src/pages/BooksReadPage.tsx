@@ -53,7 +53,7 @@ const BooksReadPage: React.FC<BooksReadPageProps> = ({
           setEditingBook={setEditingBook}
           mode="edit"
           handleModeChange={handleModeChange}
-          onSubmit={handleEditBook}
+          // onSubmit={handleEditBook}
           handleCancelBook={handleCancelBook}
           handleConfirmBook={handleConfirmBook}
         />

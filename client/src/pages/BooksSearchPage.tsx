@@ -23,11 +23,12 @@ interface BooksSearchPageProps {
   mode: "add" | "edit";
   setMode: (mode: "add" | "edit") => void;
   handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
-  onSubmit: (book: Book) => void;
+  // onSubmit: (book: Book) => void;
 }
 
 const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
   navLinks,
+  // searchedBook,
   handleEditBook,
   isEditing,
   setIsEditing,
@@ -38,7 +39,7 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
   mode,
   setMode,
   handleModeChange,
-  onSubmit,
+  // onSubmit,
 }) => {
   const supabase = useSupabase();
   const [loading, setLoading] = useState<boolean>(false);
@@ -55,6 +56,7 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
       console.log("Error:", error);
       return [];
     } else {
+      // @ts-expect-error: data could be undefined
       setFilteredBooks(data);
     }
     return filteredBooks;
@@ -66,7 +68,7 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
       .select("*")
       .ilike("title", `%${title}%`)
       .order("date_finished", { ascending: false });
-
+    // @ts-expect-error: data could be undefined
     return handleSearchResponse(data, error);
   };
 
@@ -84,7 +86,7 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
       .order("date_finished", { ascending: false });
 
     const { data, error } = await query;
-
+    // @ts-expect-error: data could be undefined
     return handleSearchResponse(data, error);
   };
 
@@ -98,7 +100,7 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
       .gte("date_finished", startDate)
       .lte("date_finished", endDate)
       .order("date_finished", { ascending: false });
-
+    // @ts-expect-error: data could be undefined
     return handleSearchResponse(data, error);
   };
 
@@ -148,17 +150,20 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
             filteredBooks={filteredBooks}
             searchMethod={searchMethod}
             searchInput={searchInput}
-            mode={mode}
+            mode="edit"
             setMode={setMode}
+            handleModeChange={handleModeChange}
             handleEditBook={handleEditBook}
             editingBook={editingBook}
             isEditing={isEditing}
             setIsEditing={setIsEditing}
+            setEditingBook={setEditingBook}
+            // onSubmit={onSubmit}
           />
         )}
-        {isEditing && (
+        {isEditing && editingBook && (
           <EditBook
-            // searchedBook={searchedBook}
+            searchedBook={mode === "edit" ? editingBook : null}
             handleEditBook={handleEditBook}
             handleCancelBook={handleCancelBook}
             handleConfirmBook={handleConfirmBook}
@@ -166,9 +171,9 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
             setIsEditing={setIsEditing}
             editingBook={editingBook}
             setEditingBook={setEditingBook}
-            mode={mode}
+            mode="edit"
             handleModeChange={handleModeChange}
-            onSubmit={onSubmit}
+            // onSubmit={onSubmit}
           />
         )}
       </div>

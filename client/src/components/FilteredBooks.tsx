@@ -15,29 +15,27 @@ interface FilteredBooksProps {
   mode: "add" | "edit";
   setMode: (mode: "add" | "edit") => void;
   handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
-  onSubmit: (book: Book) => void;
+  // onSubmit: (book: Book) => void;
 }
 
 const FilteredBooks: React.FC<FilteredBooksProps> = ({
   filteredBooks,
   searchInput,
   searchMethod,
-  handleEditBook,
-  isEditing,
   setIsEditing,
   editingBook,
   setEditingBook,
-  mode,
-  setMode,
   handleModeChange,
-  onSubmit,
+  // onSubmit,
 }) => {
   const handleSubmit = (book: Book) => {
     console.log("edit button clicked");
     setIsEditing(true);
-    handleModeChange("edit", book);
     setEditingBook(book);
-    onSubmit(book);
+    handleModeChange("edit", book);
+    
+    // @ts-expect-error: editingBook can be undefined
+    onSubmit(editingBook);
   };
 
   return (

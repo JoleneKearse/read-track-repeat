@@ -1,4 +1,4 @@
-import React, { FormEvent, useRef } from "react";
+import React, { FormEvent, useRef, useEffect } from "react";
 import { Book } from "../types";
 import Cover from "/cover.svg";
 import Cross from "/cross.svg";
@@ -6,7 +6,6 @@ import Check from "/check.svg";
 
 interface EditBookProps {
   searchedBook: Book | null;
-  // handleEditBook: () => void;
   isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
   editingBook: Book | null;
@@ -14,7 +13,7 @@ interface EditBookProps {
   handleCancelBook: (book: Book) => void;
   handleConfirmBook: (book: Book) => void;
   handleEditBook: (book: Book) => void;
-  onSubmit: (book: Book) => void;
+  // onSubmit: (book: Book) => void;
   mode: "add" | "edit";
   handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
 }
@@ -24,9 +23,9 @@ const EditBook: React.FC<EditBookProps> = ({
   handleCancelBook,
   handleConfirmBook,
   editingBook,
-  setEditingBook,
+  // setEditingBook,
   handleEditBook,
-  onSubmit,
+  // onSubmit,
   mode,
   handleModeChange,
 }) => {
@@ -36,7 +35,17 @@ const EditBook: React.FC<EditBookProps> = ({
   const pagesRef = useRef<HTMLInputElement>(null);
   const publishedRef = useRef<HTMLInputElement>(null);
   const dateFinishedRef = useRef<HTMLInputElement>(null);
+  // @ts-expect-error: currentBook can be undefined
   const currentBook: Book = searchedBook || editingBook;
+
+  // useEffect(() => {
+  //   if (coverImageUrlRef.current) {
+  //     coverImageUrlRef.current.value = currentBook?.coverImageUrl || "";
+  //   }
+  // }, [currentBook?.coverImageUrl]);
+  useEffect(() => {
+    console.log(currentBook);
+  }, [currentBook])
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -57,7 +66,12 @@ const EditBook: React.FC<EditBookProps> = ({
       dateFinished: currentBook.dateFinished,
     };
     console.log(updatedBook);
-    handleConfirmBook(updatedBook);
+    if (mode === "add") {
+      handleConfirmBook(updatedBook);
+    } else {
+      handleEditBook(updatedBook);
+    }
+    // handleModeChange("edit", updatedBook);
   };
 
   return (
@@ -65,7 +79,9 @@ const EditBook: React.FC<EditBookProps> = ({
       className="w-5/6 max-w-sm py-32 mx-auto snap-center md:max-w-md"
       onSubmit={handleSubmit}
     >
-      <article
+      
+      {currentBook && (
+        <article
         key={currentBook.id | 1}
         className="flex flex-col items-center justify-center p-6 border border-orange-200 rounded-lg shadow-lg shadow-orange-200a bg-overlay"
       >
@@ -232,6 +248,8 @@ const EditBook: React.FC<EditBookProps> = ({
           </button>
         </div>
       </article>
+      )}
+      
     </form>
   );
 };
