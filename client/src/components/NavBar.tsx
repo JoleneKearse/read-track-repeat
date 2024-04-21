@@ -1,7 +1,10 @@
 import { NavLink } from "react-router-dom";
-// import { NavLink as links } from "../types";
+import { NavLink as MyLinks } from "../types";
 
-const NavBar = ({ navLinks }) => {
+interface NavBarProps {
+  navLinks: MyLinks[];
+}
+const NavBar: React.FC<NavBarProps> = ({ navLinks }) => {
   return (
     <nav className="w-5/6 max-w-sm mx-auto mb-10 md:max-w-md">
       <ul className="flex items-center justify-center gap-6">

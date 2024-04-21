@@ -17,13 +17,10 @@ interface AddBookPageProps {
   handleCancelBook: () => void;
   handleConfirmBook: (book: Book) => void;
   handleSearch: (book: Book | null) => void;
-  // searchedBook={mode === "add" ? searchedBook : null};
   bookNotFound: boolean;
   setBookNotFound: (bookNotFound: boolean) => void;
   editingBook: Book | null;
   setEditingBook: (editedBook: Book | null) => void;
-  // handleManuallyAddBook: () => void;
-  // addBook: boolean;
   date: string;
   setDate: (date: string) => void;
   handleEditBook: (book: Book) => void;
@@ -44,8 +41,6 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
   setBookNotFound,
   editingBook,
   setEditingBook,
-  // handleManuallyAddBook,
-  // addBook,
   handleEditBook,
   isEditing,
   setIsEditing,
@@ -80,7 +75,6 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
           date={date}
           setDate={setDate}
           searchedBook={mode === "add" ? searchedBook : null}
-          // editingBook={mode === "edit" ? editingBook : null}
           mode={mode}
           handleModeChange={handleModeChange}
           onSubmit={onSubmit}
@@ -98,7 +92,6 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
               handleConfirmBook={handleConfirmBook}
               handleModeChange={handleModeChange}
               mode={mode}
-              // onSubmit={onSubmit}
             />
           )}
         </div>
