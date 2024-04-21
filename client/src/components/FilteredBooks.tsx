@@ -51,7 +51,7 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({
             : searchMethod === "author"
             ? "by"
             : ""}{" "}
-          {searchInput}
+          {searchInput.split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")}
         </p>
       ) : (
         <p className="p-3 mb-10 text-3xl font-bold text-center text-purple-100 bg-orange-gradient">
