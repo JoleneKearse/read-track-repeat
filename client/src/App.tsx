@@ -70,9 +70,7 @@ const App: React.FC = () => {
           author: book.author,
           published: book.published || null,
           pages: book.pages || null,
-          // @ts-expect-error: db expects snake_case rather than camelCase
           cover_img_url: book.coverImageUrl || null,
-          // @ts-expect-error: db expects snake_case rather than camelCase
           date_finished: book.dateFinished || null,
         };
         const { data, error } = await supabase

@@ -4,8 +4,10 @@ export interface Book {
   author: string | undefined;
   published?: string | undefined;
   pages?: number | undefined;
-  cover_img_url?: string;
+  cover_img_url?: string | null;
+  coverImageUrl?: string | null;
   date_finished?: string | null;
+  dateFinished?: string | null;
 }
 
 export interface NavLink {

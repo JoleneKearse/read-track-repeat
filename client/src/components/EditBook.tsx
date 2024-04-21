@@ -52,9 +52,7 @@ const EditBook: React.FC<EditBookProps> = ({
     console.log("MODE:", mode);
 
     const updatedBook: Book = {
-      // @ts-expect-error: db expects snake_case rather than camelCase
       coverImageUrl:
-      // @ts-expect-error: db expects snake_case rather than camelCase
         coverImageUrlRef.current?.value || currentBook.coverImageUrl,
       title: titleRef.current?.value || currentBook.title,
       author: authorRef.current?.value || currentBook.author,
@@ -62,7 +60,6 @@ const EditBook: React.FC<EditBookProps> = ({
         ? parseInt(pagesRef.current.value)
         : currentBook.pages,
       published: publishedRef.current?.value || currentBook.published,
-      // @ts-expect-error: db expects snake_case rather than camelCase
       dateFinished: currentBook.dateFinished,
     };
     console.log(updatedBook);
@@ -83,7 +80,7 @@ const EditBook: React.FC<EditBookProps> = ({
       
       {currentBook && (
         <article
-        key={currentBook.id | 1}
+        key={currentBook?.id || 1}
         className="flex flex-col items-center justify-center p-6 border border-orange-200 rounded-lg shadow-lg shadow-orange-200a bg-overlay"
       >
         <h2 className="pb-6 text-2xl font-bold tracking-wide text-orange-200">
@@ -98,7 +95,7 @@ const EditBook: React.FC<EditBookProps> = ({
         </p>
 
         {/* CURRENT INFO */}
-        {/* @ts-expect-error: db expects snake_case rather than camelCase */}
+        
         {currentBook.coverImageUrl && (
           <>
             <img
@@ -207,7 +204,7 @@ const EditBook: React.FC<EditBookProps> = ({
         </div>
 
         <div className="w-full py-2">
-          {currentBook.date_finished && (
+          {currentBook.dateFinished && (
             <>
               <label
                 htmlFor="authorInput"
@@ -220,7 +217,7 @@ const EditBook: React.FC<EditBookProps> = ({
                 ref={dateFinishedRef}
                 id="dateFinishedInput"
                 className="block mb-8 px-2.5 bg-orange-100a text-orange-300 text-sm tracking-wide rounded-lg w-full placeholder:text-orange-200 font-bold focus:ring-purple-300 focus:border-purple-300 md:text-lg"
-                defaultValue={currentBook.date_finished}
+                defaultValue={currentBook.dateFinished}
               />
             </>
           )}

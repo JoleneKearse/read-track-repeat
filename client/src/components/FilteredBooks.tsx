@@ -33,7 +33,7 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({
     setIsEditing(true);
     setEditingBook(book);
     handleModeChange("edit", book);
-    
+
     // @ts-expect-error: editingBook can be undefined
     onSubmit(editingBook);
   };
@@ -51,7 +51,12 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({
             : searchMethod === "author"
             ? "by"
             : ""}{" "}
-          {searchInput.split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")}
+          "
+          {searchInput
+            .split(" ")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ")}
+          "
         </p>
       ) : (
         <p className="p-3 mb-10 text-3xl font-bold text-center text-purple-100 bg-orange-gradient">
