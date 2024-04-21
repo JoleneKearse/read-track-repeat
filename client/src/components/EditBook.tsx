@@ -45,7 +45,7 @@ const EditBook: React.FC<EditBookProps> = ({
   // }, [currentBook?.coverImageUrl]);
   useEffect(() => {
     console.log(currentBook);
-  }, [currentBook])
+  }, [currentBook]);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -66,6 +66,7 @@ const EditBook: React.FC<EditBookProps> = ({
       dateFinished: currentBook.dateFinished,
     };
     console.log(updatedBook);
+    handleModeChange("edit", updatedBook);
     if (mode === "add") {
       handleConfirmBook(updatedBook);
     } else {
@@ -226,7 +227,7 @@ const EditBook: React.FC<EditBookProps> = ({
         </div>
 
         <div className="flex justify-center items-center pt-10 pb-8 ml-[2.25rem] md:ml-[4rem]">
-          <button type="button" onClick={handleCancelBook}>
+          <button type="button" onClick={() => handleCancelBook(currentBook)}>
             <img
               src={Cross}
               alt="cross"

@@ -98,7 +98,7 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
               handleConfirmBook={handleConfirmBook}
               handleModeChange={handleModeChange}
               mode={mode}
-              onSubmit={onSubmit}
+              // onSubmit={onSubmit}
             />
           )}
         </div>
