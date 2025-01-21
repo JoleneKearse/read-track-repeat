@@ -16,6 +16,8 @@ interface AddFormProps {
   mode: "add" | "edit";
   handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
   onSubmit: (book: Book) => void;
+  // TODO: REMOVE
+  isEditing: boolean;
 }
 
 const AddForm: React.FC<AddFormProps> = ({
@@ -27,6 +29,7 @@ const AddForm: React.FC<AddFormProps> = ({
   // mode,
   // setMode,
   handleModeChange,
+  isEditing
 }) => {
   const searchMethodRef = useRef<HTMLSelectElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -40,7 +43,7 @@ const AddForm: React.FC<AddFormProps> = ({
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    handleModeChange("add", undefined);
+    // handleModeChange("add", undefined);
 
     if (searchMethodRef.current !== null) {
       formData.method = searchMethodRef.current.value;
@@ -72,12 +75,9 @@ const AddForm: React.FC<AddFormProps> = ({
       newBook = await fetchBookByIsbn(formData.input);
     }
 
-    // console.log("isEditing from AddForm", isEditing);
-
     if (newBook) {
       // add dateFinished to Book object
       const bookWithDate = { ...newBook, dateFinished: formData.dateFinished };
-      console.log(bookWithDate);
       // TODO: add key
       handleSearch(bookWithDate);
 
@@ -97,6 +97,11 @@ const AddForm: React.FC<AddFormProps> = ({
       console.log("AddForm saying if book is not found", bookNotFound);
     }
   }, [bookNotFound]);
+
+  // TODO: REMOVE
+  useEffect(() => {
+    console.log(`🦜🦜🦜Editing state changed in AddBookPage > AddForm: ${isEditing}`);
+  }, [isEditing]);
 
   return (
     <form

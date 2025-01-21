@@ -9,6 +9,7 @@ interface BookCollectionProps {
   setIsEditing: (isEditing: boolean) => void;
   setEditingBook: (editedBook: Book | null) => void;
   mode: "add" | "edit";
+  handleEditBook: (updatedBook: Book) => void;
   handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
 }
 
@@ -16,13 +17,15 @@ const BookCollection: React.FC<BookCollectionProps> = ({
   books,
   setIsEditing,
   setEditingBook,
+  handleEditBook,
   handleModeChange,
 }) => {
-  const handleSubmit = (book: Book) => {
-    console.log(book);
+  const handleEditSubmit = (book: Book) => {
+    console.log("🐽1️⃣ Edit button click triggered from BooksReadPage > BookCollection");
     setIsEditing(true);
     handleModeChange("edit", book);
     setEditingBook(book);
+    handleEditBook(book);
   };
 
   return (
@@ -65,7 +68,7 @@ const BookCollection: React.FC<BookCollectionProps> = ({
                 {book.pages} pages
               </p>
             )}
-            <button type="button" onClick={() => handleSubmit(book)}>
+            <button type="button" onClick={() => handleEditSubmit(book)}>
               <img
                 src={Edit}
                 alt="Edit book info"

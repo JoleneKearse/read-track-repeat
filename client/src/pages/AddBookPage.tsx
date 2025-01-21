@@ -58,8 +58,8 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
   }, [searchedBook]);
 
   useEffect(() => {
-    console.log(`Editing state changed in AddBookPage: ${isEditing}`);
-  }, [isEditing]);
+    console.log(`🦜🦜🦜Editing state changed in AddBookPage: ${isEditing} ${mode}`);
+  }, [isEditing, mode]);
 
   return (
     <section className="min-h-screen bg-bg-gradient snap-y">
@@ -78,6 +78,8 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
           mode={mode}
           handleModeChange={handleModeChange}
           onSubmit={onSubmit}
+          // TODO: REMOVE
+          isEditing={isEditing}
         />
         <div ref={searchResultsRef}>
           {searchedBook && (

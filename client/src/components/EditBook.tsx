@@ -9,7 +9,7 @@ interface EditBookProps {
   isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
   editingBook: Book | null;
-  setEditingBook: (editingBook: Book | null) => void;
+  // setEditingBook: (editingBook: Book | null) => void;
   handleCancelBook: (book: Book) => void;
   handleConfirmBook: (book: Book) => void;
   handleEditBook: (book: Book) => void;
@@ -25,9 +25,11 @@ const EditBook: React.FC<EditBookProps> = ({
   editingBook,
   // setEditingBook,
   handleEditBook,
-  // onSubmit,
+  onSubmit,
   mode,
   handleModeChange,
+  // TODO: REMOVE
+  isEditing,
 }) => {
   const coverImageUrlRef = useRef<HTMLInputElement>(null);
   const titleRef = useRef<HTMLInputElement>(null);
@@ -38,18 +40,12 @@ const EditBook: React.FC<EditBookProps> = ({
   // @ts-expect-error: currentBook can be undefined
   const currentBook: Book = searchedBook || editingBook;
 
-  // useEffect(() => {
-  //   if (coverImageUrlRef.current) {
-  //     coverImageUrlRef.current.value = currentBook?.coverImageUrl || "";
-  //   }
-  // }, [currentBook?.coverImageUrl]);
   useEffect(() => {
-    console.log(currentBook);
-  }, [currentBook]);
+      console.log(`🦜🦜🦜Editing state changed in AddBookPage > EditBook: ${isEditing}, ${mode}`);
+    }, [isEditing, mode]);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    console.log("MODE:", mode);
 
     const updatedBook: Book = {
       coverImageUrl:
@@ -62,14 +58,12 @@ const EditBook: React.FC<EditBookProps> = ({
       published: publishedRef.current?.value || currentBook.published,
       dateFinished: currentBook.dateFinished,
     };
-    console.log(updatedBook);
     handleModeChange("edit", updatedBook);
     if (mode === "add") {
       handleConfirmBook(updatedBook);
     } else {
       handleEditBook(updatedBook);
     }
-    // handleModeChange("edit", updatedBook);
   };
 
   return (
