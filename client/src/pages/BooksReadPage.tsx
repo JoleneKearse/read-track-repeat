@@ -4,36 +4,20 @@ import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 import BookCollection from "../components/BookCollection";
 import EditBook from "../components/EditBook";
+import useBooks from "../context/useBooks";
 
 interface BooksReadPageProps {
 	navLinks: NavLink[];
-	books: Book[];
-	handleDataFetch: () => void;
 	handleEditBook: (book: Book) => void;
-	isEditing: boolean;
-	setIsEditing: (isEditing: boolean) => void;
-	editingBook: Book | null;
-	setEditingBook: (editedBook: Book | null) => void;
-	handleCancelBook: (book: Book) => void;
 	handleConfirmBook: (book: Book) => void;
-	mode: "add" | "edit";
-	handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
 }
 
 const BooksReadPage: React.FC<BooksReadPageProps> = ({
 	navLinks,
-	books,
-	handleDataFetch,
 	handleEditBook,
-	isEditing,
-	setIsEditing,
-	editingBook,
-	setEditingBook,
-	handleCancelBook,
-	handleConfirmBook,
-	mode,
-	handleModeChange,
+	handleConfirmBook
 }) => {
+	const { state, dispatch } = useBooks(); 
 	useEffect(() => {
 		handleDataFetch();
 	}, [books, handleDataFetch]);

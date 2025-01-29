@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { SupabaseProvider, useSupabase } from "./context/SupabaseContext";
+import useBooks from "./context/useBooks";
 
 import { Book, NavLink } from "./types";
 import { Database } from "../src/types/supabase";
@@ -42,68 +43,38 @@ const App: React.FC = () => {
 			alt: "Search Books",
 		},
 	];
-
-	const [searchedBook, setSearchedBook] = useState<Book | null>(null);
-	const [books, setBooks] = useState<Book[]>([]);
-	const [bookNotFound, setBookNotFound] = useState(false);
-	const [date, setDate] = useState("");
-	const [isEditing, setIsEditing] = useState(false);
-	const [editingBook, setEditingBook] = useState<Book | null>(null);
-	const [mode, setMode] = useState<"add" | "edit">("add");
-
 	const supabase = useSupabase();
+	const { state, dispatch } = useBooks();
 
-	const handleAddBook = useCallback(
-		(newBook: Book) => {
-			setBooks([...books, newBook]);
-		},
-		[books]
-	);
+	// const handleAddBook = (newBook: Book) => {
+	// 	dispatch({ type: "SET_BOOKS", payload: [...state.books, newBook] });
+	// };
 
-	const handleConfirmBook = useCallback(
-		async (book: Book) => {
-			if (book) {
-				const bookToInsert: Database["public"]["Tables"]["books"]["Insert"] = {
-					title: book.title,
-					// @ts-expect-error: author could be undefined
-					author: book.author,
-					published: book.published || null,
-					pages: book.pages || null,
-					cover_img_url: book.coverImageUrl || null,
-					date_finished: book.dateFinished || null,
-				};
-				const { data, error } = await supabase
-					.from("books")
-					.insert([bookToInsert]);
-
-				if (error) {
-					console.log("Error:", error);
-				} else if (data) {
-					const addedBook = data;
-					handleAddBook(addedBook);
-					console.log("Data:", data);
-				}
-				setSearchedBook(null);
-				setIsEditing(false);
-				handleModeChange("add", undefined);
+	const handleConfirmBook = async (book: Book) => {
+		if (book) {
+			const bookToInsert: Database["public"]["Tables"]["books"]["Insert"] = {
+				title: book.title,
+				author: book.author || null,
+				published: book.published || null,
+				pages: book.pages || null,
+				cover_img_url: book.coverImageUrl || null,
+				date_finished: book.dateFinished || null,
+			};
+	
+			const { data, error } = await supabase.from("books").insert([bookToInsert]);
+	
+			if (error) {
+				console.log("Error:", error);
+			} else if (data) {
+				dispatch({ type: "SET_BOOKS", payload: [...state.books, ...data] });
+				console.log("Data:", data);
 			}
-		},
-		[handleAddBook, supabase]
-	);
-
-	const handleCancelBook = () => {
-		if (searchedBook!) {
-			setTimeout(() => {
-				setSearchedBook(null);
-			}, 500);
+	
+			dispatch({ type: "SET_SEARCHED_BOOK", payload: null });
+			dispatch({ type: "SET_IS_EDITING", payload: false });
+			dispatch({ type: "SET_MODE", payload: "add" });
 		}
-		setSearchedBook(null);
-		setIsEditing(false);
-	};
-
-	const handleSearch = async (book: Book | null) => {
-		setSearchedBook(book);
-	};
+	};	
 
 	const handleDataFetch = useCallback(async () => {
 		const { data, error } = await supabase
@@ -113,150 +84,105 @@ const App: React.FC = () => {
 		if (error) {
 			console.log("Error:", error);
 		} else {
-			// @ts-expect-error: date could be undefined// @ts-expect-error: date could be undefined
-			setBooks(data);
+			dispatch({ type: "SET_BOOKS", payload: data as Book[] });
 		}
-	}, [supabase]);
+	}, [supabase, dispatch]);
 
-	const handleEditBook = useCallback(
-		async (book: Book) => {
-			setIsEditing(true);
-			setEditingBook(book!);
-
-			if (book! && book.id) {
-				const updatedBook = {
-					title: book.title,
-					author: book.author,
-					published: book.published || null,
-					pages: book.pages || null,
-					cover_img_url: book.cover_img_url || null,
-					date_finished: book.date_finished || null,
-				};
-				const { data, error } = await supabase
-					.from("books")
-					.update(updatedBook)
-					.eq("id", book.id);
-
-				if (error) {
-					console.log("Error:", error);
-				} else if (data) {
-					handleSubmit(book);
-				}
+	const handleEditBook = async (book: Book) => {
+		dispatch({ type: "SET_IS_EDITING", payload: true });
+		dispatch({ type: "SET_EDITING_BOOK", payload: book });
+	
+		if (book && book.id) {
+			const updatedBook = {
+				title: book.title,
+				author: book.author,
+				published: book.published || null,
+				pages: book.pages || null,
+				cover_img_url: book.cover_img_url || null,
+				date_finished: book.date_finished || null,
+			};
+	
+			const { data, error } = await supabase
+				.from("books")
+				.update(updatedBook)
+				.eq("id", book.id);
+	
+			if (error) {
+				console.log("Error:", error);
+			} else if (data) {
+				console.log("Updated data:", data);
 			}
-			// TODO: This allowed the EditBook component to render when commented out.  But now I can't switch back to add mode.
-			setIsEditing(false);
-		},
-		[supabase]
-	);
+		}
+	
+		dispatch({ type: "SET_IS_EDITING", payload: false });
+	};	
 
-	const handleSubmit = useCallback(
-		(updatedBook: Book) => {
-			if (updatedBook) {
-				if (mode === "add") {
-					console.log("adding new book", updatedBook);
-					handleConfirmBook(updatedBook);
-				} else if (mode === "edit") {
-					handleEditBook(updatedBook);
-				}
-			} else {
-				console.log("no updated book");
-			}
-		},
-		[mode, handleConfirmBook, handleEditBook]
-	);
+	// const handleSubmit = (updatedBook: Book) => {
+	// 	if (updatedBook) {
+	// 		if (state.mode === "add") {
+	// 			handleConfirmBook(updatedBook);
+	// 		} else if (state.mode === "edit") {
+	// 			handleEditBook(updatedBook);
+	// 		}
+	// 	} else {
+	// 		console.log("no updated book");
+	// 	}
+	// };
 
-	const handleModeChange = useCallback(
-		(newMode: "add" | "edit", book?: Book) => {
-			console.log("🐽2️⃣ Changing mode to:", newMode);
-			console.trace();
-			setMode(newMode);
-			// if (book) {
-			// 	setEditingBook(book);
-			// }
-			if (newMode === "edit" && book) {
-				setEditingBook(book);
-				handleEditBook(book);
-			}
-		},
-		[setMode, setEditingBook, handleEditBook]
-	);
+	// const handleModeChange = (newMode: "add" | "edit", book?: Book) => {
+	// 	console.log("🐽2️⃣ Changing mode to:", newMode);
+	// 	console.trace();
+	
+	// 	dispatch({ type: "SET_MODE", payload: newMode });
+	
+	// 	if (newMode === "edit" && book) {
+	// 		dispatch({ type: "SET_EDITING_BOOK", payload: book });
+	// 		handleEditBook(book);
+	// 	}
+	// };	
 
 	return (
 		<SupabaseProvider>
-			<Router>
-				<Routes>
-					<Route
-						path="/"
-						element={
-							<AddBookPage
-								books={books}
-								handleAddBook={handleAddBook}
-								navLinks={navLinks}
-								handleCancelBook={handleCancelBook}
-								handleConfirmBook={handleConfirmBook}
-								handleSearch={handleSearch}
-								bookNotFound={bookNotFound}
-								setEditingBook={setEditingBook}
-								setBookNotFound={setBookNotFound}
-								handleEditBook={handleEditBook}
-								isEditing={isEditing}
-								setIsEditing={setIsEditing}
-								onSubmit={handleSubmit}
-								searchedBook={mode === "add" ? searchedBook : null}
-								editingBook={mode === "edit" ? editingBook : null}
-								mode={mode}
-								handleModeChange={handleModeChange}
-								date={date}
-								setDate={setDate}
-							/>
-						}
-					/>
-					<Route
-						path="/booksRead"
-						element={
-							<BooksReadPage
-								navLinks={navLinks}
-								books={books}
-								handleDataFetch={handleDataFetch}
-								handleEditBook={handleEditBook}
-								handleCancelBook={handleCancelBook}
-								handleConfirmBook={handleConfirmBook}
-								isEditing={isEditing}
-								setIsEditing={setIsEditing}
-								setEditingBook={setEditingBook}
-								// searchedBook={mode === "add" ? searchedBook : null}
-								editingBook={mode === "edit" ? editingBook : null}
-								mode={mode}
-								handleModeChange={handleModeChange}
-								// onSubmit={handleSubmit}
-							/>
-						}
-					/>
-					<Route
-						path="/bookSearch"
-						element={
-							<BooksSearchPage
-								navLinks={navLinks}
-								books={books}
-								// handleDataFetch={handleDataFetch}
-								handleEditBook={handleEditBook}
-								handleCancelBook={handleCancelBook}
-								handleConfirmBook={handleConfirmBook}
-								isEditing={isEditing}
-								setIsEditing={setIsEditing}
-								// editingBook={editingBook}
-								setEditingBook={setEditingBook}
-								mode={mode}
-								setMode={setMode}
-								handleModeChange={handleModeChange}
-								// searchedBook={mode === "add" ? searchedBook : null}
-								editingBook={mode === "edit" ? editingBook : null}
-								// onSubmit={handleSubmit}
-							/>
-						}
-					/>
-				</Routes>
-			</Router>
+				<Router>
+					<Routes>
+						<Route
+							path="/"
+							element={
+								<AddBookPage
+									navLinks={navLinks}
+									handleConfirmBook={handleConfirmBook}
+									handleEditBook={handleEditBook}
+								/>
+							}
+						/>
+						<Route
+							path="/booksRead"
+							element={
+								<BooksReadPage
+									navLinks={navLinks}
+									handleDataFetch={handleDataFetch}
+									handleEditBook={handleEditBook}
+									handleConfirmBook={handleConfirmBook}
+									// searchedBook={mode === "add" ? searchedBook : null}
+									// editingBook={state.mode === "edit" ? editingBook : null}
+								/>
+							}
+						/>
+						<Route
+							path="/bookSearch"
+							element={
+								<BooksSearchPage
+									navLinks={navLinks}
+									// handleDataFetch={handleDataFetch}
+									handleEditBook={handleEditBook}
+									handleConfirmBook={handleConfirmBook}
+									// searchedBook={mode === "add" ? searchedBook : null}
+									// editingBook={state.mode === "edit" ? state.editingBook : null}
+								/>
+							}
+						/>
+					</Routes>
+				</Router>
 		</SupabaseProvider>
 	);
 };

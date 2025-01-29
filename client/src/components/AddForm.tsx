@@ -1,4 +1,5 @@
-import React, { FormEvent, useRef, useEffect } from "react";
+import React, { FormEvent, useRef } from "react";
+import useBooks from "../context/useBooks";
 import { Book } from "../types";
 import {
   fetchBookByIsbn,
@@ -6,31 +7,9 @@ import {
   fetchBookByAuthor,
 } from "../../../api/getBookDetails";
 
-interface AddFormProps {
-  searchedBook: Book | null;
-  handleSearch: (book: Book) => void;
-  bookNotFound: boolean;
-  setBookNotFound: (bookNotFound: boolean) => void;
-  date: string;
-  setDate: (date: string) => void;
-  mode: "add" | "edit";
-  handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
-  onSubmit: (book: Book) => void;
-  // TODO: REMOVE
-  isEditing: boolean;
-}
 
-const AddForm: React.FC<AddFormProps> = ({
-  handleSearch,
-  bookNotFound,
-  setBookNotFound,
-  date,
-  setDate,
-  // mode,
-  // setMode,
-  handleModeChange,
-  isEditing
-}) => {
+const AddForm: React.FC = () => {
+  const { state, dispatch } = useBooks();
   const searchMethodRef = useRef<HTMLSelectElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const dateRef = useRef<HTMLInputElement>(null);
@@ -39,6 +18,10 @@ const AddForm: React.FC<AddFormProps> = ({
     method: "",
     input: "",
     dateFinished: "",
+  };
+
+  const handleSearch = async (book: Book | null) => {
+    dispatch({ type: "SET_SEARCHED_BOOK", payload: book });
   };
 
   const handleSubmit = async (event: FormEvent) => {
@@ -85,23 +68,16 @@ const AddForm: React.FC<AddFormProps> = ({
       if (searchMethodRef.current)
         searchMethodRef.current.value = "Choose search method";
       if (searchInputRef.current) searchInputRef.current.value = "";
-      setDate("");
-    } else {
-      setBookNotFound(true);
-    }
+      dispatch({ type: "SET_DATE", payload: "" });
+    } 
   };
 
   // TODO: check if this is necessary
-  useEffect(() => {
-    if (bookNotFound) {
-      console.log("AddForm saying if book is not found", bookNotFound);
-    }
-  }, [bookNotFound]);
-
-  // TODO: REMOVE
-  useEffect(() => {
-    console.log(`🦜🦜🦜Editing state changed in AddBookPage > AddForm: ${isEditing}`);
-  }, [isEditing]);
+  // useEffect(() => {
+  //   if (bookNotFound) {
+  //     console.log("AddForm saying if book is not found", bookNotFound);
+  //   }
+  // }, [bookNotFound]);
 
   return (
     <form
@@ -150,8 +126,8 @@ const AddForm: React.FC<AddFormProps> = ({
       <input
         type="date"
         ref={dateRef}
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
+        value={state.date}
+        onChange={(e) => dispatch({ type: "SET_DATE", payload: e.target.value })}
         className="block mb-8 p-2.5 bg-orange-100 border border-orange-200 text-gray-900 text-sm tracking-wide rounded-lg w-full placeholder:text-purple-500 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
       />
 
