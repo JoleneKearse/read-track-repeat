@@ -8,53 +8,32 @@ import useBooks from "../context/useBooks";
 
 interface BooksReadPageProps {
 	navLinks: NavLink[];
-	handleEditBook: (book: Book) => void;
 	handleConfirmBook: (book: Book) => void;
+	handleDataFetch: () => void;
 }
 
 const BooksReadPage: React.FC<BooksReadPageProps> = ({
 	navLinks,
-	handleEditBook,
-	handleConfirmBook
+	handleConfirmBook,
+	handleDataFetch
 }) => {
-	const { state, dispatch } = useBooks(); 
-	useEffect(() => {
-		handleDataFetch();
-	}, [books, handleDataFetch]);
+	const { state } = useBooks(); 
 
 	useEffect(() => {
-		console.log("BooksReadPage - isEditing:", isEditing);
-		console.log("BooksReadPage - editingBook:", editingBook);
-	}, [isEditing, editingBook]);
+		handleDataFetch();
+	}, [handleDataFetch]);
 
 	return (
 		<section className="min-h-screen bg-bg-gradient">
 			<Header />
 			<NavBar navLinks={navLinks} />
 
-			{isEditing && editingBook ? (
+			{state.isEditing && state.editingBook ? (
 				<EditBook
-					searchedBook={mode === "edit" ? editingBook : null}
-					editingBook={editingBook}
-					handleEditBook={handleEditBook}
-					isEditing={isEditing}
-					setIsEditing={setIsEditing}
-					setEditingBook={setEditingBook}
-					mode={mode}
-					handleModeChange={handleModeChange}
-					handleCancelBook={handleCancelBook}
 					handleConfirmBook={handleConfirmBook}
 				/>
 			) : (
-				<BookCollection
-					handleDataFetch={handleDataFetch}
-					books={books}
-					setIsEditing={setIsEditing}
-					setEditingBook={setEditingBook}
-					mode={mode}
-					handleEditBook={handleEditBook}
-					handleModeChange={handleModeChange}
-				/>
+				<BookCollection />
 			)}
 		</section>
 	);

@@ -163,8 +163,6 @@ const App: React.FC = () => {
 									handleDataFetch={handleDataFetch}
 									handleEditBook={handleEditBook}
 									handleConfirmBook={handleConfirmBook}
-									// searchedBook={mode === "add" ? searchedBook : null}
-									// editingBook={state.mode === "edit" ? editingBook : null}
 								/>
 							}
 						/>

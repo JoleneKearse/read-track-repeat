@@ -7,13 +7,9 @@ import useBooks from "../context/useBooks";
 
 interface EditBookProps {
 	handleConfirmBook: (book: Book) => void;
-	// handleEditBook: (book: Book) => void;
 }
 
-const EditBook: React.FC<EditBookProps> = ({
-	handleConfirmBook,
-	// handleEditBook,
-}) => {
+const EditBook: React.FC<EditBookProps> = ({ handleConfirmBook }) => {
 	const { state, dispatch } = useBooks();
 	const coverImageUrlRef = useRef<HTMLInputElement>(null);
 	const titleRef = useRef<HTMLInputElement>(null);

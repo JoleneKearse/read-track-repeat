@@ -2,49 +2,34 @@ import React from "react";
 import { Book } from "../types";
 import Edit from "/edit.svg";
 import Cover from "/cover.svg";
+import useBooks from "../context/useBooks";
 
-interface BookCollectionProps {
-  handleDataFetch: () => void;
-  books: Book[];
-  setIsEditing: (isEditing: boolean) => void;
-  setEditingBook: (editedBook: Book | null) => void;
-  mode: "add" | "edit";
-  handleEditBook: (updatedBook: Book) => void;
-  handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
-}
+const BookCollection: React.FC = () => {
+  const { state, dispatch } = useBooks();
 
-const BookCollection: React.FC<BookCollectionProps> = ({
-  books,
-  setIsEditing,
-  setEditingBook,
-  handleEditBook,
-  handleModeChange,
-}) => {
   const handleEditSubmit = (book: Book) => {
-    console.log("🐽1️⃣ Edit button click triggered from BooksReadPage > BookCollection");
-    setIsEditing(true);
-    handleModeChange("edit", book);
-    setEditingBook(book);
-    handleEditBook(book);
+    dispatch({ type: "SET_IS_EDITING", payload: true });
+    dispatch({ type: "SET_MODE", payload: "edit" });
+    dispatch({ type: "SET_EDITING_BOOK", payload: book });
   };
 
   return (
     <>
       <p className="text-2xl font-bold tracking-wide text-center text-purple-200">
-        {books.length} books tracked
+        {state.books.length} books tracked
       </p>
       <section
         className={`justify-center min-h-screen scroll snap-y  ${
-          books.length <= 3
+          state.books.length <= 3
             ? "lg:flex lg:gap-10"
             : "md:grid md:grid-cols-2 lg:grid-cols-4 md:h-auto md:py-64"
         }`}
       >
-        {books.map((book) => (
+        {state.books.map((book) => (
           <article
             key={book.id}
             className={`flex flex-col items-center justify-center flex-none w-3/5 p-4 mx-auto my-10 text-center bg-overlay border border-orange-200 rounded-lg shadow-lg shadow-orange-200a relative ${
-              books.length <= 3 ? "lg:max-w-xs lg:max-h-[450px]" : ""
+              state.books.length <= 3 ? "lg:max-w-xs lg:max-h-[450px]" : ""
             }`}
           >
             <img
