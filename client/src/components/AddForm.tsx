@@ -72,13 +72,6 @@ const AddForm: React.FC = () => {
     } 
   };
 
-  // TODO: check if this is necessary
-  // useEffect(() => {
-  //   if (bookNotFound) {
-  //     console.log("AddForm saying if book is not found", bookNotFound);
-  //   }
-  // }, [bookNotFound]);
-
   return (
     <form
       className="w-5/6 max-w-sm mx-auto py-28 snap-center md:max-w-md"

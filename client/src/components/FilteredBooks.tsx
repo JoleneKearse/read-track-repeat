@@ -2,40 +2,24 @@ import React from "react";
 import { Book } from "../types";
 import Edit from "/edit.svg";
 import Cover from "/cover.svg";
+import useBooks from "../context/useBooks";
 
 interface FilteredBooksProps {
   filteredBooks: Book[];
   searchInput: string;
   searchMethod: string;
-  handleEditBook: (book: Book) => void;
-  isEditing: boolean;
-  setIsEditing: (isEditing: boolean) => void;
-  editingBook: Book | null;
-  setEditingBook: (editedBook: Book | null) => void;
-  mode: "add" | "edit";
-  setMode: (mode: "add" | "edit") => void;
-  handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
-  // onSubmit: (book: Book) => void;
 }
 
 const FilteredBooks: React.FC<FilteredBooksProps> = ({
   filteredBooks,
-  searchInput,
   searchMethod,
-  setIsEditing,
-  editingBook,
-  setEditingBook,
-  handleModeChange,
-  // onSubmit,
+  searchInput
 }) => {
+  const { dispatch } = useBooks();
   const handleSubmit = (book: Book) => {
-    console.log("edit button clicked");
-    setIsEditing(true);
-    setEditingBook(book);
-    handleModeChange("edit", book);
-
-    // @ts-expect-error: editingBook can be undefined
-    onSubmit(editingBook);
+    dispatch({ type: "SET_MODE", payload: "edit" });
+    dispatch({ type: "SET_IS_EDITING", payload: true });
+    dispatch({ type: "SET_EDITING_BOOK", payload: book });
   };
 
   return (

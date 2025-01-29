@@ -9,39 +9,22 @@ import SearchBooks from "../components/SearchBooks";
 import FilteredBooks from "../components/FilteredBooks";
 import EditBook from "../components/EditBook";
 import { PostgrestError } from "@supabase/supabase-js";
+import useBooks from "../context/useBooks";
 
 interface BooksSearchPageProps {
   navLinks: NavLink[];
-  books: Book[];
   handleEditBook: (book: Book) => void;
-  handleCancelBook: (book: Book) => void;
   handleConfirmBook: (book: Book) => void;
-  isEditing: boolean;
-  setIsEditing: (isEditing: boolean) => void;
-  editingBook: Book | null;
-  setEditingBook: (editedBook: Book | null) => void;
-  mode: "add" | "edit";
-  setMode: (mode: "add" | "edit") => void;
-  handleModeChange: (newMode: "add" | "edit", book?: Book) => void;
-  // onSubmit: (book: Book) => void;
 }
 
 const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
   navLinks,
-  // searchedBook,
-  handleEditBook,
-  isEditing,
-  setIsEditing,
-  editingBook,
-  setEditingBook,
-  handleCancelBook,
-  handleConfirmBook,
-  mode,
-  setMode,
-  handleModeChange,
-  // onSubmit,
+  handleConfirmBook
 }) => {
   const supabase = useSupabase();
+
+  const { state } = useBooks();
+
   const [loading, setLoading] = useState<boolean>(false);
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
   const filteredBooksRef = useRef<HTMLDivElement>(null);
@@ -150,30 +133,11 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
             filteredBooks={filteredBooks}
             searchMethod={searchMethod}
             searchInput={searchInput}
-            mode="edit"
-            setMode={setMode}
-            handleModeChange={handleModeChange}
-            handleEditBook={handleEditBook}
-            editingBook={editingBook}
-            isEditing={isEditing}
-            setIsEditing={setIsEditing}
-            setEditingBook={setEditingBook}
-            // onSubmit={onSubmit}
           />
         )}
-        {isEditing && editingBook && (
+        {state.isEditing && state.editingBook && (
           <EditBook
-            searchedBook={mode === "edit" ? editingBook : null}
-            handleEditBook={handleEditBook}
-            handleCancelBook={handleCancelBook}
             handleConfirmBook={handleConfirmBook}
-            isEditing={isEditing}
-            setIsEditing={setIsEditing}
-            editingBook={editingBook}
-            setEditingBook={setEditingBook}
-            mode="edit"
-            handleModeChange={handleModeChange}
-            // onSubmit={onSubmit}
           />
         )}
       </div>
