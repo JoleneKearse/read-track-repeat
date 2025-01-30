@@ -73,9 +73,7 @@ const EditBook: React.FC<EditBookProps> = ({ handleConfirmBook }) => {
 					{currentBook.coverImageUrl && (
 						<>
 							<img
-								src={
-									currentBook.coverImageUrl ? currentBook.coverImageUrl : Cover
-								}
+								src={(currentBook.cover_img_url || Cover) as string}
 								alt={currentBook.title}
 								className="w-3/4 pt-8 pb-10"
 							/>
@@ -86,6 +84,12 @@ const EditBook: React.FC<EditBookProps> = ({ handleConfirmBook }) => {
 						</>
 					)}
 					<div className="w-full py-2">
+						<div className="flex justify-center">
+							<img
+								src={currentBook.cover_img_url as string}
+								alt={currentBook.title}
+							/>
+						</div>
 						<label
 							htmlFor="coverImgInput"
 							className="block mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
@@ -95,9 +99,11 @@ const EditBook: React.FC<EditBookProps> = ({ handleConfirmBook }) => {
 						<input
 							type="text"
 							ref={coverImageUrlRef}
+							value={currentBook.cover_img_url as string}
+							defaultValue={currentBook.coverImageUrl as string}
 							id="coverImgInput"
 							className="block w-full px-2.5 mb-8 text-sm tracking-wide text-orange-200 rounded-lg bg-orange-100a placeholder:text-purple-200 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
-							placeholder="https://m.media-amazon.com/images/G/15/apparel/rcxgs/tile._CB483369412_.gif"
+							placeholder="link with 'amazon' and some gibberish"
 						/>
 					</div>
 

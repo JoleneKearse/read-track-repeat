@@ -46,10 +46,6 @@ const App: React.FC = () => {
 	const supabase = useSupabase();
 	const { state, dispatch } = useBooks();
 
-	// const handleAddBook = (newBook: Book) => {
-	// 	dispatch({ type: "SET_BOOKS", payload: [...state.books, newBook] });
-	// };
-
 	const handleConfirmBook = async (book: Book) => {
 		if (book) {
 			const bookToInsert: Database["public"]["Tables"]["books"]["Insert"] = {
