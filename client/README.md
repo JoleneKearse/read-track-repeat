@@ -1,30 +1,20 @@
-# React + TypeScript + Vite
+# Read, Track, Repeat
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is digital book tracking app is built with **React**, **TypeScript**, **Supabase**, **React Router**, **Tailwind CSS** and **The Open Library** and **Google Books** APIs.
 
-Currently, two official plugins are available:
+It empowers users to:
+- sign in and keep their information secure
+- add newly read books
+- view their library, including cover art
+- verify they haven't already read a title before buying it
+- get fun geeky reading stats
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+##  The Problem
+ 
+I am an avid customer of **Amazon Kindle** and **Audible**, but am missing a way to check which titles I've already read.  
 
-## Expanding the ESLint configuration
+It's not too big a deal in **Kindle Unlimited** as I can immediately see the last read page was at the end *and* I avoid *double-paying*.  
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+That is *not* the case in Audible.  I, for one, read a *ton* and find the synopses are insufficient to remind me I've already read that one. 
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+**Read, Track, Repeat** is the solution!   
