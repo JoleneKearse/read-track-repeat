@@ -13,13 +13,14 @@ import useBooks from "../context/useBooks";
 
 interface BooksSearchPageProps {
   navLinks: NavLink[];
-  handleEditBook: (book: Book) => void;
   handleConfirmBook: (book: Book) => void;
+  handleEditBook: (book: Book) => void;
 }
 
 const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
   navLinks,
-  handleConfirmBook
+  handleConfirmBook,
+  handleEditBook
 }) => {
   const supabase = useSupabase();
 
@@ -138,6 +139,7 @@ const BooksSearchPage: React.FC<BooksSearchPageProps> = ({
         {state.isEditing && state.editingBook && (
           <EditBook
             handleConfirmBook={handleConfirmBook}
+            handleEditBook={handleEditBook}
           />
         )}
       </div>

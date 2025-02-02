@@ -9,12 +9,14 @@ import useBooks from "../context/useBooks";
 interface BooksReadPageProps {
 	navLinks: NavLink[];
 	handleConfirmBook: (book: Book) => void;
+	handleEditBook: (book: Book) => void;
 	handleDataFetch: () => void;
 }
 
 const BooksReadPage: React.FC<BooksReadPageProps> = ({
 	navLinks,
 	handleConfirmBook,
+	handleEditBook,
 	handleDataFetch
 }) => {
 	const { state } = useBooks(); 
@@ -31,6 +33,7 @@ const BooksReadPage: React.FC<BooksReadPageProps> = ({
 			{state.isEditing && state.editingBook ? (
 				<EditBook
 					handleConfirmBook={handleConfirmBook}
+					handleEditBook={handleEditBook}
 				/>
 			) : (
 				<BookCollection />

@@ -17,6 +17,7 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({
 }) => {
   const { dispatch } = useBooks();
   const handleSubmit = (book: Book) => {
+    console.log("clicked edit from BooksSearch")
     dispatch({ type: "SET_MODE", payload: "edit" });
     dispatch({ type: "SET_IS_EDITING", payload: true });
     dispatch({ type: "SET_EDITING_BOOK", payload: book });
@@ -89,7 +90,7 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({
                 {book.pages} pages
               </p>
             )}
-            <button type="button" onClick={() => handleSubmit}>
+            <button type="button" onClick={() => handleSubmit(book)}>
               <img
                 src={Edit}
                 alt="Edit book info"

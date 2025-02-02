@@ -91,6 +91,7 @@ const App: React.FC = () => {
 		dispatch({ type: "SET_EDITING_BOOK", payload: book });
 
 		if (book && book.id) {
+			console.log("Updating book with:", book, "ID:", book.id);
 			const updatedBook = {
 				title: book.title,
 				author: book.author,
@@ -103,7 +104,8 @@ const App: React.FC = () => {
 			const { data, error } = await supabase
 				.from("books")
 				.update(updatedBook)
-				.eq("id", book.id);
+				.eq("id", book.id)
+				.select();
 
 			if (error) {
 				console.log("Error:", error);
@@ -136,6 +138,7 @@ const App: React.FC = () => {
 								navLinks={navLinks}
 								handleDataFetch={handleDataFetch}
 								handleConfirmBook={handleConfirmBook}
+								handleEditBook={handleEditBook}
 							/>
 						}
 					/>
@@ -144,8 +147,8 @@ const App: React.FC = () => {
 						element={
 							<BooksSearchPage
 								navLinks={navLinks}
-								handleEditBook={handleEditBook}
 								handleConfirmBook={handleConfirmBook}
+								handleEditBook={handleEditBook}
 							/>
 						}
 					/>
