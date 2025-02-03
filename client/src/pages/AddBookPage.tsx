@@ -21,7 +21,7 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
 	navLinks,
 	handleConfirmBook,
 	// searchedBook,
-	// handleEditBook,
+	handleEditBook,
 }) => {
 	const { state } = useBooks();
 	const searchResultsRef = useRef<HTMLDivElement>(null);
@@ -43,7 +43,7 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
 				<div ref={searchResultsRef}>
 					{state.searchedBook && (
 						<EditBook
-							// handleEditBook={handleEditBook}
+							handleEditBook={handleEditBook}
 							// handleCancelBook={handleCancelBook}
 							handleConfirmBook={handleConfirmBook}
 						/>
