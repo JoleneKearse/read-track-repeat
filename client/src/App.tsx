@@ -91,21 +91,20 @@ const App: React.FC = () => {
 		dispatch({ type: "SET_EDITING_BOOK", payload: book });
 
 		if (book && book.id) {
-			console.log("Updating book with:", book, "ID:", book.id);
 			const updatedBook = {
 				title: book.title,
 				author: book.author,
-				published: book.published || null,
-				pages: book.pages || null,
-				cover_img_url: book.cover_img_url || null,
-				date_finished: book.date_finished || null,
+				published: book.published ?? null,
+				pages: book.pages ?? null,
+				cover_img_url: book.coverImageUrl,
+				date_finished: book.dateFinished,
 			};
 
 			const { data, error } = await supabase
 				.from("books")
 				.update(updatedBook)
 				.eq("id", book.id)
-				.select();
+				.select("*");
 
 			if (error) {
 				console.log("Error:", error);

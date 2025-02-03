@@ -10,7 +10,10 @@ interface EditBookProps {
 	handleEditBook: (book: Book) => void;
 }
 
-const EditBook: React.FC<EditBookProps> = ({ handleConfirmBook, handleEditBook }) => {
+const EditBook: React.FC<EditBookProps> = ({
+	handleConfirmBook,
+	handleEditBook,
+}) => {
 	const { state, dispatch } = useBooks();
 	const coverImageUrlRef = useRef<HTMLInputElement>(null);
 	const titleRef = useRef<HTMLInputElement>(null);
@@ -19,11 +22,13 @@ const EditBook: React.FC<EditBookProps> = ({ handleConfirmBook, handleEditBook }
 	const publishedRef = useRef<HTMLInputElement>(null);
 	const dateFinishedRef = useRef<HTMLInputElement>(null);
 	const currentBook: Book = (state.searchedBook || state.editingBook) as Book;
-	const [coverImageUrl, setCoverImageUrl] = useState<string>(currentBook.cover_img_url || "");
+	const [coverImageUrl, setCoverImageUrl] = useState<string>(
+		currentBook.cover_img_url || ""
+	);
 
 	useEffect(() => {
 		setCoverImageUrl(currentBook.cover_img_url || "");
-	}, [currentBook])
+	}, [currentBook]);
 
 	const handleCancelBook = () => {
 		if (state.searchedBook) {
@@ -39,9 +44,9 @@ const EditBook: React.FC<EditBookProps> = ({ handleConfirmBook, handleEditBook }
 		event.preventDefault();
 
 		const updatedBook: Book = {
-			coverImageUrl:
-				coverImageUrl,
-				// coverImageUrlRef.current?.value || currentBook.coverImageUrl,
+			id: currentBook.id,
+			coverImageUrl: coverImageUrl,
+			// coverImageUrlRef.current?.value || currentBook.coverImageUrl,
 			title: titleRef.current?.value || currentBook.title,
 			author: authorRef.current?.value || currentBook.author,
 			pages: pagesRef.current?.value
@@ -53,12 +58,11 @@ const EditBook: React.FC<EditBookProps> = ({ handleConfirmBook, handleEditBook }
 		dispatch({ type: "SET_MODE", payload: "edit" });
 
 		if (state.isEditing) {
-			console.log("clicked edit book")
+			console.log("clicked edit book");
 			handleEditBook(updatedBook);
 		} else if (!state.isEditing) {
 			handleConfirmBook(updatedBook);
 		}
-		
 	};
 
 	return (
@@ -113,11 +117,11 @@ const EditBook: React.FC<EditBookProps> = ({ handleConfirmBook, handleEditBook }
 						<input
 							type="text"
 							ref={coverImageUrlRef}
-							value={currentBook.cover_img_url as string}
+							value={coverImageUrl}
 							id="coverImgInput"
 							className="block w-full px-2.5 mb-8 text-sm tracking-wide text-orange-200 rounded-lg bg-orange-100a placeholder:text-purple-200 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
 							placeholder="link with 'amazon' and some gibberish"
-							onChange={(e) => setCoverImageUrl(e.target.value)} 
+							onChange={(e) => setCoverImageUrl(e.target.value)}
 						/>
 					</div>
 
@@ -209,6 +213,7 @@ const EditBook: React.FC<EditBookProps> = ({ handleConfirmBook, handleEditBook }
 								<input
 									type="text"
 									ref={dateFinishedRef}
+									value={currentBook.dateFinished}
 									id="dateFinishedInput"
 									className="block mb-8 px-2.5 bg-orange-100a text-orange-300 text-sm tracking-wide rounded-lg w-full placeholder:text-orange-200 font-bold focus:ring-purple-300 focus:border-purple-300 md:text-lg"
 									defaultValue={currentBook.dateFinished}
