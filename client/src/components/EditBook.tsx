@@ -2,8 +2,10 @@ import React, { FormEvent, useRef, useState, useEffect } from "react";
 import { Book } from "../types";
 import Cover from "/cover.svg";
 import Cross from "/cross.svg";
+import BackArrow from "/back_arrow.svg";
 import Check from "/check.svg";
 import useBooks from "../context/useBooks";
+import { useSupabase } from "../context/SupabaseContext";
 
 interface EditBookProps {
 	handleConfirmBook: (book: Book) => void;
@@ -15,6 +17,7 @@ const EditBook: React.FC<EditBookProps> = ({
 	handleEditBook,
 }) => {
 	const { state, dispatch } = useBooks();
+	const supabase = useSupabase();
 	const coverImageUrlRef = useRef<HTMLInputElement>(null);
 	const titleRef = useRef<HTMLInputElement>(null);
 	const authorRef = useRef<HTMLInputElement>(null);
@@ -30,23 +33,43 @@ const EditBook: React.FC<EditBookProps> = ({
 		setCoverImageUrl(currentBook.cover_img_url || "");
 	}, [currentBook]);
 
-	const handleCancelBook = () => {
+	const handleCancelOperation = () => {
 		if (state.searchedBook) {
 			setTimeout(() => {
 				dispatch({ type: "SET_SEARCHED_BOOK", payload: null });
-			}, 500);
+			}, 400);
 		}
 		dispatch({ type: "SET_SEARCHED_BOOK", payload: null });
 		dispatch({ type: "SET_IS_EDITING", payload: false });
 	};
 
+	const handleDeleteBook = async (
+		bookId: number
+	) => {
+		if (bookId) {
+			const { data, error } = await supabase
+				.from("books")
+				.delete()
+				.eq("id", bookId);
+
+				if (error) {
+					console.log("Error:", error);
+				} else if (data) {
+					console.log(data)
+				}
+
+				dispatch({ type: "SET_SEARCHED_BOOK", payload: null });
+				dispatch({ type: "SET_IS_EDITING", payload: false });
+				dispatch({ type: "SET_MODE", payload: "add" });
+				alert("Book deleted from your library.");
+		}
+	}
+
 	const handleSubmit = async (event: FormEvent) => {
 		event.preventDefault();
-
 		const updatedBook: Book = {
 			id: currentBook.id,
 			coverImageUrl: coverImageUrl,
-			// coverImageUrlRef.current?.value || currentBook.coverImageUrl,
 			title: titleRef.current?.value || currentBook.title,
 			author: authorRef.current?.value || currentBook.author,
 			pages: pagesRef.current?.value
@@ -58,7 +81,6 @@ const EditBook: React.FC<EditBookProps> = ({
 		dispatch({ type: "SET_MODE", payload: "edit" });
 
 		if (state.isEditing) {
-			console.log("clicked edit book");
 			handleEditBook(updatedBook);
 		} else if (!state.isEditing) {
 			handleConfirmBook(updatedBook);
@@ -225,12 +247,18 @@ const EditBook: React.FC<EditBookProps> = ({
 					<div className="flex justify-center items-center pt-10 pb-8 ml-[2.25rem] md:ml-[4rem]">
 						<button
 							type="button"
-							onClick={() => handleCancelBook()}
+							onClick={() => handleCancelOperation()}
+						>
+							<img src={BackArrow} alt="Go back" title="Go back to previous." className="w-1/3 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full" />
+						</button>
+						<button
+							type="button"
+							onClick={() => handleDeleteBook(currentBook.id!)}
 						>
 							<img
 								src={Cross}
 								alt="cross"
-								title="Not my book"
+								title="Not my book."
 								className="w-1/3 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full"
 							/>
 						</button>
@@ -242,7 +270,7 @@ const EditBook: React.FC<EditBookProps> = ({
 							<img
 								src={Check}
 								alt="check"
-								title="Update"
+								title="Save changes."
 								className="w-1/3 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full"
 							/>
 						</button>

@@ -17,7 +17,6 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({
 }) => {
   const { dispatch } = useBooks();
   const handleSubmit = (book: Book) => {
-    console.log("clicked edit from BooksSearch")
     dispatch({ type: "SET_MODE", payload: "edit" });
     dispatch({ type: "SET_IS_EDITING", payload: true });
     dispatch({ type: "SET_EDITING_BOOK", payload: book });

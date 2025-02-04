@@ -44,7 +44,6 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
 					{state.searchedBook && (
 						<EditBook
 							handleEditBook={handleEditBook}
-							// handleCancelBook={handleCancelBook}
 							handleConfirmBook={handleConfirmBook}
 						/>
 					)}

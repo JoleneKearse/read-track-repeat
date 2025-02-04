@@ -18,3 +18,6 @@ It's not too big a deal in **Kindle Unlimited** as I can immediately see the las
 That is *not* the case in Audible.  I, for one, read a *ton* and find the synopses are insufficient to remind me I've already read that one. 
 
 **Read, Track, Repeat** is the solution!   
+
+## Challenges
+

@@ -71,6 +71,7 @@ const App: React.FC = () => {
 			dispatch({ type: "SET_SEARCHED_BOOK", payload: null });
 			dispatch({ type: "SET_IS_EDITING", payload: false });
 			dispatch({ type: "SET_MODE", payload: "add" });
+			alert("Book added!");
 		}
 	};
 
@@ -114,6 +115,7 @@ const App: React.FC = () => {
 		}
 
 		dispatch({ type: "SET_IS_EDITING", payload: false });
+		alert("Book updated!");
 	};
 
 	return (
