@@ -18,8 +18,8 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({
 }) => {
 	const { dispatch } = useBooks();
 	const filteredBooksRef = useRef<HTMLDivElement>(null);
-  const [isFilteredBooksVisible, setIsFilteredBooksVisible] = useState(false);
-  const componentRef = useRef<HTMLDivElement | null>(null);
+	const [isFilteredBooksVisible, setIsFilteredBooksVisible] = useState(false);
+	const componentRef = useRef<HTMLDivElement | null>(null);
 	const handleSubmit = (book: Book) => {
 		dispatch({ type: "SET_MODE", payload: "edit" });
 		dispatch({ type: "SET_IS_EDITING", payload: true });
@@ -32,23 +32,24 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({
 		}
 	}, [filteredBooks]);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      setIsFilteredBooksVisible(entry.isIntersecting);
-    },
-    { threshold: 0.1 }
-  );
-  
-  if (componentRef.current) {
-    observer.observe(componentRef.current);
-  }
+	useEffect(() => {
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				setIsFilteredBooksVisible(entry.isIntersecting);
+			},
+			{ threshold: 0.1 }
+		);
 
-  return () => {
-    if (componentRef.current) {
-      observer.unobserve(componentRef.current);
-    }
-  }
-  }, [isFilteredBooksVisible]);
+		if (componentRef.current) {
+			observer.observe(componentRef.current);
+		}
+
+		return () => {
+			if (componentRef.current) {
+				observer.unobserve(componentRef.current);
+			}
+		};
+	}, [isFilteredBooksVisible]);
 
 	return (
 		<>
@@ -80,21 +81,27 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({
 			)}
 
 			<section
-        ref={componentRef}
+				ref={componentRef}
 				className={`justify-center min-h-screen ${
 					filteredBooks.length <= 3
 						? "lg:flex lg:gap-10"
 						: "md:grid md:grid-cols-2 lg:grid-cols-4 md:h-auto md:py-42"
 				}`}
 			>
-        {isFilteredBooksVisible && (
-          <button
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed top-0 bottom-0 right-4 w-12 text-white rounded"
-          >
-            <img src={BackToTop} alt="Back to top button." />
-          </button>
-        )}
+				{isFilteredBooksVisible && (
+					<button
+						onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+						title="Go back to top."
+						aria-label="Go back to top."
+						className="fixed top-0 bottom-0 right-4 w-12 text-white rounded"
+					>
+						<img
+							src={BackToTop}
+							alt=""
+							aria-hidden="true"
+						/>
+					</button>
+				)}
 				{filteredBooks.map((book) => (
 					<article
 						key={book.id}

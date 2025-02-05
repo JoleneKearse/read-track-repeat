@@ -51,11 +51,14 @@ const BookCollection: React.FC = () => {
 				{isBookCollectionVisible && (
 					<button
 						onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            title="Go back to top."
+            aria-label="Go back to top."
 						className="fixed top-0 bottom-0 right-4 w-12 text-white rounded"
 					>
 						<img
 							src={BackToTop}
-							alt="Back to top button."
+							alt=""
+              aria-hidden="true"
 						/>
 					</button>
 				)}

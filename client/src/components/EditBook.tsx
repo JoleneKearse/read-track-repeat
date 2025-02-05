@@ -248,29 +248,35 @@ const EditBook: React.FC<EditBookProps> = ({
 						<button
 							type="button"
 							onClick={() => handleCancelOperation()}
+							title="Go back to previous."
+							aria-label="Go back to previous."
 						>
-							<img src={BackArrow} alt="Go back" title="Go back to previous." className="w-1/3 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full" />
+							<img src={BackArrow} alt="" aria-hidden="true"  className="w-1/3 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full" />
 						</button>
 						<button
 							type="button"
+							title="Not my book."
+							aria-label="Not my book."
 							onClick={() => handleDeleteBook(currentBook.id!)}
 						>
 							<img
 								src={Cross}
-								alt="cross"
-								title="Not my book."
+								alt=""
+								aria-hidden="true"
 								className="w-1/3 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full"
 							/>
 						</button>
 						<button
 							type="submit"
 							onClick={handleSubmit}
+							title="Save changes."
+							aria-label="Save changes."
 							className="flex flex-col items-center justify-center py-10"
 						>
 							<img
 								src={Check}
-								alt="check"
-								title="Save changes."
+								alt=""
+								aria-hidden="true"
 								className="w-1/3 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full"
 							/>
 						</button>
