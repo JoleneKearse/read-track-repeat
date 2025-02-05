@@ -544,6 +544,10 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.fixed {
+  position: fixed;
+}
+
 .absolute {
   position: absolute;
 }
@@ -566,6 +570,22 @@ video {
 
 .right-4 {
   right: 1rem;
+}
+
+.top-4 {
+  top: 1rem;
+}
+
+.top-20 {
+  top: 5rem;
+}
+
+.top-0 {
+  top: 0px;
+}
+
+.bottom-0 {
+  bottom: 0px;
 }
 
 .mx-auto {
@@ -654,6 +674,10 @@ video {
   width: 100%;
 }
 
+.w-12 {
+  width: 3rem;
+}
+
 .max-w-64 {
   max-width: 16rem;
 }
@@ -726,6 +750,11 @@ video {
 
 .bg-purple-100a {
   background-color: #FFF0FF26;
+}
+
+.bg-purple-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(123 49 94 / var(--tw-bg-opacity));
 }
 
 .bg-bg-gradient {

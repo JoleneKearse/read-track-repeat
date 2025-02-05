@@ -1,7 +1,8 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Book } from "../types";
 import Edit from "/edit.svg";
 import Cover from "/cover.svg";
+import BackToTop from "/back-to-top.svg";
 import useBooks from "../context/useBooks";
 
 interface FilteredBooksProps {
@@ -17,6 +18,8 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({
 }) => {
 	const { dispatch } = useBooks();
 	const filteredBooksRef = useRef<HTMLDivElement>(null);
+  const [isFilteredBooksVisible, setIsFilteredBooksVisible] = useState(false);
+  const componentRef = useRef<HTMLDivElement | null>(null);
 	const handleSubmit = (book: Book) => {
 		dispatch({ type: "SET_MODE", payload: "edit" });
 		dispatch({ type: "SET_IS_EDITING", payload: true });
@@ -28,6 +31,24 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({
 			filteredBooksRef.current?.scrollIntoView({ behavior: "smooth" });
 		}
 	}, [filteredBooks]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsFilteredBooksVisible(entry.isIntersecting);
+    },
+    { threshold: 0.1 }
+  );
+  
+  if (componentRef.current) {
+    observer.observe(componentRef.current);
+  }
+
+  return () => {
+    if (componentRef.current) {
+      observer.unobserve(componentRef.current);
+    }
+  }
+  }, [isFilteredBooksVisible]);
 
 	return (
 		<>
@@ -59,12 +80,21 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({
 			)}
 
 			<section
+        ref={componentRef}
 				className={`justify-center min-h-screen ${
 					filteredBooks.length <= 3
 						? "lg:flex lg:gap-10"
 						: "md:grid md:grid-cols-2 lg:grid-cols-4 md:h-auto md:py-42"
 				}`}
 			>
+        {isFilteredBooksVisible && (
+          <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed top-0 bottom-0 right-4 w-12 text-white rounded"
+          >
+            <img src={BackToTop} alt="Back to top button." />
+          </button>
+        )}
 				{filteredBooks.map((book) => (
 					<article
 						key={book.id}
