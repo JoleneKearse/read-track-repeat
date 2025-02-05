@@ -45,7 +45,7 @@ const BookCollection: React.FC = () => {
             </p>
             {book.published && (
               <p className="text-base tracking-wide text-purple-100">
-                Published: {book.published}
+                Finished: {book.date_finished}
               </p>
             )}
             {book.pages && (
