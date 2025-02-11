@@ -66,12 +66,11 @@ export async function fetchBookByTitle(title: string): Promise<Book | null>{
     const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${encodeURIComponent(title)}`);
     const data = await response.json();
     console.log(data["items"][0]["volumeInfo"]);
-    // console.log(data["items"][0][]);
 
-    // grab ISBN while we're at it
+    // grab ISBN while we're at it - if we can
     const industryIdentifiers: IndustryIdentifiers[] = data["items"][0]["volumeInfo"]["industryIdentifiers"];
-    const isbn10Identifier = industryIdentifiers.find(identifier => identifier.type === "ISBN_10");
-    const isbn = isbn10Identifier ? isbn10Identifier.identifier : 'No isbn 10 found';
+    const isbn10Identifier = industryIdentifiers?.find(identifier => identifier.type === "ISBN_10");
+    const isbn = isbn10Identifier ? isbn10Identifier?.identifier : 'No isbn 10 found';
     console.log(isbn);
 
     const bookDetails: ApiResponse | undefined = data["items"][0]["volumeInfo"];

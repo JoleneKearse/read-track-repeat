@@ -9,6 +9,7 @@ type State = {
 	isEditing: boolean;
 	editingBook: Book | null;
 	mode: "add" | "edit";
+	showAlert: boolean;
 };
 type Action =
 	| { type: "SET_SEARCHED_BOOK"; payload: Book | null }
@@ -17,7 +18,8 @@ type Action =
 	| { type: "SET_DATE"; payload: string }
 	| { type: "SET_IS_EDITING"; payload: boolean }
 	| { type: "SET_EDITING_BOOK"; payload: Book | null }
-	| { type: "SET_MODE"; payload: "add" | "edit" };
+	| { type: "SET_MODE"; payload: "add" | "edit" }
+	| { type: "SET_SHOW_ALERT"; payload: boolean };
 
 const initialState: State = {
 	searchedBook: null,
@@ -27,6 +29,7 @@ const initialState: State = {
 	isEditing: false,
 	editingBook: null,
 	mode: "add",
+	showAlert: false
 };
 
 function reducer(state: State, action: Action): State {
@@ -45,6 +48,8 @@ function reducer(state: State, action: Action): State {
 			return { ...state, editingBook: action.payload };
 		case "SET_MODE":
 			return { ...state, mode: action.payload };
+		case "SET_SHOW_ALERT":
+			return { ...state, showAlert: action.payload };
 		default:
 			return state;
 	}

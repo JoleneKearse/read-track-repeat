@@ -4,6 +4,7 @@ import Edit from "/edit.svg";
 import Cover from "/cover.svg";
 import BackToTop from "/back-to-top.svg";
 import useBooks from "../context/useBooks";
+import Alert from "./Alert";
 
 interface FilteredBooksProps {
 	filteredBooks: Book[];
@@ -16,10 +17,12 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({
 	searchMethod,
 	searchInput,
 }) => {
-	const { dispatch } = useBooks();
+	const { state, dispatch } = useBooks();
 	const filteredBooksRef = useRef<HTMLDivElement>(null);
 	const [isFilteredBooksVisible, setIsFilteredBooksVisible] = useState(false);
 	const componentRef = useRef<HTMLDivElement | null>(null);
+	const alertMessage = "Updated!";
+
 	const handleSubmit = (book: Book) => {
 		dispatch({ type: "SET_MODE", payload: "edit" });
 		dispatch({ type: "SET_IS_EDITING", payload: true });
@@ -88,6 +91,7 @@ const FilteredBooks: React.FC<FilteredBooksProps> = ({
 						: "md:grid md:grid-cols-2 lg:grid-cols-4 md:h-auto md:py-42"
 				}`}
 			>
+				{state.showAlert && <Alert message={alertMessage} />}
 				{isFilteredBooksVisible && (
 					<button
 						onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}

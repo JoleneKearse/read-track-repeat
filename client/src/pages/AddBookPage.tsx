@@ -6,13 +6,10 @@ import useBooks from "../context/useBooks";
 import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 import AddForm from "../components/AddForm";
-// import ConfirmBook from "../components/ConfirmBook";
-// import NotFound from "../components/NotFound";
 import EditBook from "../components/EditBook";
 
 interface AddBookPageProps {
 	navLinks: NavLink[];
-	// searchedBook: Book | null;
 	handleConfirmBook: (book: Book) => void;
 	handleEditBook: (book: Book) => void;
 }
@@ -20,7 +17,6 @@ interface AddBookPageProps {
 const AddBookPage: React.FC<AddBookPageProps> = ({
 	navLinks,
 	handleConfirmBook,
-	// searchedBook,
 	handleEditBook,
 }) => {
 	const { state } = useBooks();

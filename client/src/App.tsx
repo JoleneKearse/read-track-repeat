@@ -71,7 +71,7 @@ const App: React.FC = () => {
 			dispatch({ type: "SET_SEARCHED_BOOK", payload: null });
 			dispatch({ type: "SET_IS_EDITING", payload: false });
 			dispatch({ type: "SET_MODE", payload: "add" });
-			alert("Book added!");
+			dispatch({ type: "SET_SHOW_ALERT", payload: true });
 		}
 	};
 
@@ -111,11 +111,12 @@ const App: React.FC = () => {
 				console.log("Error:", error);
 			} else if (data) {
 				console.log("Updated data:", data);
+				dispatch({ type: "SET_SHOW_ALERT", payload: true });
 			}
 		}
 
 		dispatch({ type: "SET_IS_EDITING", payload: false });
-		alert("Book updated!");
+		dispatch({ type: "SET_SHOW_ALERT", payload: true });
 	};
 
 	return (

@@ -23,7 +23,7 @@ const BooksReadPage: React.FC<BooksReadPageProps> = ({
 
 	useEffect(() => {
 		handleDataFetch();
-	}, [handleDataFetch]);
+	}, [handleDataFetch, state.books]);
 
 	return (
 		<section className="min-h-screen bg-bg-gradient">

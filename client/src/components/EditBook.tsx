@@ -43,27 +43,28 @@ const EditBook: React.FC<EditBookProps> = ({
 		dispatch({ type: "SET_IS_EDITING", payload: false });
 	};
 
-	const handleDeleteBook = async (
-		bookId: number
-	) => {
+	const handleDeleteBook = async (bookId: number) => {
 		if (bookId) {
 			const { data, error } = await supabase
 				.from("books")
 				.delete()
 				.eq("id", bookId);
 
-				if (error) {
-					console.log("Error:", error);
-				} else if (data) {
-					console.log(data)
-				}
+			if (error) {
+				console.log("Error:", error);
+			} else if (data) {
+				console.log(data);
+			}
 
-				dispatch({ type: "SET_SEARCHED_BOOK", payload: null });
-				dispatch({ type: "SET_IS_EDITING", payload: false });
-				dispatch({ type: "SET_MODE", payload: "add" });
-				alert("Book deleted from your library.");
+			dispatch({ type: "SET_SEARCHED_BOOK", payload: null });
+			dispatch({
+				type: "SET_SHOW_ALERT",
+				payload: false,
+			});
+			dispatch({ type: "SET_IS_EDITING", payload: false });
+			dispatch({ type: "SET_MODE", payload: "add" });
 		}
-	}
+	};
 
 	const handleSubmit = async (event: FormEvent) => {
 		event.preventDefault();
@@ -251,7 +252,12 @@ const EditBook: React.FC<EditBookProps> = ({
 							title="Go back to previous."
 							aria-label="Go back to previous."
 						>
-							<img src={BackArrow} alt="" aria-hidden="true"  className="w-1/3 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full" />
+							<img
+								src={BackArrow}
+								alt=""
+								aria-hidden="true"
+								className="w-1/3 hover:border hover:border-purple-300 hover:border-4 hover:rounded-full"
+							/>
 						</button>
 						<button
 							type="button"

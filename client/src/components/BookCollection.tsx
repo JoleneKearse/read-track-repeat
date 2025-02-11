@@ -4,11 +4,13 @@ import Edit from "/edit.svg";
 import Cover from "/cover.svg";
 import BackToTop from "/back-to-top.svg";
 import useBooks from "../context/useBooks";
+import Alert from "./Alert";
 
 const BookCollection: React.FC = () => {
 	const { state, dispatch } = useBooks();
 	const bookCollectionRef = useRef<HTMLDivElement>(null);
 	const [isBookCollectionVisible, setIsBookCollectionVisible] = useState(false);
+	const alertMessage = "Updated!";
 
 	const handleEditSubmit = (book: Book) => {
 		dispatch({ type: "SET_IS_EDITING", payload: true });
@@ -40,6 +42,9 @@ const BookCollection: React.FC = () => {
 			<p className="text-2xl font-bold tracking-wide text-center text-purple-200">
 				{state.books.length} books tracked
 			</p>
+			{state.showAlert && (
+				<Alert message={alertMessage} />
+			)}
 			<section
 				ref={bookCollectionRef}
 				className={`justify-center min-h-screen scroll snap-y  ${
