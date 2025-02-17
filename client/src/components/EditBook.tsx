@@ -88,6 +88,8 @@ const EditBook: React.FC<EditBookProps> = ({
 		}
 	};
 
+	console.log(currentBook)
+
 	return (
 		<form
 			className="w-5/6 max-w-sm py-32 mx-auto snap-center md:max-w-md"
@@ -225,7 +227,7 @@ const EditBook: React.FC<EditBookProps> = ({
 					</div>
 
 					<div className="w-full py-2">
-						{currentBook.dateFinished && (
+						{currentBook.date_finished && (
 							<>
 								<label
 									htmlFor="authorInput"
@@ -236,10 +238,10 @@ const EditBook: React.FC<EditBookProps> = ({
 								<input
 									type="text"
 									ref={dateFinishedRef}
-									value={currentBook.dateFinished}
+									value={currentBook.date_finished}
 									id="dateFinishedInput"
 									className="block mb-8 px-2.5 bg-orange-100a text-orange-300 text-sm tracking-wide rounded-lg w-full placeholder:text-orange-200 font-bold focus:ring-purple-300 focus:border-purple-300 md:text-lg"
-									defaultValue={currentBook.dateFinished}
+									defaultValue={currentBook.date_finished}
 								/>
 							</>
 						)}
