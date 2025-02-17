@@ -88,8 +88,6 @@ const EditBook: React.FC<EditBookProps> = ({
 		}
 	};
 
-	console.log(currentBook)
-
 	return (
 		<form
 			className="w-5/6 max-w-sm py-32 mx-auto snap-center md:max-w-md"

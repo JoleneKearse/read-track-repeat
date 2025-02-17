@@ -70,7 +70,7 @@ const BookCollection: React.FC = () => {
 				{state.books.map((book) => (
 					<article
 						key={book.id}
-						className={`flex flex-col items-center justify-center flex-none w-3/5 p-4 mx-auto my-10 text-center bg-overlay border border-orange-200 rounded-lg shadow-lg shadow-orange-200a relative ${
+						className={`flex flex-col items-center justify-center flex-none w-3/4 p-4 mx-auto my-10 text-center bg-overlay border border-orange-200 rounded-lg shadow-lg shadow-orange-200a relative ${
 							state.books.length <= 3 ? "lg:max-w-xs lg:max-h-[450px]" : ""
 						}`}
 					>
