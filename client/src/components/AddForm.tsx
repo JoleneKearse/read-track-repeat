@@ -5,6 +5,7 @@ import {
 	fetchBookByIsbn,
 	fetchBookByTitle,
 	fetchBookByAuthor,
+	fetchBookByTitleAndAuthor,
 } from "../../../api/getBookDetails";
 import Alert from "./Alert";
 
@@ -43,6 +44,9 @@ const AddForm: React.FC = () => {
 		switch (formData.method) {
 			case "isbn":
 				newBook = await fetchBookByIsbn(formData.input);
+				break;
+			case "titleAuthor":
+				newBook = await fetchBookByTitleAndAuthor(formData.input);
 				break;
 			case "title":
 				newBook = await fetchBookByTitle(formData.input);
@@ -94,6 +98,7 @@ const AddForm: React.FC = () => {
 				<option value="isbn">ISBN</option>
 				<option value="title">Title</option>
 				<option value="author">Author</option>
+				<option value="titleAuthor">Title & Author (use / to separate)</option>
 			</select>
 
 			<label
