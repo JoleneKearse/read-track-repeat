@@ -1,4 +1,5 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Book, NavLink } from "../types";
 import useBooks from "../context/useBooks";
@@ -21,6 +22,17 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
 }) => {
 	const { state } = useBooks();
 	const searchResultsRef = useRef<HTMLDivElement>(null);
+	const navigate = useNavigate();
+
+	const [isBookInLibrary, setIsBookInLibrary] = useState(false);
+
+	useEffect(() => {
+    if (isBookInLibrary && state.searchedBook) {
+        localStorage.setItem("searchedBook", JSON.stringify(state.searchedBook));
+        navigate("/bookSearch", { state: { searchedBook: state.searchedBook } });
+    }
+}, [isBookInLibrary, navigate, state.searchedBook]);
+
 
 	useEffect(() => {
 		if (searchResultsRef.current && state.searchedBook) {
@@ -35,7 +47,7 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
 				<NavBar navLinks={navLinks} />
 			</div>
 			<main>
-				<AddForm />
+				<AddForm setIsBookInLibrary={setIsBookInLibrary} />
 				<div ref={searchResultsRef}>
 					{state.searchedBook && (
 						<EditBook

@@ -1,16 +1,25 @@
 import React, { FormEvent, useRef } from "react";
+
 import useBooks from "../context/useBooks";
 import { Book } from "../types";
+import { useSupabase } from "../context/SupabaseContext";
+import { searchBooksByTitle } from "../utils/utils";
 import {
 	fetchBookByIsbn,
 	fetchBookByTitle,
 	fetchBookByAuthor,
 	fetchBookByTitleAndAuthor,
 } from "../../../api/getBookDetails";
+
 import Alert from "./Alert";
 
-const AddForm: React.FC = () => {
+interface AddFormProps {
+	setIsBookInLibrary: (isBookInLibrary: boolean) => void;
+}
+
+const AddForm: React.FC<AddFormProps> = ({ setIsBookInLibrary }) => {
 	const { state, dispatch } = useBooks();
+	const supabase = useSupabase();
 	const searchMethodRef = useRef<HTMLSelectElement>(null);
 	const searchInputRef = useRef<HTMLInputElement>(null);
 	const dateRef = useRef<HTMLInputElement>(null);
@@ -41,6 +50,8 @@ const AddForm: React.FC = () => {
 
 		// fetch by search method
 		let newBook: Book | null = null;
+		let duplicateBook: Book[] = [];
+		
 		switch (formData.method) {
 			case "isbn":
 				newBook = await fetchBookByIsbn(formData.input);
@@ -49,8 +60,17 @@ const AddForm: React.FC = () => {
 				newBook = await fetchBookByTitleAndAuthor(formData.input);
 				break;
 			case "title":
-				newBook = await fetchBookByTitle(formData.input);
-				break;
+				console.log("searching by title");
+				duplicateBook = await searchBooksByTitle(supabase, formData.input);
+				if (duplicateBook.length > 0) {
+					console.log("Book already in library");
+					handleSearch(duplicateBook[0]);
+					setIsBookInLibrary(true);
+					break;
+				} else {
+					newBook = await fetchBookByTitle(formData.input);
+					break;
+				}
 			case "author":
 				newBook = await fetchBookByAuthor(formData.input);
 				break;

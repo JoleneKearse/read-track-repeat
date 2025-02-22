@@ -1,4 +1,4 @@
-import React, { FormEvent, useRef, useState, useEffect } from "react";
+import React, { FormEvent, useRef, useState } from "react";
 import { Book } from "../types";
 import Cover from "/cover.svg";
 import Cross from "/cross.svg";
@@ -29,9 +29,7 @@ const EditBook: React.FC<EditBookProps> = ({
 		currentBook.cover_img_url || ""
 	);
 
-	useEffect(() => {
-		setCoverImageUrl(currentBook.cover_img_url || "");
-	}, [currentBook]);
+	// signal if user already owns book if mode is "add"	
 
 	const handleCancelOperation = () => {
 		if (state.searchedBook) {
@@ -99,7 +97,7 @@ const EditBook: React.FC<EditBookProps> = ({
 					className="flex flex-col items-center justify-center p-6 border border-orange-200 rounded-lg shadow-lg shadow-orange-200a bg-overlay"
 				>
 					<h2 className="pb-6 text-2xl font-bold tracking-wide text-orange-200">
-						Finalize your book's info
+					Finalize your book's info
 					</h2>
 					<p className="pb-16 text-base tracking-wide text-orange-200">
 						Edit any of the{" "}
@@ -114,7 +112,8 @@ const EditBook: React.FC<EditBookProps> = ({
 					{currentBook.coverImageUrl && (
 						<>
 							<img
-								src={(currentBook.cover_img_url || Cover) as string}
+								// src={(currentBook.cover_img_url || Cover) as string}
+								src={(currentBook.cover_img_url ? currentBook.cover_img_url : Cover) as string}
 								alt={currentBook.title}
 								className="w-3/4 pt-8 pb-10"
 							/>
