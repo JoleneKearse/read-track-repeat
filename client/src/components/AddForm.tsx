@@ -1,7 +1,7 @@
 import React, { FormEvent, useRef } from "react";
 
 import useBooks from "../context/useBooks";
-import { Book } from "../types";
+import { Book } from "../types.ts"
 import { useSupabase } from "../context/SupabaseContext";
 import { searchBooksByTitle } from "../utils/utils";
 import {

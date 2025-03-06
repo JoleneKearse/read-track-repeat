@@ -9,7 +9,7 @@ interface Cover {
 
 interface ApiResponse {
   title: string;
-  authors?: Author[] | undefined;
+  authors?: Author[] | null;
   publish_date?: string;
   publishedDate?: string;
   number_of_pages?: number;
@@ -23,7 +23,7 @@ interface ApiResponse {
 interface Book {
   id?: number;
   title: string;
-  author: string | undefined;
+  author: string | null;
   published: string | undefined;
   pages: number | undefined;
   coverImageUrl?: string;
@@ -82,7 +82,7 @@ export async function fetchBookByTitle(title: string): Promise<Book | null>{
 
     const bookData: Book = {
       title: bookDetails?.title,
-      author: bookDetails?.authors?.join(", ") || "",
+      author: bookDetails?.authors?.join(", ") || null,
       published: bookDetails?.publishedDate,
       pages: bookDetails?.pageCount,
       coverImageUrl: bookDetails?.imageLinks?.thumbnail,
@@ -129,7 +129,7 @@ export async function fetchBookByAuthor(author: string): Promise<Book | null>{
     }
     const bookData: Book = {
       title: bookDetails?.title,
-      author: bookDetails?.authors?.join(", ") || "",
+      author: bookDetails?.authors?.join(", ") || null,
       published: bookDetails?.publishedDate,
       pages: bookDetails?.pageCount,
       coverImageUrl: bookDetails?.imageLinks?.thumbnail,
@@ -165,7 +165,7 @@ export async function fetchBookByTitleAndAuthor(info: string): Promise<Book | nu
 
     const bookData: Book = {
       title: bookDetails?.title,
-      author: bookDetails?.authors?.join(", ") || "",
+      author: bookDetails?.authors?.join(", ") || null,
       published: bookDetails?.publishedDate,
       pages: bookDetails?.pageCount,
       coverImageUrl: bookDetails?.imageLinks?.thumbnail,
