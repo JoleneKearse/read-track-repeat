@@ -219,7 +219,7 @@ const EditBook: React.FC<EditBookProps> = ({
 							ref={pagesRef}
 							id="pagesInput"
 							className="block mb-8 px-2.5 bg-orange-100a text-orange-300 text-sm tracking-wide rounded-lg w-full placeholder:text-orange-200 font-bold focus:ring-purple-300 focus:border-purple-300 md:text-lg"
-							defaultValue={currentBook.pages}
+							defaultValue={currentBook.pages || 0}
 						/>
 					</div>
 

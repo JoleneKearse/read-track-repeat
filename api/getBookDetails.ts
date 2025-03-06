@@ -24,8 +24,8 @@ interface Book {
   id?: number;
   title: string;
   author: string | null;
-  published: string | undefined;
-  pages: number | undefined;
+  published: string | null;
+  pages: number | null;
   coverImageUrl?: string;
 }
 
@@ -48,8 +48,8 @@ export async function fetchBookByIsbn(isbn: string): Promise<Book> {
     const bookData: Book = {
       title: bookDetails?.title,
       author: bookDetails?.authors?.map(a => a.name).join(", ") || "",
-      published: bookDetails?.publish_date,
-      pages: bookDetails?.number_of_pages || bookDetails?.pagination,
+      published: bookDetails?.publish_date || null,
+      pages: bookDetails?.number_of_pages || null,
       coverImageUrl: bookDetails?.cover?.medium,
     }
     console.log(`data returned from ISBN: `, bookData);
@@ -83,8 +83,8 @@ export async function fetchBookByTitle(title: string): Promise<Book | null>{
     const bookData: Book = {
       title: bookDetails?.title,
       author: bookDetails?.authors?.join(", ") || null,
-      published: bookDetails?.publishedDate,
-      pages: bookDetails?.pageCount,
+      published: bookDetails?.publishedDate || null,
+      pages: bookDetails?.pageCount || null,
       coverImageUrl: bookDetails?.imageLinks?.thumbnail,
     }
 
@@ -130,8 +130,8 @@ export async function fetchBookByAuthor(author: string): Promise<Book | null>{
     const bookData: Book = {
       title: bookDetails?.title,
       author: bookDetails?.authors?.join(", ") || null,
-      published: bookDetails?.publishedDate,
-      pages: bookDetails?.pageCount,
+      published: bookDetails?.publishedDate || null,
+      pages: bookDetails?.pageCount || null,
       coverImageUrl: bookDetails?.imageLinks?.thumbnail,
     }
     return bookData;
@@ -166,8 +166,8 @@ export async function fetchBookByTitleAndAuthor(info: string): Promise<Book | nu
     const bookData: Book = {
       title: bookDetails?.title,
       author: bookDetails?.authors?.join(", ") || null,
-      published: bookDetails?.publishedDate,
-      pages: bookDetails?.pageCount,
+      published: bookDetails?.publishedDate || null,
+      pages: bookDetails?.pageCount || null,
       coverImageUrl: bookDetails?.imageLinks?.thumbnail,
     }
 
