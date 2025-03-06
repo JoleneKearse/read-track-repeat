@@ -130,7 +130,6 @@ const App: React.FC = () => {
 								navLinks={navLinks}
 								handleConfirmBook={handleConfirmBook}
 								handleEditBook={handleEditBook}
-								handleDataFetch={handleDataFetch}
 							/>
 						}
 					/>

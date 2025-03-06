@@ -26,6 +26,7 @@ const AddBookPage: React.FC<AddBookPageProps> = ({
 
 	const [isBookInLibrary, setIsBookInLibrary] = useState(false);
 
+	// send to search page if book is in library
 	useEffect(() => {
     if (isBookInLibrary && state.searchedBook) {
         localStorage.setItem("searchedBook", JSON.stringify(state.searchedBook));

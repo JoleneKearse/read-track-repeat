@@ -25,15 +25,6 @@ const SearchBooks: React.FC<SearchBooksProps> = ({ handleSearch }) => {
 		if (criteriaInputRef.current) criteriaInputRef.current.value = "";
 	};
 
-	const handleDirectSearch = () => {
-		const method = sortingMethodRef.current?.value;
-		const input = criteriaInputRef.current?.value;
-
-		if (method && input) {
-			handleSearch(method, input);
-		}
-	};
-
 	useEffect(() => {
 		if (
 			criteriaInputRef.current &&
@@ -43,9 +34,18 @@ const SearchBooks: React.FC<SearchBooksProps> = ({ handleSearch }) => {
 			sortingMethodRef.current.value = "title";
 			criteriaInputRef.current.value = state.searchedBook.title;
 		}
+
+    const handleDirectSearch = () => {
+      const method = sortingMethodRef.current?.value;
+      const input = criteriaInputRef.current?.value;
+  
+      if (method && input) {
+        handleSearch(method, input);
+      }
+    };
 		// Use the new function to handle the search directly
 		setTimeout(() => handleDirectSearch(), 300);
-	}, [state.searchedBook, handleDirectSearch]);
+	}, [state.searchedBook, handleSearch]);
 
 	return (
 		<form
