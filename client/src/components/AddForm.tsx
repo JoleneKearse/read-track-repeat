@@ -104,7 +104,7 @@ const AddForm: React.FC<AddFormProps> = ({ setIsBookInLibrary }) => {
       {state.showAlert && <Alert message={alertMessage} />}
       <label
         htmlFor="searchMethod"
-        className="mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg flex gap-2"
+        className="flex gap-2 items-center mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
       >
         Choose search method
         <svg
@@ -135,7 +135,7 @@ const AddForm: React.FC<AddFormProps> = ({ setIsBookInLibrary }) => {
 
       <label
         htmlFor="searchInput"
-        className="flex gap-2 mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
+        className="flex items-center gap-2 mb-2 font-bold tracking-wide text-orange-200 text-med dark:text-white md:text-lg"
       >
         Book detail
         <svg
