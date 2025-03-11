@@ -34,6 +34,19 @@ interface IndustryIdentifiers {
   identifier: string;
 }
 
+// split book titles at common delimiters for better search results
+function splitTitle(title: string): string[] {
+  const delimiters = [":", " - ", "("];
+  // iterate over delimiters and split title
+  let splitTitles: string[] = [];
+  for (const delimiter of delimiters) {
+    if (title.includes(delimiter)) {
+      splitTitles.push(title.split(delimiter)[0]);
+    }
+  }
+  return splitTitles;
+}
+
 export async function fetchBookByIsbn(isbn: string): Promise<Book> {
   try {
     const response = await fetch(
@@ -73,6 +86,15 @@ export async function fetchBookByTitle(title: string): Promise<Book | null> {
     );
     const data = await response.json();
     console.log(data["items"][0]["volumeInfo"]);
+
+    // if no data returned, split title and search again
+    if (!data["items"] || !data["items"][0]["volumeInfo"]) {
+      console.log("No data returned, splitting title and searching again");
+      const splitTitles = splitTitle(title);
+      splitTitles.forEach((title) => {
+        fetchBookByTitle(title);
+      });
+    }
 
     // grab ISBN while we're at it - if we can
     const industryIdentifiers: IndustryIdentifiers[] =
@@ -170,7 +192,22 @@ export async function fetchBookByTitleAndAuthor(
       `https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}`
     );
     const data = await response.json();
-    console.log(data["items"][0]["volumeInfo"]);
+    console.log(data);
+
+    // if no data returned, split title and search again
+    if (!data["items"] || !data["items"][0]["volumeInfo"]) {
+      console.log("No data returned, splitting title and searching again");
+      const splitTitles = splitTitle(title);
+      for (const splitTitle of splitTitles) {
+        const result = await fetchBookByTitleAndAuthor(
+          `${splitTitle}/${author}`
+        );
+        if (result) {
+          return result;
+        }
+      }
+      return null;
+    }
 
     // grab ISBN while we're at it - if we can
     const industryIdentifiers: IndustryIdentifiers[] =
