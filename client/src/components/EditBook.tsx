@@ -152,7 +152,7 @@ const EditBook: React.FC<EditBookProps> = ({
             <input
               type="text"
               ref={coverImageUrlRef}
-              value={coverImageUrl || cover_img_url}
+              value={coverImageUrl}
               id="coverImgInput"
               className="block w-full px-2.5 mb-8 text-sm tracking-wide text-orange-200 rounded-lg bg-orange-100a placeholder:text-purple-200 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
               placeholder="link with 'amazon' and some gibberish"
