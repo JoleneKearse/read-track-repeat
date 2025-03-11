@@ -36,7 +36,9 @@ interface IndustryIdentifiers {
 
 export async function fetchBookByIsbn(isbn: string): Promise<Book> {
   try {
-    const response = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`);
+    const response = await fetch(
+      `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`
+    );
     const data = await response.json();
     console.log(data);
     const bookDetails: ApiResponse | undefined = data[`ISBN:${isbn}`];
@@ -44,14 +46,14 @@ export async function fetchBookByIsbn(isbn: string): Promise<Book> {
       console.log("Book not found");
       return null as unknown as Book;
     }
-    
+
     const bookData: Book = {
       title: bookDetails?.title,
-      author: bookDetails?.authors?.map(a => a.name).join(", ") || "",
+      author: bookDetails?.authors?.map((a) => a.name).join(", ") || "",
       published: bookDetails?.publish_date || null,
       pages: bookDetails?.number_of_pages || null,
       coverImageUrl: bookDetails?.cover?.medium,
-    }
+    };
     console.log(`data returned from ISBN: `, bookData);
     return bookData;
   } catch (error) {
@@ -60,18 +62,27 @@ export async function fetchBookByIsbn(isbn: string): Promise<Book> {
   }
 }
 
-export async function fetchBookByTitle(title: string): Promise<Book | null>{
+export async function fetchBookByTitle(title: string): Promise<Book | null> {
   const formattedTitle = title.replace(/\s/g, "+");
   try {
-    console.log(`https://www.googleapis.com/books/v1/volumes?q=intitle:${formattedTitle}`)
-    const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${formattedTitle}`);
+    console.log(
+      `https://www.googleapis.com/books/v1/volumes?q=intitle:${formattedTitle}`
+    );
+    const response = await fetch(
+      `https://www.googleapis.com/books/v1/volumes?q=intitle:${formattedTitle}`
+    );
     const data = await response.json();
     console.log(data["items"][0]["volumeInfo"]);
 
     // grab ISBN while we're at it - if we can
-    const industryIdentifiers: IndustryIdentifiers[] = data["items"][0]["volumeInfo"]["industryIdentifiers"];
-    const isbn10Identifier = industryIdentifiers?.find(identifier => identifier.type === "ISBN_10");
-    const isbn = isbn10Identifier ? isbn10Identifier?.identifier : 'No isbn 10 found';
+    const industryIdentifiers: IndustryIdentifiers[] =
+      data["items"][0]["volumeInfo"]["industryIdentifiers"];
+    const isbn10Identifier = industryIdentifiers?.find(
+      (identifier) => identifier.type === "ISBN_10"
+    );
+    const isbn = isbn10Identifier
+      ? isbn10Identifier?.identifier
+      : "No isbn 10 found";
     console.log(isbn);
 
     const bookDetails: ApiResponse | undefined = data["items"][0]["volumeInfo"];
@@ -86,7 +97,7 @@ export async function fetchBookByTitle(title: string): Promise<Book | null>{
       published: bookDetails?.publishedDate || null,
       pages: bookDetails?.pageCount || null,
       coverImageUrl: bookDetails?.imageLinks?.thumbnail,
-    }
+    };
 
     console.log(`data returned from title: `, bookData);
 
@@ -96,17 +107,19 @@ export async function fetchBookByTitle(title: string): Promise<Book | null>{
     if (isDataMissing && isbn) {
       console.log("title not completed, searching by ISBN");
 
-      // find missing values 
-      const missingKeys = Object.keys(bookData).filter(key => !bookData[key as keyof Book]);
+      // find missing values
+      const missingKeys = Object.keys(bookData).filter(
+        (key) => !bookData[key as keyof Book]
+      );
       console.log("Missing keys:", missingKeys);
       // search by ISBN
       const additionalData = await fetchBookByIsbn(isbn);
       if (additionalData) {
-        missingKeys.forEach(key => {
+        missingKeys.forEach((key) => {
           (bookData as any)[key] = (additionalData as any)[key];
-        })
+        });
       }
-      return bookData;      
+      return bookData;
     }
 
     return bookData;
@@ -116,10 +129,12 @@ export async function fetchBookByTitle(title: string): Promise<Book | null>{
   }
 }
 
-export async function fetchBookByAuthor(author: string): Promise<Book | null>{
+export async function fetchBookByAuthor(author: string): Promise<Book | null> {
   const formattedAuthor = author.replace(/\s/g, "+");
   try {
-    const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=inauthor:${formattedAuthor}`);
+    const response = await fetch(
+      `https://www.googleapis.com/books/v1/volumes?q=inauthor:${formattedAuthor}`
+    );
     const data = await response.json();
     console.log(data["items"][0]["volumeInfo"]);
     const bookDetails: ApiResponse | undefined = data["items"][0]["volumeInfo"];
@@ -133,7 +148,7 @@ export async function fetchBookByAuthor(author: string): Promise<Book | null>{
       published: bookDetails?.publishedDate || null,
       pages: bookDetails?.pageCount || null,
       coverImageUrl: bookDetails?.imageLinks?.thumbnail,
-    }
+    };
     return bookData;
   } catch (error) {
     console.log(error);
@@ -141,20 +156,31 @@ export async function fetchBookByAuthor(author: string): Promise<Book | null>{
   }
 }
 
-export async function fetchBookByTitleAndAuthor(info: string): Promise<Book | null>{
+export async function fetchBookByTitleAndAuthor(
+  info: string
+): Promise<Book | null> {
   let [title, author] = info.split("/");
   title = title.trim().replace(/\s/g, "+");
   author = author.trim().replace(/\s/g, "+");
   try {
-    console.log(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}`)
-    const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}`);
+    console.log(
+      `https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}`
+    );
+    const response = await fetch(
+      `https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}`
+    );
     const data = await response.json();
     console.log(data["items"][0]["volumeInfo"]);
 
     // grab ISBN while we're at it - if we can
-    const industryIdentifiers: IndustryIdentifiers[] = data["items"][0]["volumeInfo"]["industryIdentifiers"];
-    const isbn10Identifier = industryIdentifiers?.find(identifier => identifier.type === "ISBN_10");
-    const isbn = isbn10Identifier ? isbn10Identifier?.identifier : 'No isbn 10 found';
+    const industryIdentifiers: IndustryIdentifiers[] =
+      data["items"][0]["volumeInfo"]["industryIdentifiers"];
+    const isbn10Identifier = industryIdentifiers?.find(
+      (identifier) => identifier.type === "ISBN_10"
+    );
+    const isbn = isbn10Identifier
+      ? isbn10Identifier?.identifier
+      : "No isbn 10 found";
     console.log(isbn);
 
     const bookDetails: ApiResponse | undefined = data["items"][0]["volumeInfo"];
@@ -169,7 +195,7 @@ export async function fetchBookByTitleAndAuthor(info: string): Promise<Book | nu
       published: bookDetails?.publishedDate || null,
       pages: bookDetails?.pageCount || null,
       coverImageUrl: bookDetails?.imageLinks?.thumbnail,
-    }
+    };
 
     console.log(`data returned from title and author: `, bookData);
 
@@ -179,17 +205,19 @@ export async function fetchBookByTitleAndAuthor(info: string): Promise<Book | nu
     if (isDataMissing && isbn) {
       console.log("title not completed, searching by ISBN");
 
-      // find missing values 
-      const missingKeys = Object.keys(bookData).filter(key => !bookData[key as keyof Book]);
+      // find missing values
+      const missingKeys = Object.keys(bookData).filter(
+        (key) => !bookData[key as keyof Book]
+      );
       console.log("Missing keys:", missingKeys);
       // search by ISBN
       const additionalData = await fetchBookByIsbn(isbn);
       if (additionalData) {
-        missingKeys.forEach(key => {
+        missingKeys.forEach((key) => {
           (bookData as any)[key] = (additionalData as any)[key];
-        })
+        });
       }
-      return bookData;      
+      return bookData;
     }
 
     return bookData;
