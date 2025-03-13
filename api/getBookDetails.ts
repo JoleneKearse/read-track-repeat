@@ -78,14 +78,10 @@ export async function fetchBookByIsbn(isbn: string): Promise<Book> {
 export async function fetchBookByTitle(title: string): Promise<Book | null> {
   const formattedTitle = title.replace(/\s/g, "+");
   try {
-    console.log(
-      `https://www.googleapis.com/books/v1/volumes?q=intitle:${formattedTitle}`
-    );
     const response = await fetch(
       `https://www.googleapis.com/books/v1/volumes?q=intitle:${formattedTitle}`
     );
     const data = await response.json();
-    console.log(data["items"][0]["volumeInfo"]);
 
     // if no data returned, split title and search again
     if (!data["items"] || !data["items"][0]["volumeInfo"]) {
@@ -120,8 +116,6 @@ export async function fetchBookByTitle(title: string): Promise<Book | null> {
       pages: bookDetails?.pageCount || null,
       coverImageUrl: bookDetails?.imageLinks?.thumbnail,
     };
-
-    console.log(`data returned from title: `, bookData);
 
     // if any values missing, search by ISBN
     const returnedDataValues = Object.values(bookData);
@@ -185,14 +179,10 @@ export async function fetchBookByTitleAndAuthor(
   title = title.trim().replace(/\s/g, "+");
   author = author.trim().replace(/\s/g, "+");
   try {
-    console.log(
-      `https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}`
-    );
     const response = await fetch(
       `https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}`
     );
     const data = await response.json();
-    console.log(data);
 
     // if no data returned, split title and search again
     if (!data["items"] || !data["items"][0]["volumeInfo"]) {
@@ -233,8 +223,6 @@ export async function fetchBookByTitleAndAuthor(
       pages: bookDetails?.pageCount || null,
       coverImageUrl: bookDetails?.imageLinks?.thumbnail,
     };
-
-    console.log(`data returned from title and author: `, bookData);
 
     // if any values missing, search by ISBN
     const returnedDataValues = Object.values(bookData);
