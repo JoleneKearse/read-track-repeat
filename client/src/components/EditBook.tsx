@@ -86,12 +86,6 @@ const EditBook: React.FC<EditBookProps> = ({
     }
   };
 
-  // useEffect(() => {
-  //   if (currentBook.coverImageUrl) {
-  //     setCoverImageUrl(currentBook.coverImageUrl);
-  //   }
-  // }, [currentBook]);
-
   return (
     <form
       className="w-5/6 max-w-sm py-32 mx-auto snap-center md:max-w-md"
@@ -117,15 +111,6 @@ const EditBook: React.FC<EditBookProps> = ({
 
           {currentBook.coverImageUrl && (
             <>
-              {/* <img
-                src={
-                  (currentBook.coverImageUrl
-                    ? currentBook.coverImageUrl
-                    : Cover) as string
-                }
-                alt={currentBook.title}
-                className="w-3/4 pt-8 pb-10"
-              /> */}
               <p className="pb-4 text-base italic font-light tracking-wide text-orange-200">
                 Not the book cover you were expecting? Click the help button to
                 find the one you want.
@@ -152,7 +137,7 @@ const EditBook: React.FC<EditBookProps> = ({
             <input
               type="text"
               ref={coverImageUrlRef}
-              value={coverImageUrl || cover_img_url}
+              value={coverImageUrl}
               id="coverImgInput"
               className="block w-full px-2.5 mb-8 text-sm tracking-wide text-orange-200 rounded-lg bg-orange-100a placeholder:text-purple-200 focus:ring-purple-300 focus:border-purple-300 md:text-lg"
               placeholder="link with 'amazon' and some gibberish"
